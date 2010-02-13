@@ -1,0 +1,413 @@
+\documentclass[12pt]{article}
+\usepackage{url}
+\usepackage{pdfsync}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+% \VignetteIndexEntry{wq: exploring water quality monitoring data}
+% \VignetteDepends{wq, zoo, ggplot2, lattice}
+% \VignetteKeyword{ts}
+
+%%% PACKAGES
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{paralist}
+\usepackage{verbatim}
+\usepackage{subfigure}
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry}
+\geometry{left=1.25in, right=1.25in, top=1.25in, bottom=1.25in}
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape}
+
+%%% LINKS
+\usepackage{color}
+\usepackage[pdftex,bookmarks,colorlinks,breaklinks]{hyperref}
+\definecolor{dullmagenta}{rgb}{0.4,0,0.4}
+\definecolor{darkblue}{rgb}{0,0,0.4}
+\hypersetup{linkcolor=red,citecolor=blue,filecolor=dullmagenta,urlcolor=darkblue}
+
+%%% Bibliography:
+\usepackage{natbib}
+\bibpunct{(}{)}{,}{a}{}{,} % format natbib citation punctuation
+
+\SweaveOpts{engine=R, eps=FALSE}
+
+\title{\texttt{wq:} Exploring water quality monitoring data}
+\author{Alan D. Jassby and James E. Cloern}
+%\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+
+This package contains functions to assist in the processing and exploration of data from monitoring programs for aquatic ecosystems. The name \textit{wq} stands for \textit{w}ater \textit{q}uality and reflects a focus on time series data for physical and chemical properties of water, as well as the plankton. The package is currently intended for programs that sample approximately monthly at discrete stations. Although our emphasis is mainly estuarine and nearshore coastal ecosystems, most functions should be applicable for a wide range of systems, from freshwater to open ocean. The package contains only a few functions at this early stage, but we hope they are generally useful.
+
+The approach used here involves transformation of external data files into one or a few standard formats that existing functions can then handle easily. A conceptualization of this sequence is illustrated in Figure~\ref{fig:typSeq}. Water quality monitoring programs maintain their data in a wide variety of formats, and the first step is to read data from an external file and store it in a data frame. Often, the external data are stored or at least transmitted in a comma- or tab-delimited format and can be easily handled with \texttt{read.table} or one of its variants. Some manipulations of the data set may take place during the import process, but more substantive ones are often undertaken immediately after. Typical modifications include renaming variables, dropping unnecessary variables and observations, calculating derived variables and coercing variables to different classes. These modifications are chosen with regard to ease of use and the intended analysis, but also in order to facilitate construction of an object with a standardized format, which is the next stage. Once this standardized ``wq data'' object is available (which we call \texttt{WqData}), it can be reshaped into various forms---matrix, list, time series vector, data frame, etc.---depending on the analysis. At this point, the data are finally in a form for examination. Some functions may be able to explore a \texttt{WqData} object directly without any additional reshaping.
+
+\begin{figure}[tbp]
+\begin{center}
+  \tikzstyle{box}=[rectangle, minimum size=6mm, very thick,
+  draw=red!50!black!50, top color=white, bottom color=red!50!black!20,
+  font=\ttfamily] 
+  \small{
+    \begin{tikzpicture}[node distance=4cm, auto, >=stealth', thick,
+      text height=1.5ex, text depth=.25ex]
+    \node [box,  draw=black!50, top color=white, bottom color=black!20] (a) {\textrm{external source}};
+    \node [box] (b) [below of=a, node distance=1.75cm]{data.frame};
+    \node [box] (c) [right of=b] {WqData};
+    \node [box] (d) [right of=c] {matrix, \textrm{\dots}};
+    \node [box] (e) [right of=d] {\textrm{result}};
+    \path[->] (a) edge node {$read$} (b);
+    \path[->] (b) edge [loop below, distance=1.75cm] node {$modify$} (b);
+    \path[->] (b) edge node {$generate$} (c);
+    \path[->] (c) edge node {$reshape$} (d);
+    \path[->] (c) edge [bend right] node {$analyze$} (e);
+    \path[->] (d) edge node {$analyze$} (e);
+  \end{tikzpicture}
+}
+  \caption{A typical sequence of data analysis.}
+   \label{fig:typSeq}
+\end{center}
+\end{figure}
+
+This package is intended to facilitate all of these activities. We will illustrate some of the steps in Figure~\ref{fig:typSeq} using the accompanying data set \texttt{sfbay}. The exercise should demonstrate most of the current capability of the package and make its use more clear.
+
+<<>>=
+library(wq)
+@
+
+\section{Preparing data from an external file}
+
+Our starting point is a comma-delimited file downloaded on 2009-11-17 from the U.S. Geological Survey's water quality data set for San Francisco Bay (\url{http://sfbay.wr.usgs.gov/access/wqdata}). The downloaded file, \texttt{sfbay.csv}, starts with a row of variable names followed by a row of units, so the first two lines are skipped during import and simpler variable names are substituted for the originals. Also, only a subset of stations and years is used in order to keep \texttt{sfbay} small and the \texttt{wq} package easier to download:
+
+<<eval=FALSE>>=
+sfbay <- read.csv("sfbay.csv", header = FALSE, as.is = TRUE, skip = 2)
+names(sfbay) <- c('date', 'time', 'stn', 'depth', 'chl', 'dox', 'spm', 'ext', 'sal', 'temp', 'nox', 'nhx')
+sfbay <- subset(sfbay, stn %in% c(21, 24, 27, 30, 32, 36) & substring(date, 7, 10) %in% 1985:2004)
+@
+
+\noindent The resulting data frame \texttt{sfbay} is provided as part of the package, and its contents are explained in the accompanying help file.
+
+<<>>=
+head(sfbay)
+@
+
+The next step is to add any necessary derived variables to the data frame. An initial data set will sometimes contain conductivity rather than salinity data, and we might want to use \texttt{ec2pss} to derive the latter. That's not the case here, but let's assume that we want dissolved oxygen as percent saturation rather than in concentration units. Using \texttt{oxySol} and the convention of expressing percent saturation with respect to surface pressure:
+
+<<>>=
+x <- sample(1:nrow(sfbay), 10)
+sfbay[x, "dox"]
+sfbay1 <- transform(sfbay, dox = round(100 * dox/oxySol(sal, temp), 1))
+sfbay1[x, "dox"]
+@
+
+As will be seen below, much of the manipulation work needed to form the \texttt{WqData} object is taken care of by a generating function in the package, and there is really nothing more that needs to be done. In fact, not even the renaming of the variables was necessary: only the initial \texttt{read.csv} function was required. This is partly due to the way the original data were formatted in the downloaded file and more work may be needed in other cases.
+
+\section{The \texttt{WqData} class} \label{sec:wqClass} 
+
+We define a standardized format for water quality data by creating a formal (\texttt{S4}) class, the \texttt{WqData} class, that enforces the standards, and an accompanying generating function \texttt{wqData}. The generating function acts on the suitably-modified data frame and constructs a \texttt{WqData} object.
+
+In order to avoid a large programming burden in the early stages of this package, and also to let the design evolve efficiently by responding to specific needs that arise, the initial \texttt{WqData} object is just a simple extension or subset of the \texttt{data.frame} and can be treated as such. The only restrictions it makes is in the column names and classes.
+
+We decided to accommodate two types of sampling \texttt{time}, namely, the date either with or without the time of day. The former are converted to the \texttt{POSIXct} class and the latter to the \texttt{Date} class. A special class \texttt{DateTime} is created, which is the union of these two time classes. This was done because the use of classes that combine date and time of day require an additional level of care with respect to time zone \citep{Grothendieck:2004kx}. Almost all analyses of these low-frequency sampling programs are concerned with only the date, and this additional burden and possible source of error seems unwarranted if not necessary.
+
+Surface location is specified by a \texttt{site} code, as the initial intention is to handle discrete monitoring programs as opposed to continuous transects. Latitude-longitude and distances from a fixed point are implicit in the \texttt{site} code and can be recorded in a separate table (see \texttt{sfbayVars}). The \texttt{depth} is specified separately as a number. Other information that may not be depth-specific, such as the mean vertical extinction coefficient in the near-surface layer, can be located by a negative depth number for now. The last two fields in the data portion of a \texttt{WqData} object are the \texttt{variable} code and the \texttt{value}. The variables are given as character strings and the values as numbers. As in the case of the sampling site, additional information related to the variable code can be maintained in a separate table (see \texttt{sfbayVars}).
+
+\section{Creating a \texttt{WqData} object}
+
+Like all \texttt{S4} classes, \texttt{WqData} has a generating function called \texttt{new} automatically created along with the class. This function, however, requires that its data frame argument already have a fairly restricted form of structure. In order to decrease the manipulation required of the imported data, a separate, less restrictive generating function called \texttt{wqData} is available. This function is more forgiving of field names and classes and does a few other ``cleanup'' tasks with the data before calling \texttt{new}. Perhaps most useful, it converts data from a ``wide'' format with one field per variable into the ``narrow'' or long format used by the \texttt{WqData} class. For example, \texttt{sfbay} can be converted to a \texttt{WqData} object with a single command:
+
+<<>>=
+sfb <- wqData(sfbay, c(1, 3:4), 5:12, site.order = TRUE, 
+	time.format = "%m/%d/%Y", type = "wide")
+head(sfb)
+@
+
+There is a \texttt{summary} method for this class that tabulates the number of observations by site and variable, as well as the mean and  quartiles for individual variables:
+
+<<>>=
+summary(sfb)
+@
+
+\noindent Subsetting an object of class \texttt{"WqData"} will preserve the class:
+
+<<>>=
+sfb1 <- subset(sfb, variable == 'chl' & depth <= 1)
+class(sfb1)
+summary(sfb1)
+@
+
+\noindent And plotting a \texttt{"WqData"} object produces a page for each variable, each page containing a strip plot of the values for each site (Figure~\ref{fig:strip}):
+
+<<>>=
+plot(sfb1)
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=4>>=
+print(plot(sfb1))
+@
+    \caption{Plotting a \texttt{"WqData"} object with only one variable; \texttt{chl}.}
+    \label{fig:strip}
+  \end{center}
+\end{figure}
+
+Apart from \texttt{summary}, \texttt{subset} and \texttt{plot}, existing methods for data frames will produce an object of class \texttt{"data.frame"} rather than one of class \texttt{"WqData"}.
+
+\section{Reshaping}
+
+Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. All replicates are first averaged and then the mean is found for the depth layer of interest. \texttt{NA} values will be omitted. If you want to include them, temporarily assign them some unique depth within the specified depth layer. The default time series plot is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}):
+
+<<>>=
+y <- tsMake(sfb, focus = "chl", layer = c(0, 5))
+y[1:6, ]
+tsp(y)
+plot(y, main = "Chlorophyll in San Francisco Bay")
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE>>=
+plot(y, main = "Chlorophyll in San Francisco Bay")
+@
+    \caption{Monthly mean chlorophyll ($\mu$g L$^{-1}$) in 0-5 m layer of San Francisco Bay.}
+    \label{fig:6chlTs}
+  \end{center}
+\end{figure}
+
+\noindent If the option \texttt{type = "zoo"}, then \texttt{tsMake} produces an object of class \texttt{"zoo"} containing values by date of observation, rather than a monthly time series.
+
+<<>>=
+head(tsMake(sfb, focus = "chl", layer = c(0, 5), type = 'zoo'))
+@
+
+
+\section{Analyzing}
+
+\subsection{Trends}
+
+The function \texttt{mannKen} does a Mann-Kendall test of trend on a time series and provides the corresponding nonparametric slope estimate. Because of serial correlation for most monthly time series, the significance of such a trend is often overstated and \texttt{mannKen} is better suited for annual series, such as this one for Nile River flow:
+
+<<>>=
+mannKen(Nile)
+@
+
+\noindent Its main role in this package, however, is as a support function for the Seasonal Kendall test of trend \citep{Helsel:1992bc}. The Seasonal Kendall test combines information about trends for individual months (or some other subdivision of the year such as quarters) and produces an overall test of trend for a series. \texttt{mannKen} collects certain information on the pattern of missing data that is then used to determine if a Seasonal Kendall test is warranted. In particular, there is an option to report a result only if more than half the seasons are each missing less than half the possible comparisons between the first and last 20\% of the years \citep{Schertz:1991hy}:
+
+<<>>=
+chl27 <- sfbayChla[, "s27"]
+seaKen(chl27)
+@
+
+\noindent The main role, in turn, for \texttt{seaKen} in this package is as a support function for \texttt{seaRoll}, which applies the Seasonal Kendall test to a rolling window of years, such as a decadal window. \texttt{seaKen} is also subject to distortion by correlation among months, but the relatively small number of years per window in typical use does not allow for an accurate correction. One might therefore consider using a more conservative $p$-value than usual as a significance threshold:
+
+<<>>=
+seaRoll(chl27, w = 10)
+@
+
+\subsection{Empirical Orthogonal Functions}
+
+Empirical Orthogonal Function (\textsc{EOF}) analysis is a term used primarily in the earth sciences for principal component analysis applied to simultaneous time series at different spatial locations. \cite{Hannachi:2007hb} provides a recent comprehensive summary. The function \texttt{eof} in this package, based on \texttt{prcomp} in the \texttt{stats} package, scales the time series and applies a promax rotation to the \textsc{EOF}s.  
+
+\texttt{eof} does not permit \texttt{NA}s and some kind of data imputation or omission will usually be required. The function \texttt{interpTs} is handy for small data gaps. Here, we use it to bridge gaps of up to three months. The interpolated series is then plotted in red and the original series overplotted in blue (Figure~\ref{fig:interp}).
+
+<<>>=
+chl27 <- sfbayChla[, "s27"]
+chl27a <- interpTs(chl27, gap = 3)
+plot(chl27a, col = "red", xlab = "")
+lines(chl27, col = "blue")
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=4>>=
+plot(chl27a, col = "red", xlab = "")
+lines(chl27, col = "blue")
+@
+    \caption{Interpolation of a monthly time series (interpolated data in \emph{red}).}
+    \label{fig:interp}
+  \end{center}
+\end{figure}
+
+\texttt{eof} requires an estimate of the number of \textsc{EOF}s to retain for rotation. \texttt{eofNum} provides a guide to this number by plotting the eigenvalues and their confidence intervals in a ``scree" plot. The significance of each eigenvalue is also assessed using \emph{rule N}, which repeatedly computes eigenvalues of the correlation matrix for an appropriately-sized random variable matrix and returns the 0.95 quantiles. Here, we apply \texttt{eofNum} to annualized San Francisco Bay chlorophyll data and retain the stations with no missing data, namely, the first 12 stations.
+
+<<>>=
+chla1 <- aggregate(sfbayChla, 1, mean, na.rm = TRUE)
+chla1 <- chla1[, 1:12]
+eofNum(chla1, distr = "lognormal", reps = 2000)
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=4>>=
+print(eofNum(chla1, distr = "lognormal", reps = 2000))
+@
+    \caption{Eigenvalues of the San Francisco Bay chlorophyll time series matrix.}
+    \label{fig:scree}
+  \end{center}
+\end{figure}
+
+\noindent These stations have similar coefficients for the first EOF and appear to act as one with respect to chlorophyll variability on the annual scale (Figure~\ref{fig:scree}). It suggests that further exploration of the interannual variability of these stations can be simplified by using a single time series, namely, the first \textsc{EOF}.
+
+<<>>=
+e1 <- eof(chla1, n = 1)
+e1
+@
+
+\noindent The function \texttt{plotEof} produces a graph of either the \textsc{EOF}s or their accompanying time series. In this case, with \texttt{n = 1}, there is only one plot for each such graph (Figure~\ref{fig:eof1}).
+
+<<>>=
+plotEof(e1, type = "amp")
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=3>>=
+print(plotEof(e1, type = "amp"))
+@
+    \caption{Time series for the first \textsc{EOF} of the San Francisco Bay chlorophyll time series matrix.}
+    \label{fig:eof1}
+  \end{center}
+\end{figure}
+
+Principal component analysis can also be useful in studying the way different seasonal ``modes'' of variability contribute to overall year-to-year variability of a single time series \citep{Jassby:1999ui}. The basic approach is to consider each month as determining a separate annual time series and then to calculate the eigenvalues for the resulting $12 \times n$ years time series matrix. The function \texttt{ts2df} is useful for expressing a monthly time series in the form needed by \texttt{eof}. For example, the following code converts the monthly chlorophyll time series for Station 27 in San Francisco Bay to the appropriate data frame with October, the first month of the local ``water year'', in the first column, and years with missing data omitted:
+
+<<>>=
+chl27b <- interpTs(sfbayChla[, "s27"], gap = 3)
+chl27b <- ts2df(chl27b, mon1 = 10, addYr = TRUE, omit = TRUE)
+head(round(chl27b, 1))
+@
+
+The following example plots the \textsc{EOFs} from an analysis of this month $\times$ year data frame for Station 27 chlorophyll. \texttt{eofNum} (not shown) suggested retaining up to two EOFs. The resulting rotated EOFs imply two separate modes of variability for further exploration, the first operating during May-Sep and the other during Nov-Jan (Figure~\ref{fig:eof2}):
+
+<<>>=
+e2 <- eof(chl27b, n = 2)
+plotEof(e2, type = "coef")
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=4>>=
+print(plotEof(e2, type = "coef"))
+@
+    \caption{Rotated EOFs for the San Francisco Bay Station 27 month $\times$ year chlorophyll time series.}
+    \label{fig:eof2}
+  \end{center}
+\end{figure}
+
+\subsection{Time series decomposition}
+
+An analysis of chlorophyll \textit{a} time series from many coastal and estuarine sites around the world demonstrates that the standard deviation of chlorophyll is approximately proportional to the mean, both among and within sites, as well as at different time scales \citep{Cloern:2009ml}. One consequence is that these monthly time series are well described by  a multiplicative seasonal model: $c_{ij} = C y_i m_j \epsilon_{ij}$, where $c_{ij}$ is chlorophyll concentration in year $i$ and month $j$; $C$ is the long-term mean; $y_i$ is the annual effect; $m_j$ is the average seasonal (in this case monthly) effect; and $\epsilon_{ij}$ is the residual series, which we sometimes refer to as the ``events'' component. The annual effect is simply the annual mean $Y_{i} = (1/12) \sum_{j=1}^{12}c_{ij}$ divided by the long-term mean: $y_{i}=Y_{i}/C$. The average monthly effect is given by $m_{j}=(1/N) \sum_{i=1}^{N} M_{ij}/Y_{i}$, where $M_{ij}$ is the value for month $j$ in year $i$, and $N$ is the total number of years. The events component is then obtained by $\epsilon_{ij}=c_{ij}/C y_{i} m_{j}$.
+
+The \texttt{decompTs} listed here accomplishes this multiplicative decomposition (an option allows additive decomposition as an alternative). It requires input of a time series matrix in which the columns are monthly time series. It allows missing data, but it is up to the user to decide how many data are sufficient and if the pattern of missing data will lead to bias in the results. If so, it would be advisable to eliminate problem years beforehand by setting all month values to \texttt{NA} for those years. There are two cases of interest here: one in which the seasonal effect is held constant from year to year, and another in which it is allowed to vary by not distinguishing a separate events component. The choice is made by setting \texttt{event = TRUE} or \texttt{event = FALSE}, respectively, in the input. If no specific starting or ending year is given, the input data will be extended to cover January of the earliest or December of the latest year, respectively. The output of this function is a matrix time series containing the original time series and its multiplicative model components.
+
+The average seasonal pattern may not resemble observed seasonality in a given year. Patterns that are highly variable from year to year will result in an average seasonal pattern of relatively low amplitude (i.e., low range of monthly values) compared to the amplitudes in individual years. An average seasonal pattern with high amplitude therefore indicates both high amplitude and a recurring pattern for individual years. The default time series \texttt{plot} again provides a quick illustration of the result (Figure~\ref{fig:decomp}):
+
+<<>>=
+chl27 <- sfbayChla[, "s27"]
+d1 <- decompTs(chl27)
+plot(d1, nc = 1, main = "Station 27 Chl-a decomposition")
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE>>=
+plot(d1, nc = 1, main = "Station 27 Chl-a decomposition")
+@
+    \caption{Multiplicative decomposition of chlorophyll at Station 27 in San Francisco Bay.}
+    \label{fig:decomp}
+  \end{center}
+\end{figure}
+
+The average seasonal pattern does not provide any information about potential secular trends in the pattern. A solution is to apply the decomposition to a moving time window. The window should be big enough to yield a meaningful average of interannual variability but short enough to allow a trend to manifest. This may be different for different systems, but a decadal window can be used as a starting point. A more convenient, albeit restrictive, way to examine changing seasonality is with the dedicated function \texttt{plotSeas}. It divides the time period into four equal intervals and plots a composite of the seasonal pattern in each interval. It also warns of months that may not be represented by enough data by colouring them red (Figure~\ref{fig:seas}). \texttt{plotSeas} is an easy way to decide on the value for the \texttt{event} option in \texttt{decompTs}.
+
+<<>>=
+plotSeas(chl27)
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=4>>=
+print(plotSeas(chl27))
+@
+    \caption{Composites of seasonal pattern in \texttt{chl27} for four multi-year intervals.}
+    \label{fig:seas}
+  \end{center}
+\end{figure}
+
+\subsection{Phenological parameters}
+
+\texttt{phenoPhase} and \texttt{phenoAmp} act on monthly time series or dated observations (\texttt{"zoo"} objects) and produce measures of the phase and amplitude, respectively, for each year. \texttt{phenoPhase} finds the month containing the maximum value, the \emph{fulcrum} or center of gravity, and the weighted mean month. \texttt{phenoAmp} finds the range, the range divided by mean, and the coefficient of variation. Both functions can be confined to only part of the year, for example, the months containing the spring phytoplankton bloom. This feature can also be used to avoid months with chronic missing-data problems.
+
+Illustrating once again with chlorophyll observations from Station 27 in San Francisco Bay:
+
+<<>>=
+chl27 <- sfbayChla[, 's27']
+p1 <- phenoPhase(chl27)
+head(p1)
+p2 <- phenoPhase(chl27, c(1, 6))
+head(p2)
+p3 <- phenoAmp(chl27, c(1, 6))
+head(p3)
+@
+
+Using the actual dated observations:
+
+<<>>=
+zchl <- tsMake(sfb, focus = "chl", layer = c(0, 5), type = 'zoo')
+head(zchl)
+zchl27 <- zchl[, 3]
+head(phenoPhase(zchl27))
+head(phenoPhase(zchl27, c(1, 6), out = 'doy'))
+head(phenoPhase(zchl27, c(1, 6), out = 'julian'))
+@
+
+\subsection{Miscellaneous plotting functions}
+
+\texttt{plotTsTile} plots a monthly time series as a month $\times$ year grid of tiles, with color representing magnitude. The data can be binned in either of two ways. The first is simply by deciles. The second, which is intended for log-anomaly data, is by four categories: Positive numbers higher or lower than the mean positive value, and negative numbers higher or lower than the mean negative value. In this version of \texttt{plotTsTile}, the anomalies are calculated with respect to the overall mean month. 
+
+<<>>=
+chl27 <- sfbayChla[, "s27"]
+plotTsTile(chl27)
+@
+
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE, width=8, height=3>>=
+print(plotTsTile(chl27))
+@
+    \caption{Image plot of monthly log-anomaly time series for Station 27 chlorophyll.}
+    \label{fig:tile}
+  \end{center}
+\end{figure}
+
+\noindent This plot shows clearly the change in autumn-winter chlorophyll magnitude after 1999 (Figure~\ref{fig:tile}). 
+
+\section{Concluding Remarks}
+
+In the near future, this package will remain focused on typical data sets that have accumulated in long-term coastal water quality monitoring programs, namely, those collected at a frequency of about $10^1$ to $10^2$ times per year at $10^1$ to $10^2$ sites. Aside from incremental revision and addition of specific functions, the main structural change envisioned is in the class definitions for data objects. 
+
+In this regard, it is helpful to examine what constitutes a water quality observation, i.e., the essential components of this class. The minimum information typically needed is of four kinds: the location, the time, the analyte and the observed value. As discussed in Section~\ref{sec:wqClass}, additional information about the location and the analytical method is inherent in the unique codes used for each location and analyte. Sometimes, however, it may be more convenient to include additional information explicitly with the actual observations, such as censoring limits that may change throughout a project. Other complications are introduced by the different ways in which location, time, and even observed values can be recorded. For example, surface location information can come in the form of site names, latitude-longitude coordinates or distance along the axis of a channel from some fixed point. Observed values may be numbers, numeric ranges or discrete classifications. Ideally, one wants each of the basic four kinds of information to accommodate all of the major possible forms.  
+
+An obvious extension of the \texttt{WqData} object would be to include additional slots for site and variable metadata, so that there is no ambiguity about the availability of this information. A more significant change would be to define classes for the fields described above as superclasses of basic classes. For example, a \texttt{site} class could accommodate factors, numeric vectors or matrices. Location could then be given by discrete site name, \textit{x} position as distance from a fixed point, or \textit{x} and \textit{y} positions as latitude and longitude. Similarly, depth could accommodate factors or numeric vectors, the former as names of depth layers (``top 5 m") or as non-numeric depths (``just below surface" or "bottom").
+
+Ultimately, the package direction will be driven by the needs of people actually using it. Suggestions for revisions and additions are welcome.
+
+\bibliographystyle{ecology}
+\bibliography{wq}{}
+
+\end{document}

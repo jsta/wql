@@ -1,0 +1,21 @@
+Package: wq
+Type: Package
+Title: Exploring water quality monitoring data
+Version: 0.2-2
+Date: 2010-02-13
+Author: Alan D. Jassby and James E. Cloern
+Maintainer: Alan Jassby <adjassby@ucdavis.edu>
+Description: Functions to assist in the processing and exploration of
+        data from monitoring programs for aquatic ecosystems. The focus
+        is on time series data for physical and chemical properties of
+        water, as well as the plankton. The package is intended for
+        programs that sample approximately monthly at discrete
+        stations.
+Depends: R (>= 2.10.0), methods, zoo
+Suggests: ggplot2, lattice, reshape
+License: GPL-2
+LazyLoad: yes
+LazyData: yes
+Packaged: 2010-02-17 20:16:38 UTC; alanjassby
+Repository: CRAN
+Date/Publication: 2010-02-18 13:05:07

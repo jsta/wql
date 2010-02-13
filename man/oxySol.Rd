@@ -1,0 +1,48 @@
+\name{oxySol}
+\Rdversion{1.1}
+\alias{oxySol}
+
+\title{Dissolved oxygen at saturation}
+
+\description{
+Finds dissolved oxygen concentration in equilibrium with water-saturated air.
+}
+
+\usage{
+oxySol(t, S, P = NULL)
+}
+
+\arguments{
+  \item{t}{
+temperature, degrees C
+}
+  \item{S}{
+salinity, on the Practical Salinity Scale
+}
+  \item{P}{
+pressure, atm
+}
+}
+
+\details{
+Calculations are based on the approach of Benson and Krause (1984), using Green and Carritt's (1967) equation for dependence of water vapor partial pressure on \code{t} and \code{S}. Equations are valid for temperature in the range 0-40 C and salinity in the range 0-40.
+}
+
+\value{
+Dissolved oxygen concentration in mg/L at 100\% saturation. If \code{P = NULL}, saturation values at 1 atm are calculated.
+}
+
+\references{
+Benson, B.B. and Krause, D. (1984) The concentration and isotopic fractionation of oxygen dissolved in fresh-water and seawater in equilibrium with the atmosphere. \emph{Limnology and Oceanography} \bold{29,} 620-632.
+
+Green, E.J. and Carritt, D.E. (1967) New tables for oxygen saturation of seawater. \emph{Journal of Marine Research} \bold{25,} 140-147.}
+
+\examples{
+# Convert DO into \% saturation for 1-m depth at Station 32.
+# Use convention of expressing saturation at 1 atm.
+sfb1 <- subset(sfbay, depth == 1 & stn == 32)
+dox.pct <- with(sfb1, 100 * dox/oxySol(temp, sal))
+summary(dox.pct)
+}
+
+\keyword{manip}
