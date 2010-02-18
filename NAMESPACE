@@ -1,0 +1,6 @@
+import(zoo)
+importFrom(graphics, plot)
+
+exportPattern("^[a-zA-Z]")
+exportClassPattern("^[a-zA-Z]")
+exportMethods(phenoAmp, phenoPhase, plot, subset, summary, tsMake)

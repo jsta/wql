@@ -1,0 +1,18 @@
+citHeader("To cite package 'wq' in publications use:")
+
+     desc <- packageDescription("wq")
+     year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", desc$Date)
+     vers <- paste("R package version", desc$Version)
+
+     citEntry(entry="Manual",
+              title = "wq: Exploring water quality monitoring data",
+              author = personList(as.person("Alan D. Jassby"),
+                                  as.person("James E. Cloern")),
+              year = year,
+              note = vers,
+
+              textVersion =
+              paste("Alan D. Jassby and James E. Cloern (",
+                    year,
+                    "). wq: Some tools for exploring water quality monitoring data. ",
+                    vers, ".", sep=""))
