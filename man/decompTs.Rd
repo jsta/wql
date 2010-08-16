@@ -56,8 +56,9 @@ Cloern, J.E. and Jassby, A.D. (2009) Patterns and scales of phytoplankton variab
 # Apply the function to a matrix time series, producing a list of decompositions
 ans <- vector('list', ncol(sfbayChla))
 names(ans) <- colnames(sfbayChla)
-for(i in seq(along = names(ans)))
-	ans[[i]] <- decompTs(sfbayChla[, i])
+for(i in seq(along = names(ans))) {
+  ans[[i]] <- decompTs(sfbayChla[, i])
+}
 
 # A quick plot for a time series decomposiiton
 plot(ans[[7]], nc = 1, main = paste(names(ans)[7], "Chl-a decomposition"))

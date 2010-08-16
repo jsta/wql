@@ -11,13 +11,14 @@ setMethod(
   signature = "ts",
   definition = function(x, mon.range = c(1, 12)) {
 
-## Calculates range, range/mean, CV, by year
-## Args
-##   x: time series
-##   mon.range: range of months to use for calculations
-## Returns numeric matrix
+### Calculates range, range/mean, CV, by year
+### Args
+###   x: time series
+###   mon.range: range of months to use for calculations
+### Returns numeric matrix
 
-    d1 <- data.frame(yr = floor(time(x)), mon = cycle(x), val = as.numeric(x))
+    d1 <- data.frame(yr = floor(time(x)), mon = cycle(x), val =
+    	as.numeric(x))
     yrs <- unique(d1$yr)
     mons <- mon.range[1]:mon.range[2]
     d2 <- subset(d1, mon %in% mons)
@@ -42,7 +43,8 @@ setMethod(
     a3 <- aggregate(d2$val, list(d2$yr), sd, na.rm=TRUE)
     cv <- ifelse(yrs.ok, a3$x/a2$x, NA)
     
-    as.data.frame(cbind(year=yrs, range, range.mean, cv), row.names = length(yrs))   
+    as.data.frame(cbind(year=yrs, range, range.mean, cv), row.names =
+    	length(yrs))
   }
 )
 
@@ -52,18 +54,19 @@ setMethod(
   signature = "zoo",
   definition = function(x, mon.range = c(1, 12)) {
 
-## Calculates range, range/mean, CV, by year
-## Args
-##   x: zoo object with index in class 'DateTime'
-##   mon.range: range of months to use for calculations
-## Returns numeric matrix
+### Calculates range, range/mean, CV, by year
+### Args
+###   x: zoo object with index in class 'DateTime'
+###   mon.range: range of months to use for calculations
+### Returns numeric matrix
 
     ## validate args
     if (!is(index(x), "DateTime"))
       stop('time index must be a DateTime object')
     indexx <- as.Date(index(x))  
       
-    d1 <- data.frame(time = indexx, yr = years(indexx), mon = monthNum(indexx), val = as.numeric(x))
+    d1 <- data.frame(time = indexx, yr = years(indexx), mon =
+    	monthNum(indexx), val = as.numeric(x))
     yrs <- unique(d1$yr)
     mons <- mon.range[1]:mon.range[2]
     d2 <- subset(d1, mon %in% mons)
@@ -88,6 +91,7 @@ setMethod(
     a3 <- aggregate(d2$val, list(d2$yr), sd, na.rm=TRUE)
     cv <- a3$x/a2$x
     
-    as.data.frame(cbind(year=yrs, range, range.mean, cv, n), row.names = length(yrs))   
+    as.data.frame(cbind(year=yrs, range, range.mean, cv, n), row.names =
+    	length(yrs))
   }
 )
