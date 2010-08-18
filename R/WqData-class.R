@@ -2,7 +2,8 @@ setClass(
   Class = 'WqData', 
   contains = 'data.frame', 
   validity = function(object) {
-    if (!identical(object@names[1:5], c("time", "site", "depth", "variable", "value")))
+    if (!identical(object@names[1:5], c("time", "site", "depth",
+    	"variable", "value")))
       stop("columns are not all named correctly")
     if (!all(
         is(object$time, "DateTime"),
@@ -34,27 +35,14 @@ setMethod(
 setMethod(
   f = "plot",
   signature = "WqData",
-  definition = function(x, y = "missing", ...) {
+  definition = function(x, y = "missing", vars, ...) {
+    if (missing(vars)) vars = unique(x$variable)[1:10]
     require(lattice)
     stripplot(site ~ value|variable, data = as.data.frame(x),
+      subset = variable %in% vars,
       scales = list(x = list(relation = 'free')),
-      layout = c(1, 1, length(levels(x$variable))),
+      layout = c(1, 1),
       ...
     )
   }
 )
-  
-  
-setMethod(
-  f = "subset",
-  signature = "WqData",
-  definition = function(x, ...) {
-    x1 <- as.data.frame(x)
-    x2 <- subset(x1, ...)
-    x2$site <- x2$site[, drop = TRUE]
-    x2$variable <- x2$variable[, drop = TRUE]
-    x@.Data <- x2
-    x
-  }
-)
-

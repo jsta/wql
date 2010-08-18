@@ -31,13 +31,9 @@
 }
 \section{Methods}{
   \describe{
-    \item{plot}{\code{signature(x = "WqData")}: Multi-page stripchart of observations, each page containing one plot of all sites for one variable.}
+    \item{plot}{\code{signature(x = "WqData")}: Multi-page stripchart of observations, each page containing one plot of all sites for one variable. An argument \code{vars} can be given specifying a character string of variables to be plotted. Otherwise, only the first 10 variables will be plotted if the number of variables is more than 10. Further arguments will be passed to the underlying \code{stripplot} function.}
   }
     
-  \describe{
-    \item{subset}{\code{signature(x = "WqData")}: Subset with a logical expression indicating sites and/or variables and/or depths to keep. Missing values are taken as false.}
-  }
-
   \describe{
     \item{summary}{\code{signature(x = "WqData")}: Date range, number of observations for each combination of site and variable, and quartiles of variable values.}
   }
@@ -91,14 +87,9 @@ sfb <- new('WqData', m1)
 # Summarize the data
 summary(sfb)
 
-# Select a subset of just near-surface chlorophyll
-sfb1 <- subset(sfb, variable == 'chl' & depth <= 1)
-class(sfb1)
-summary(sfb1)
-
 # Create multi-page pdf of strip chart summary of data
 pdf()  # default is to create Rplots.pdf
-plot(sfb)
+plot(sfb, vars = c('chl', 'dox', 'spm'))
 dev.off()
 }
 

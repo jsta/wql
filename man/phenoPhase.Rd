@@ -54,12 +54,18 @@ Colebrook, J.M. (1979) Continuous plankton records - seasonal cycles of phytopla
 }
 
 \examples{
+# ts example
 y <- sfbayChla[, 's27']
-phenoPhase(y)
-
-p1 <- phenoPhase(y, c(1, 6))
+p1 <- phenoPhase(y)
 p1
 apply(p1, 2, sd, na.rm=TRUE)  # max.mon > fulcrum > mean.wt 
+phenoPhase(y, c(3, 10))
+
+# zoo example
+sfb <- wqData(sfbay, c(1,3,4), 5:12, site.order = TRUE, type = "wide", 
+  time.format = "\%m/\%d/\%Y")
+y <- tsMake(sfb, focus = 'chl', layer = c(0, 5), type = 'zoo')
+phenoPhase(y[, 's27'])
 }
 
 \keyword{manip}

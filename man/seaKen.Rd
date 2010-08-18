@@ -30,7 +30,7 @@ The rule number for excluding windows with excessive missing data.
 }
 
 \details{
-The Seasonal Kendall tests are described by Helsel and Hirsch (1992). The \emph{p-}values provided here are the raw values, not the ones corrected for serial correlation among seasons. In any case, the raw values are recommended for series lengths less than 10 years. But consider using smaller p-values than usual as a threshold for significance.
+The Seasonal Kendall tests are described by Helsel and Hirsch (1992). The \emph{p}-values provided here are the raw values, not the ones corrected for serial correlation among seasons. In any case, the raw values are recommended for series lengths less than 10 years. But consider using smaller \emph{p}values than usual as a threshold for significance.
 
 The function \code{seaRoll} applies \code{seaKen} to rolling time windows of width \code{w}. A minimum \code{w} of five years is required. The only rules currently implemented are: (1) ignore missing data; and (2) report a result only if more than half the seasons are each missing less than half the possible comparisons between the first and last 20\% of the years (Schertz et al. [1991] discuss these and related decisions about missing data).
 }

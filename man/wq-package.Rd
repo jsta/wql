@@ -12,13 +12,14 @@ Functions to assist in the processing and exploration of data from monitoring pr
 \tabular{ll}{
 Package: \tab wq\cr
 Type: \tab Package\cr
-Version: \tab 0.2-2\cr
-Date: \tab 2010-02-13\cr
-Depends: \tab R (>= 2.10.0), methods, zoo\cr
+Version: \tab 0.2-5\cr
+Date: \tab 2010-08-16\cr
+Depends: \tab R (>= 2.11.0), methods, zoo\cr
 Suggests: \tab ggplot2, lattice, reshape\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 LazyData: \tab yes\cr
+URL: \tab http://www.nyeinchan.net/#wq\cr
 }
 }
 \author{

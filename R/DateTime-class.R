@@ -1,1 +1,1 @@
- setClassUnion("DateTime", c("Date", "POSIXct"))
+setClassUnion("DateTime", c("Date", "POSIXct"))

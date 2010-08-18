@@ -55,9 +55,9 @@ chla1 <- aggregate(sfbayChla, 1, mean, na.rm = TRUE)
 chla1 <- chla1[, 1:12]  # remove stations with missing years
 
 # eofNum (see examples) suggests n = 1
-e1 <- eof(chla1, n=1)
-plotEof(e1, type='coef')
-plotEof(e1, type='amp')
+e1 <- eof(chla1, n = 1)
+plotEof(e1, type = 'coef')
+plotEof(e1, type = 'amp')
 }
 
 \keyword{Graphics}

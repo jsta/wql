@@ -1,0 +1,15 @@
+CHANGES SINCE 0.2-2
+
+* interpTs: Fill with long-term mean or median.
+* phenoPhase: Fixed problem where max.time month number given relative
+	to subset rather than whole year
+* plotSeas: Allow choice of number of intervals.
+* plotTsTile: More informative error message when not enough data.
+* seaRoll: Now allows frequencies other than 12.
+* tsMake: Remove need to specify layer if no depth info.
+* WqData plot method: Limit to specific fields (first 10 is default).
+* WqData subset method: Removed because of strategy that WqData objects
+	should not be changed, only created or destroyed.
+* wqData: Argument value "narrow" changed to "long". 
+* wqData: Now requires time.format to be specified.
+* wqData: Now ensures variable is a factor when type = "long".
