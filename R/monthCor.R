@@ -1,7 +1,6 @@
 monthCor <- 
 function(x) {
 
-### aj 10/21/09 4:07 PM
 ### Find the month-to-month correlations in a monthly time series x. 
 
 	## Validate args

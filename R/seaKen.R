@@ -1,7 +1,6 @@
 seaKen <-
 function(x) {
 
-### aj 10/22/09 3:16 PM
 ### Calculate Seasonal Sen slope and Seasonal Kendall significance test
 ### Args:
 ###   x: ts object
@@ -29,19 +28,19 @@ function(x) {
 		
 		## get kendall statistics for current season
 		ken <- mannKen(ts(xm, start = start(x)[1], frequency = 1))
-	  S <- S + ken$S
+	    S <- S + ken$S
 		varS <- varS + ken$varS
 		miss <- c(miss, ken$miss)
 		
 		## calculate slopes for current season
-		outr=outer(xm, xm, '-')/outer(tm, tm, '-')
-		slopes.m=outr[lower.tri(outr)]		
-		slopes=c(slopes, slopes.m)		
+		outr <- outer(xm, xm, '-')/outer(tm, tm, '-')
+		slopes.m <- outr[lower.tri(outr)]		
+		slopes <- c(slopes, slopes.m)		
 	}
 	
 	## calculate sen slope
-	sen.slope=median(slopes, na.rm=TRUE)
-	sen.slope.pct <- 100 * sen.slope/mean(x, na.rm=TRUE)
+	sen.slope <- median(slopes, na.rm=TRUE)
+	sen.slope.pct <- 100 * sen.slope/abs(mean(x, na.rm = TRUE))
 
 	## calculate sen slope significance
 	Z <- (S - sign(S))/sqrt(varS)

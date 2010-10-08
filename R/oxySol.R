@@ -1,7 +1,7 @@
 oxySol <-
     function (t, S, P = NULL) 
 {
-### adj 12/22/09 11:56 AM
+
 ### DO concentration in equilibrium with water-saturated air, mg/L, from
 ### Benson and Krause (1984), using Green and Carritt (1967) [see Table
 ### 2 of Benson and Krause (1984)] for dependence of partial pressure of

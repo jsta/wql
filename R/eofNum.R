@@ -2,7 +2,6 @@ eofNum <-
 function (x, distr = c("normal", "lognormal"), n = nrow(x), reps =
 	10000) {
 
-### aj 10/21/09 2:49 PM
 ### Scree plot enabling scree test, North's rule-of-thumb, rule N
 ### Args:
 ###   x: data.frame or matrix
@@ -47,5 +46,6 @@ function (x, distr = c("normal", "lognormal"), n = nrow(x), reps =
     scale_colour_discrete("rule N", breaks = c(TRUE, FALSE), labels =
       c(expression(p < 0.05), expression(p >= 0.05))) +
     labs(list(x = "Rank", y = "Eigenvalue")) + opts(panel.grid.minor =
-    	theme_blank())
+    	theme_blank()) +
+    theme_bw()
 }

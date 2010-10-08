@@ -1,7 +1,7 @@
 ec2pss <-
 function (ec, t, p = 0) 
 {
-### adj 10/20/09 11:44 AM
+
 ### Electrical conductivity (ec) data are converted to salinity on the
 ### Practical Salinity Scale 1978 in the range of 2-42 (Fofonoff and
 ### Millard 1983). Salinities below 2 are calculated using extension

@@ -1,7 +1,7 @@
 eof <-
   function (x, n) 
 {
-### aj 10/20/09 4:18 PM
+
 ### Find and rotate first n EOFs of a matrix, mts or data.frame. NAs not
 ###	allowed.
 ### Args:

@@ -19,9 +19,9 @@ setMethod(
 
     d1 <- data.frame(yr = floor(time(x)), mon = cycle(x), val =
     	as.numeric(x))
-    yrs <- unique(d1$yr)
     mons <- mon.range[1]:mon.range[2]
     d2 <- subset(d1, mon %in% mons)
+    yrs <- unique(d2$yr)
     yrs.ok <- table(d2$yr, is.na(d2$val))[, 1] == length(mons)
     
     ## range
@@ -67,9 +67,9 @@ setMethod(
       
     d1 <- data.frame(time = indexx, yr = years(indexx), mon =
     	monthNum(indexx), val = as.numeric(x))
-    yrs <- unique(d1$yr)
     mons <- mon.range[1]:mon.range[2]
     d2 <- subset(d1, mon %in% mons)
+    yrs <- unique(d2$yr)
     n <- table(d2$yr, is.na(d2$val))[, 1]
     
     ## range

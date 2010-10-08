@@ -1,7 +1,7 @@
 decompTs <- 
 function(x, startyr, endyr, event = TRUE, type = c('mult', 'add')) 
 {   
-### aj 11/9/09 1:52 PM
+
 ### Decomposes time series into annual, seasonal, and event series
 ### Args: 
 ###   x, ts

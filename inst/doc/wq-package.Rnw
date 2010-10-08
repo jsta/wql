@@ -95,6 +95,8 @@ sfbay1 <- transform(sfbay, dox = round(100 * dox/oxySol(sal, temp), 1))
 sfbay1[x, "dox"]
 @
 
+\noindent Aside from \texttt{ec2pss} and \texttt{oxySol}, the function \texttt{ammFrac} is available for estimating the fraction of total ammonium in the un-ionized form.
+
 As will be seen below, much of the manipulation work needed to form the \texttt{WqData} object is taken care of by a generating function in the package, and there is really nothing more that needs to be done. In fact, not even the renaming of the variables was necessary: only the initial \texttt{read.csv} function was required. This is partly due to the way the original data were formatted in the downloaded file and more work may be needed in other cases.
 
 \section{The \texttt{WqData} class} \label{sec:wqClass} 
@@ -105,7 +107,7 @@ In order to avoid a large programming burden in the early stages of this package
 
 We decided to accommodate two types of sampling \texttt{time}, namely, the date either with or without the time of day. The former are converted to the \texttt{POSIXct} class and the latter to the \texttt{Date} class. A special class \texttt{DateTime} is created, which is the union of these two time classes. This was done because the use of classes that combine date and time of day require an additional level of care with respect to time zone \citep{Grothendieck2004to}. Almost all analyses of these low-frequency sampling programs are concerned with only the date, and this additional burden and possible source of error seems unwarranted if not necessary.
 
-Surface location is specified by a \texttt{site} code, as the initial intention is to handle discrete monitoring programs as opposed to continuous transects. Latitude-longitude and distances from a fixed point are implicit in the \texttt{site} code and can be recorded in a separate table (see \texttt{sfbayVars}). The \texttt{depth} is specified separately as a number. Other information that may not be depth-specific, such as the mean vertical extinction coefficient in the near-surface layer, can be located by a negative depth number for now. The last two fields in the data portion of a \texttt{WqData} object are the \texttt{variable} code and the \texttt{value}. The variables are given as character strings and the values as numbers. As in the case of the sampling site, additional information related to the variable code can be maintained in a separate table (see \texttt{sfbayVars}).
+Surface location is specified by a \texttt{site} code, as the initial intention is to handle discrete monitoring programs as opposed to continuous transects. Latitude-longitude and distances from a fixed point are implicit in the \texttt{site} code and can be recorded in a separate table (see \texttt{sfbayVars}). The \texttt{depth} is specified separately as a number. Other information that may not be depth-specific, such as the mean vertical extinction coefficient in the near-surface layer, can be coded by a negative depth number. The last two fields in the data portion of a \texttt{WqData} object are the \texttt{variable} code and the \texttt{value}. The variables are given as character strings and the values as numbers. As in the case of the sampling site, additional information related to the variable code can be maintained in a separate table (see \texttt{sfbayVars}).
 
 \section{Creating a \texttt{WqData} object}
 
@@ -143,7 +145,7 @@ Apart from \texttt{summary} and \texttt{plot}, existing methods for data frames 
 
 \section{Reshaping}
 
-Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. All replicates are first averaged and then the mean is found for the depth layer of interest. \texttt{NA} values will be omitted. If you want to include them, temporarily assign them some unique depth within the specified depth layer. If no layer is specified, all depths will be used. The default time series plot is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}):
+Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. All replicates are first averaged and then the mean is found for the depth layer of interest. If no layer is specified, all depths will be used. The \texttt{layer} argument allows for flexibility in specifying depths, including negative depths used as codes for, say, ``near botton'' or ``entire water column''. The default time series plot is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}):
 
 <<>>=
 y <- tsMake(sfb, focus = "chl", layer = c(0, 5))
@@ -191,6 +193,24 @@ seaKen(chl27)
 <<>>=
 seaRoll(chl27, w = 10)
 @
+
+The Seasonal Kendall test is not informative when trends for different months differ in sign. The function \texttt{plotSeasonTrend} enables visualization of individual monthly trends and can be helpful for, among other things, deciding on the appropriateness of the Seasonal Kendall test. The Theil-Sen slopes are shown along with an indication, using dot colour, of the Mann-Kendall test of significance. The dot shape (filled or empty) indicates whether the proportion of missing values in the first and last fifths of the data is < 0.5 or not (Figure~\ref{fig:plotseasontrend}).
+
+<<>>=
+x <- sfbayChla
+plotSeasonTrend(x, yrs = c(1978, 2009), ncol = 4, scales = 'free_y')
+@
+\setkeys{Gin}{width=1\textwidth}
+\begin{figure}[tb]
+  \begin{center}
+<<fig=TRUE, echo=FALSE, width=6.5, height=5>>=
+print(plotSeasonTrend(x, yrs = c(1978, 2009), ncol = 4, scales = 'free_y'))
+@
+    \caption{Mann-Kendall tests of chlorophyll trends for individual months at stations in San Francisco Bay. Trends are expressed in original units per year, in this case $\mu$g l$^{-1}$ yr$^{-1}$.}
+    \label{fig:plotseasontrend}
+  \end{center}
+\end{figure}
+\setkeys{Gin}{width=0.8\textwidth}
 
 \subsection{Empirical Orthogonal Functions}
 
@@ -284,7 +304,7 @@ print(plotEof(e2, type = "coef"))
 
 \subsection{Time series decomposition}
 
-An analysis of chlorophyll \textit{a} time series from many coastal and estuarine sites around the world demonstrates that the standard deviation of chlorophyll is approximately proportional to the mean, both among and within sites, as well as at different time scales \citep{Cloern2010yx}. One consequence is that these monthly time series are well described by  a multiplicative seasonal model: $c_{ij} = C y_i m_j \epsilon_{ij}$, where $c_{ij}$ is chlorophyll concentration in year $i$ and month $j$; $C$ is the long-term mean; $y_i$ is the annual effect; $m_j$ is the average seasonal (in this case monthly) effect; and $\epsilon_{ij}$ is the residual series, which we sometimes refer to as the ``events'' component. The annual effect is simply the annual mean $Y_{i} = (1/12) \sum_{j=1}^{12}c_{ij}$ divided by the long-term mean: $y_{i}=Y_{i}/C$. The average monthly effect is given by $m_{j}=(1/N) \sum_{i=1}^{N} M_{ij}/Y_{i}$, where $M_{ij}$ is the value for month $j$ in year $i$, and $N$ is the total number of years. The events component is then obtained by $\epsilon_{ij}=c_{ij}/C y_{i} m_{j}$.
+An analysis of chlorophyll \textit{a} time series from many coastal and estuarine sites around the world demonstrates that the standard deviation of chlorophyll is approximately proportional to the mean, both among and within sites, as well as at different time scales \citep{Cloern2010yx}. One consequence is that these monthly time series are well described by a multiplicative seasonal model: $c_{ij} = C y_i m_j \epsilon_{ij}$, where $c_{ij}$ is chlorophyll concentration in year $i$ and month $j$; $C$ is the long-term mean; $y_i$ is the annual effect; $m_j$ is the average seasonal (in this case monthly) effect; and $\epsilon_{ij}$ is the residual series, which we sometimes refer to as the ``events'' component. The annual effect is simply the annual mean $Y_{i} = (1/12) \sum_{j=1}^{12}c_{ij}$ divided by the long-term mean: $y_{i}=Y_{i}/C$. The average monthly effect is given by $m_{j}=(1/N) \sum_{i=1}^{N} M_{ij}/Y_{i}$, where $M_{ij}$ is the value for month $j$ in year $i$, and $N$ is the total number of years. The events component is then obtained by $\epsilon_{ij}=c_{ij}/C y_{i} m_{j}$. This simple approach is motivated partly by the observation that many important events for estuaries (e.g., persistent dry periods, species invasions) start or stop suddenly. Smoothing to extract the annualized term, which can disguise the timing of these events and make analysis of them unnecessarily difficult, is not used.
 
 The \texttt{decompTs} listed here accomplishes this multiplicative decomposition (an option allows additive decomposition as an alternative). It requires input of a time series matrix in which the columns are monthly time series. It allows missing data, but it is up to the user to decide how many data are sufficient and if the pattern of missing data will lead to bias in the results. If so, it would be advisable to eliminate problem years beforehand by setting all month values to \texttt{NA} for those years. There are two cases of interest here: one in which the seasonal effect is held constant from year to year, and another in which it is allowed to vary by not distinguishing a separate events component. The choice is made by setting \texttt{event = TRUE} or \texttt{event = FALSE}, respectively, in the input. If no specific starting or ending year is given, the input data will be extended to cover January of the earliest or December of the latest year, respectively. The output of this function is a matrix time series containing the original time series and its multiplicative model components.
 
@@ -306,21 +326,23 @@ plot(d1, nc = 1, main = "Station 27 Chl-a decomposition")
   \end{center}
 \end{figure}
 
-The average seasonal pattern does not provide any information about potential secular trends in the pattern. A solution is to apply the decomposition to a moving time window. The window should be big enough to yield a meaningful average of interannual variability but short enough to allow a trend to manifest. This may be different for different systems, but a decadal window can be used as a starting point. A more convenient, albeit restrictive, way to examine changing seasonality is with the dedicated function \texttt{plotSeas}. It divides the time period into equal intervals and plots a composite of the seasonal pattern in each interval. It also warns of months that may not be represented by enough data by colouring them red (Figure~\ref{fig:seas}). \texttt{plotSeas} is an easy way to decide on the value for the \texttt{event} option in \texttt{decompTs}.
+The average seasonal pattern does not provide any information about potential secular trends in the pattern. A solution is to apply the decomposition to a moving time window. The window should be big enough to yield a meaningful average of interannual variability but short enough to allow a trend to manifest. This may be different for different systems, but a decadal window can be used as a starting point. A more convenient, albeit restrictive, way to examine changing seasonality is with the dedicated function \texttt{plotSeason}. It divides the time period into equal intervals and plots a composite of the seasonal pattern in each interval. It also warns of months that may not be represented by enough data by colouring them red (Figure~\ref{fig:seas}). \texttt{plotSeason} is an easy way to decide on the value for the \texttt{event} option in \texttt{decompTs}.
 
 <<>>=
-plotSeas(chl27, num = 4)
+plotSeason(chl27, num = 4)
 @
 
 \begin{figure}[tb]
   \begin{center}
 <<fig=TRUE, echo=FALSE, width=6, height=4>>=
-print(plotSeas(chl27))
+print(plotSeason(chl27))
 @
     \caption{Composites of seasonal pattern in \texttt{chl27} for four multi-year intervals.}
     \label{fig:seas}
   \end{center}
 \end{figure}
+
+\noindent \texttt{plotSeason} also has an option to plot all individual months separately for the entire record. With both types of seasonal plots, it is often helpful to adjust the device aspect ratio and size manually to get the clearest information. 
 
 \subsection{Phenological parameters}
 
@@ -357,26 +379,27 @@ head(phenoPhase(zchl27, c(1, 6), out = 'julian'))
 chl27 <- sfbayChla[, "s27"]
 plotTsTile(chl27)
 @
-
+\setkeys{Gin}{width=1\textwidth}
 \begin{figure}[tb]
   \begin{center}
-<<fig=TRUE, echo=FALSE, width=12, height=4.5>>=
+<<fig=TRUE, echo=FALSE, width=6, height=2.25>>=
 print(plotTsTile(chl27))
 @
     \caption{Image plot of monthly log-anomaly time series for Station 27 chlorophyll.}
     \label{fig:tile}
   \end{center}
 \end{figure}
+\setkeys{Gin}{width=0.8\textwidth}
 
 \noindent This plot shows clearly the change in autumn-winter chlorophyll magnitude after 1999 (Figure~\ref{fig:tile}). 
 
 \section{Concluding Remarks}
 
-In the near future, this package will remain focused on typical data sets that have accumulated in long-term coastal water quality monitoring programs, namely, those collected at a frequency of about $10^1$ to $10^2$ times per year at $10^1$ to $10^2$ sites. Aside from incremental revision and addition of specific functions, the main structural change envisioned is in the class definitions for data objects. 
+In the near future, this package will remain focused on typical data sets that have accumulated in long-term coastal water quality monitoring programs, namely, those collected at a frequency of about $10^1$ to $10^2$ times per year at $10^1$ to $10^2$ sites. Aside from incremental revision and addition of specific functions, the main structural change envisioned is in the class definition for data objects. 
 
-In this regard, it is helpful to examine what constitutes a water quality observation, i.e., the essential components of this class. The minimum information typically needed is of four kinds: the location, the time, the analyte and the observed value. As discussed in Section~\ref{sec:wqClass}, additional information about the location and the analytical method is inherent in the unique codes used for each location and analyte. Sometimes, however, it may be more convenient to include additional information explicitly with the actual observations, such as censoring limits that may change throughout a project. Other complications are introduced by the different ways in which location, time, and even observed values can be recorded. For example, surface location information can come in the form of site names, latitude-longitude coordinates or distance along the axis of a channel from some fixed point. Observed values may be numbers, numeric ranges or discrete classifications. Ideally, one wants each of the basic four kinds of information to accommodate all of the major possible forms.  
+In this regard, it is helpful to examine what constitutes a water quality observation, i.e., the essential components of this class. The minimum information typically needed is of four kinds: the location, the time, the analyte and the observed value. As discussed in Section~\ref{sec:wqClass}, additional information about the location and the analytical method is inherent in the unique codes used for each location and analyte. Sometimes, however, it may be more convenient to include additional information explicitly with the actual observations, such as censoring limits that may change throughout a project. Other complications are introduced by the different ways in which location, time, and even observed values can be recorded. For example, surface location information can come in the form of site names, latitude-longitude coordinates or distance along the axis of a channel from some fixed point. Observed values may be numbers, numeric ranges or discrete classifications. Ideally, one wants each of the basic four kinds of information to accommodate all forms in common use.  
 
-An obvious extension of the \texttt{WqData} object would be to include additional slots for site and variable metadata, so that there is no ambiguity about the availability of this information. A more significant change would be to define classes for the fields described above as superclasses of basic classes. For example, a \texttt{site} class could accommodate factors, numeric vectors or matrices. Location could then be given by discrete site name, \textit{x} position as distance from a fixed point, or \textit{x} and \textit{y} positions as latitude and longitude. Similarly, depth could accommodate factors or numeric vectors, the former as names of depth layers (``top 5 m") or as non-numeric depths (``just below surface" or "bottom").
+An obvious extension of the \texttt{WqData} object would be to include additional slots for site and variable metadata, so that there is no ambiguity about the availability of this information. A more significant change would be to define classes for the fields described above as superclasses of basic classes, as already done for time (the \texttt{"DateTime"} class). For example, a \texttt{site} class could accommodate factors, numeric vectors or matrices. Location could then be given by discrete site name, \textit{x} position as distance from a fixed point, or \textit{x} and \textit{y} positions as latitude and longitude. Similarly, depth could accommodate factors or numeric vectors, the former as names of depth layers (``top 5 m") or as non-numeric depths (``just below surface" or "bottom"). As an interim measure, non-numeric depths can be coded as negative numbers.
 
 Ultimately, the package direction will be driven by the needs of people actually using it. Suggestions for revisions and additions are welcome.
 

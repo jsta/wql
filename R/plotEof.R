@@ -1,7 +1,6 @@
 plotEof <-
 function(x, type = c('coef', 'amp'), rev = FALSE, ord = FALSE) {
 
-### aj 2/4/10 9:57 AM
 ### Plots REOFs or amplitudes from x, the output of eof().
 ### Args:
 ###   type: plot REOF coefficients or amplitudes?
