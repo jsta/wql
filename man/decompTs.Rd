@@ -32,11 +32,11 @@ the kind of decomposition, either multiplicative ("mult") or additive ("add")
 }
 
 \details{
-A multiplicative decomposition will typically be useful for a biological community- or population-related variable (e.g., chlorophyll-a) that experiences exponential changes in time and is approximately lognormal, whereas an additive deomposition is more suitable for a normal variable.  Aside from the long-term mean, each component of a multiplicative decomposition will average 1, whereas each component of an additive decomposition will average 0.  The rationale for this simple approach to decomposing a time series, with examples of its application, is given by Cloern and Jassby (2009).  
+ The rationale for this simple approach to decomposing a time series, with examples of its application, is given by Cloern and Jassby (2010). It is motivated by the observation that many important events for estuaries (e.g., persistent dry periods, species invasions) start or stop suddenly. Smoothing to extract the annualized term, which can disguise the timing of these events and make analysis of them unnecessarily difficult, is not used.
 
-If \code{event = TRUE}, the seasonal component represents a recurring monthly pattern and the events component a residual series.  Otherwise, the seasonal component becomes the residual series.  
+A multiplicative decomposition will typically be useful for a biological community- or population-related variable (e.g., chlorophyll-a) that experiences exponential changes in time and is approximately lognormal, whereas an additive deomposition is more suitable for a normal variable.  Aside from the long-term mean, each component of a multiplicative decomposition will average 1, whereas each component of an additive decomposition will average 0.   
 
-Seasonal patterns that change systematically over time can be investigated by applying the function to a \dQuote{rolling} time window by changing \code{startyr} and \code{endyr}.  
+If \code{event = TRUE}, the seasonal component represents a recurring monthly pattern and the events component a residual series. Otherwise, the seasonal component becomes the residual series. The latter is appropriate when seasonal patterns change systematically over time. You can use \code{\link{plotSeason}} and \code{\link{plotSeasonTrend}} to investigate the way seasonality changes.
 }
 
 \value{
@@ -49,7 +49,11 @@ A monthly time series matrix with the following individual time series:
 }
 
 \references{
-Cloern, J.E. and Jassby, A.D. (2009) Patterns and scales of phytoplankton variability in estuarine-coastal ecosystems. \emph{Estuaries and Coasts} DOI 10.1007/s12237-009-9195-3.
+Cloern, J.E. and Jassby, A.D. (2010) Patterns and scales of phytoplankton variability in estuarine-coastal ecosystems. \emph{Estuaries and Coasts} \bold{33,} 230--241.
+}
+
+\seealso{
+\code{\link{plotSeason}}, \code{\link{plotSeasonTrend}}
 }
 
 \examples{

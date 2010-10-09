@@ -11,7 +11,6 @@ setMethod(
   signature = "ts",
   definition = function(x, mon.range = c(1, 12)) {
 
-### adj 8/7/10 9:04 AM
 ### Calculates months of max, center of gravity, weighted mean
 ### Args
 ###   x: time series
@@ -20,9 +19,9 @@ setMethod(
 
     d1 <- data.frame(yr = floor(time(x)), mon = cycle(x), val =
     	as.numeric(x))
-    yrs <- unique(d1$yr)
     mons <- mon.range[1]:mon.range[2]
     d2 <- subset(d1, mon %in% mons)
+    yrs <- unique(d2$yr)
     yrs.ok <- table(d2$yr, is.na(d2$val))[, 1] == length(mons)
     
     ## max month
@@ -72,7 +71,6 @@ setMethod(
   definition = function(x, mon.range = c(1, 12), out = c('date', 'doy',
   	'julian')) {
 
-### adj 8/7/10 5:24 PM
 ### Calculates day of max, center of gravity, weighted mean
 ### Args
 ###   x: zoo object with index in class 'DateTime'
@@ -88,11 +86,11 @@ setMethod(
     d1 <- data.frame(julday = julian(indexx, origin =
     	as.Date("1970-01-01")), yr = years(indexx), mon =
     	monthNum(indexx), val = as.numeric(x))
-    yrs <- unique(d1$yr)
     mons <- mon.range[1]:mon.range[2]
     d2 <- subset(d1, mon %in% mons)
+    yrs <- unique(d2$yr)
     n <- table(d2$yr, is.na(d2$val))[, 1]
-    
+   
     ## max day
     maxDay <- function(d)
       d[, 1][which.max(d[, 2])]
@@ -119,7 +117,7 @@ setMethod(
         optimize(fopt, lower = lo, upper = up)$minimum
       }
     }
-    b2 <- by(d1[, c('julday', 'val', 'yr')], as.factor(d1$yr), fulc)
+    b2 <- by(d2[, c('julday', 'val', 'yr')], as.factor(d2$yr), fulc)
     fulcrum <- ceiling(as.numeric(b2))
 
     ## weighted mean
@@ -134,7 +132,7 @@ setMethod(
     b3 <- by(d2[, c('julday', 'val')], as.factor(d2$yr),
     	weighted.mean.df)
     mean.wt <- ceiling(as.numeric(b3))
-    
+     
     switch(match(out, c('date', 'doy', 'julian')),
       data.frame(year = yrs, max.time = as.Date(max.time), fulcrum =
       	as.Date(fulcrum), mean.wt = as.Date(mean.wt), n, row.names =

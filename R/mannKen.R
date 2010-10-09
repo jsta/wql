@@ -1,7 +1,6 @@
 mannKen <-
 function(x) {
 
-### aj 10/21/09 4:34 PM
 ### Calculate sen slope with Mann-Kendall test of significance
 ### Args:
 ### x: ts object
@@ -43,7 +42,7 @@ function(x) {
   ## Sen slope
   outr <- outer(y, y, '-')/outer(t, t, '-')	
   sen.slope <- median(outr[lower.tri(outr)])
-  sen.slope.pct <- 100 * sen.slope/mean(y)
+  sen.slope.pct <- 100 * sen.slope/abs(mean(y))
 
   ## Kendall's S
   outr <- sign(outer(y, y, '-')/outer(t, t, '-'))	

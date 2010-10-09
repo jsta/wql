@@ -1,7 +1,0 @@
-syntax: glob
-
-# A hidden file created by MacOS X Finder.
-.DS_Store
-
-# Vignette pdf created by R CMD build.
-inst/doc/wq-package.pdf

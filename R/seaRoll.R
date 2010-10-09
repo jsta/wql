@@ -1,7 +1,6 @@
 seaRoll <-
 function(x, w = 5, rule = 2) {
 
-### aj 10/22/09 3:36 PM; 5/1/10
 ### Rolling estimate of sen slope
 ### Args:
 ###   x: seasonal time series

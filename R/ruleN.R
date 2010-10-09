@@ -1,7 +1,6 @@
 ruleN <-
 function(n, p, type=c('normal','lognormal'), reps = 10000) {
 
-### aj 10/21/09 3:07 PM
 ### Repeatedly compute singular values of the correlation matrix for
 ### an n by p matrix of a random variable and return the 0.95 quantiles
 ### Args:

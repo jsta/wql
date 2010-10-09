@@ -41,7 +41,7 @@ Slack, J.R., Lorenz, D.L., and others (2003) \emph{USGS library for S-PLUS for W
 \note{The \code{varS} calculation is based on \code{kensen} in the \acronym{USGS} library for \acronym{S-PLUS} (Slack et al. 2003).}
 
 \seealso{
-\code{\link{seaKen}}
+\code{\link{seaKen}}, \code{\link{plotSeasonTrend}}
 }
 
 \examples{

@@ -7,7 +7,7 @@
 \alias{plot,WqData-method}
 
 \title{Class "WqData"}
-\description{A simple extension or subclass of the \code{"data.frame"} class for typical \dQuote{discrete} water quality monitoring programs that examine phenomena on a time scale of days or longer. It requires water quality data to be in a specific \dQuote{narrow} format, although a generating function \code{\link{wqData}} can be used for different forms of data.
+\description{A simple extension or subclass of the \code{"data.frame"} class for typical \dQuote{discrete} water quality monitoring programs that examine phenomena on a time scale of days or longer. It requires water quality data to be in a specific \dQuote{long} format, although a generating function \code{\link{wqData}} can be used for different forms of data.
 }
 \section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("WqData", d)}, where \code{d} is a data.frame. \code{d} should have columns named \code{time, site, depth, variable, value} of class \code{"DateTime", "factor", "numeric", "factor", "numeric"}, respectively.

@@ -1,7 +1,6 @@
 interpTs <-
 function(x, gap = 1, type = c("linear", "median", "mean")) {
 
-### adj 11/6/09 3:51 PM, 8/10/10 12:40 PM
 ### Imputes missing data in a time series vector or matrix
 ### Args:
 ###   x: data

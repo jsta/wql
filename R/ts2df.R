@@ -1,7 +1,6 @@
 ts2df <-
 function(x, mon1 = 1, addYr = FALSE, omit = FALSE) {
 
-### aj 10/21/09 3:49 PM
 ### Convert monthly ts to year by month data.frame. Leading and trailing
 ###	empty rows are removed.
 ### Args:

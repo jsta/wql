@@ -1,7 +1,6 @@
 plotTsTile <- 
 function(x, title = NULL, trim = TRUE, four = TRUE, loganom = TRUE) {
 
-### adj 2/2/10 9:30 PM
 ### Produces a month x year image plot with data in 10 or 4 groups.
 ### x: monthly time series vector
 ### trim: If TRUE, leading and trailing NAs are removed.
