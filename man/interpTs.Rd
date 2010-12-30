@@ -54,5 +54,5 @@ x3 <- interpTs(sfbayChla, gap = 1)
 plot(x3[, 1:10], main = "SF Bay Chl-a\n(gaps of 1 month interpolated)")
 }
 
-\keyword{utility}
+\keyword{utilities}
 \keyword{manip}

@@ -1,3 +1,17 @@
+CHANGES SINCE 0.2-8
+
+New features
+
+* phenoPhase: Integration defaults can now be changed, if necessary.
+* plotSeason: Added smoother when type='by.month'.
+* plotSeasonTrend: Changed appearance and some options.
+
+Bugs fixed
+
+* plotSeason: Fixed problem when type='by.month'.
+* plotTsTile: Now plots correct colours when four=FALSE.
+* tsMake: Fixed problem when layer of class "numeric".
+
 CHANGES SINCE 0.2-5
 
 Terminology changes

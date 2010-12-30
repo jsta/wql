@@ -30,7 +30,7 @@ Further parameters to pass to the plotting function.
 }
 
 \details{
-When plotted \code{"by.era"}, the composite patterns are plotted in a horizontal row for easier comparison, which limits the number of periods that can be examined. Boxes based on fewer than half of the maximum possible years available are outlined in red. When plotted \code{"by.month"}, parameters can be passed to \code{facet_wrap} in \pkg{ggplot2}. The most useful parameters here are \code{ncol} (or \code{nrow}), which determines the number of columns (or rows) of plots, and \code{scales}, which can be set to \code{"free_y"} to allow the y-axis to change for each individual month. As always, and especially with these plots, experiment with the device aspect ratio and size to get the clearest information. 
+When plotted \code{"by.era"}, the composite patterns are plotted in a horizontal row for easier comparison, which limits the number of periods that can be examined. Boxes based on fewer than half of the maximum possible years available are outlined in red. When plotted \code{"by.month"}, parameters can be passed to \code{facet_wrap} in \pkg{ggplot2}. The most useful parameters here are \code{ncol} (or \code{nrow}), which determines the number of columns (or rows) of plots, and \code{scales}, which can be set to \code{"free_y"} to allow the y-axis to change for each individual month. A loess smoother with \code{span = 1} is added to each plot. As always, and especially with these plots, experiment with the device aspect ratio and size to get the clearest information. 
 }
 
 \value{

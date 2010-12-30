@@ -1,17 +1,17 @@
-plotSeason <- function(x, type = c('by.era', 'by.month'), num = 4, ylab = NULL, ...) {
+plotSeason <- function(x, type = c('by.era', 'by.month'), num=4, ylab = NULL, ...) {
 
-    require(reshape)
-    require(ggplot2)
-    
-    ## Validate args
-    if (!is(x, 'ts') || is(x, 'mts'))
-        stop("x must be a non-matrix 'ts'")
-    type <- match.arg(type)
-    
-  if (type == 'by.era') {
-    d <- as.data.frame(x)
-    d <- transform(d, mon = ordered(month.abb[cycle(x)],
-        levels=month.abb), yr = floor(time(x)))
+   require(reshape)
+   require(ggplot2)
+   
+   ## Validate args
+   if (!is(x, 'ts') || is(x, 'mts'))
+     stop("x must be a single 'ts'")
+   type <- match.arg(type)
+   
+    d <- data.frame(x = as.numeric(x), mon =
+    	ordered(month.abb[cycle(x)], levels = month.abb), yr =
+    	as.numeric(floor(time(x))))
+    if (type == 'by.era') {
     d <- transform(d, int = {if (num > 1) cut(yr, breaks = num,
     	include.lowest = TRUE, dig.lab = 4, ordered_result = TRUE) else
     	rep('all', nrow(d))})
@@ -35,16 +35,14 @@ plotSeason <- function(x, type = c('by.era', 'by.month'), num = 4, ylab = NULL, 
         	'', 'Apr', '', '', 'Jul', '', '', 'Oct', '', '')) +
         scale_y_continuous(ylab) +
         scale_colour_manual("", values = cols, legend = FALSE) +
-        opts(panel.grid.minor = theme_blank()) +
-        theme_bw()
+        opts(panel.grid.minor = theme_blank())
     if (num > 1) p1 <- p1 + facet_wrap(~ int, nrow = 1) 
     p1
   } else {
     ggplot(d, aes(x=yr, y=x)) +
-        geom_line(size=.5) +
-        geom_point(size=2) +
-        labs(x="", y=ylab) +
-        facet_wrap(~mon, ...) +
-        theme_bw()
+      geom_point(colour = 'grey20') +
+      geom_smooth(method='lm') +
+      labs(x="", y=ylab) +
+      facet_wrap(~mon, ...)
   }
 }

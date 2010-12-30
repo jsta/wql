@@ -12,9 +12,9 @@ Finds various measures of the phase of the annual cycle, or of some specified mo
 }
 
 \usage{
-\S4method{phenoPhase}{ts}(x, mon.range = c(1, 12))
+\S4method{phenoPhase}{ts}(x, mon.range = c(1, 12), ...)
 
-\S4method{phenoPhase}{zoo}(x, mon.range = c(1, 12), out = c('date', 'doy', 'julian'))
+\S4method{phenoPhase}{zoo}(x, mon.range = c(1, 12), out = c('date', 'doy', 'julian'), ...)
 }
 
 \arguments{
@@ -27,6 +27,9 @@ A vector of two numbers specifying the month range to be considered.
   \item{out}{
 The form of the output.
 }
+  \item{...}{
+Additional arguments to be passed for changing integration defaults.
+}
 }
 
 \details{
@@ -37,6 +40,8 @@ These measures can be restricted to a subset of the year by giving the desired r
 The measures are annum-centric, i.e., they reflect the use of calendar year as the annum, which may not be appropriate for cases in which important features occur in winter and span two calendar years. Such cases can be handled by lagging the time series by an appropriate number of months, or by subtracting an appropriate number of days from the individual dates.
 
 \code{\link{tsMake}} can be used to produce \code{"ts"} and \code{"zoo"} objects suitable as arguments to this function.
+
+The default parameters used for the \code{integrate} function in \code{phenoPhase} may fail for certain datasets. Try increasing the number of subdivisions above its default of 100 by adding, for example, \code{subdivisions = 1000} to the arguments of \code{phenoPhase}.
 }
 
 \value{
