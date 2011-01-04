@@ -25,7 +25,7 @@ scale of pH measurement
 }
 }
 \details{
-The stoichiometric dissociation constant \eqn{K_a^*}{Ka*} of the ammonium ion is estimated using the equations of Clegg and Whitfield (1995). There are separate equations for use with pH measurements made on the total and free scales. Equations should be valid in the range of 0 to 40 salinity and -2 to 40 C. Accuracy is probably better than 5\% at all temperatures and salinities.	 The dissociation constant is then used to calculate the mole fraction from \eqn{1/(1+ 10^(-pH)/K_a^*)}{1/(1+10^(-pH)/Ka*)}.
+The stoichiometric dissociation constant \eqn{K_a^*}{Ka*} of the ammonium ion is estimated using the equations of Clegg and Whitfield (1995). There are separate equations for use with pH measurements made on the total and free scales. Equations should be valid in the range of 0 to 40 salinity and -2 to 40 C. Accuracy is probably better than 5\% at all temperatures and salinities.	 The dissociation constant is then used to calculate the mole fraction from \eqn{1/(1+ 10^{-pH}/K_a^*)}{1/(1+10^(-pH)/Ka*)}.
 If input vectors are not of the same length, shorter ones will be recycled as necessary without warning.
 }
 \value{

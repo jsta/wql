@@ -21,6 +21,7 @@ setMethod(
     ## Assemble all depths
     d <- as.data.frame(object)
     if (missing(layer)) layer = list(c(-Inf, Inf))
+    if (!is.list(layer)) layer = list(layer)
     depths <- NULL
     for (el in layer) {
         if (length(el) > 1) {
@@ -51,7 +52,7 @@ setMethod(
     if (type == 'ts.mon') {
       z1 <- aggregate(z1, as.yearmon, mean, na.rm = TRUE)
       if (is.null(nrow(z1)) || nrow(z1) > 1) z1 <- as.ts(z1)
-    }    
+    } 
     z1
   }
 )

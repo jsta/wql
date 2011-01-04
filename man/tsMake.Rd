@@ -34,7 +34,7 @@ The function currently averages all included depths for each day, the implicit a
 }
 
 \note{
-The layer list can include negative numbers, which may have been used in the \code{WqData} object to denote variables that apply to the water column as a whole, such as, say, -1 for light attenuation coefficient. This enables \code{focus = 's27'} and \code{layer = list(-1, c(0, 5))} to produce a time series matrix for station 27 that includes both attenuation coefficient and chlorophyll averaged over the top 5 m. Negative numbers may also have been used in the \code{WqData} object to identify qualitative depths such as \dQuote{"near bottom"}, which is not uncommon in historical data sets. So data from such depths can  be aggregated easily with other data to make these time series.
+The layer list can include negative numbers, which may have been used in the \code{WqData} object to denote variables that apply to the water column as a whole, such as, say, -1 for light attenuation coefficient. This enables \code{focus = 's27'} and \code{layer = list(-1, c(0, 5))} to produce a time series matrix for station 27 that includes both attenuation coefficient and chlorophyll averaged over the top 5 m. Negative numbers may also have been used in the \code{WqData} object to identify qualitative depths such as \dQuote{near bottom}, which is not uncommon in historical data sets. So data from such depths can  be aggregated easily with other data to make these time series.
 }
 
 \value{

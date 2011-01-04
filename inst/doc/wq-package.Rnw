@@ -105,7 +105,7 @@ We define a standardized format for water quality data by creating a formal (\te
 
 In order to avoid a large programming burden in the early stages of this package, and also to let the design evolve efficiently by responding to specific needs that arise, the initial \texttt{WqData} object is just a simple extension or subset of the \texttt{data.frame} and can be treated as such. The only restrictions it makes is in the column names and classes.
 
-We decided to accommodate two types of sampling \texttt{time}, namely, the date either with or without the time of day. The former are converted to the \texttt{POSIXct} class and the latter to the \texttt{Date} class. A special class \texttt{DateTime} is created, which is the union of these two time classes. This was done because the use of classes that combine date and time of day require an additional level of care with respect to time zone \citep{Grothendieck2004to}. Almost all analyses of these low-frequency sampling programs are concerned with only the date, and this additional burden and possible source of error seems unwarranted if not necessary.
+We decided to accommodate two types of sampling \texttt{time}, namely, the date either with or without the time of day. The former are converted to the \texttt{POSIXct} class and the latter to the \texttt{Date} class. A special class \texttt{DateTime} is created, which is the union of these two time classes. This was done because the use of classes that combine date and time of day require an additional level of care with respect to time zone \citep{grothendieck2004}. Almost all analyses of these low-frequency sampling programs are concerned with only the date, and this additional burden and possible source of error seems unwarranted if not necessary.
 
 Surface location is specified by a \texttt{site} code, as the initial intention is to handle discrete monitoring programs as opposed to continuous transects. Latitude-longitude and distances from a fixed point are implicit in the \texttt{site} code and can be recorded in a separate table (see \texttt{sfbayVars}). The \texttt{depth} is specified separately as a number. Other information that may not be depth-specific, such as the mean vertical extinction coefficient in the near-surface layer, can be coded by a negative depth number. The last two fields in the data portion of a \texttt{WqData} object are the \texttt{variable} code and the \texttt{value}. The variables are given as character strings and the values as numbers. As in the case of the sampling site, additional information related to the variable code can be maintained in a separate table (see \texttt{sfbayVars}).
 
@@ -181,7 +181,7 @@ The function \texttt{mannKen} does a Mann-Kendall test of trend on a time series
 mannKen(Nile)
 @
 
-\noindent Its main role in this package, however, is as a support function for the Seasonal Kendall test of trend \citep{Helsel1992fo}. The Seasonal Kendall test combines information about trends for individual months (or some other subdivision of the year such as quarters) and produces an overall test of trend for a series. \texttt{mannKen} collects certain information on the pattern of missing data that is then used to determine if a Seasonal Kendall test is warranted. In particular, there is an option to report a result only if more than half the seasons are each missing less than half the possible comparisons between the first and last 20\% of the years \citep{Schertz1991ao}:
+\noindent Its main role in this package, however, is as a support function for the Seasonal Kendall test of trend \citep{hirsch1982, helsel2002}. The Seasonal Kendall test combines information about trends for individual months (or some other subdivision of the year such as quarters) and produces an overall test of trend for a series. \texttt{mannKen} collects certain information on the pattern of missing data that is then used to determine if a Seasonal Kendall test is warranted. In particular, there is an option to report a result only if more than half the seasons are each missing less than half the possible comparisons between the first and last 20\% of the years \citep{schertz1991}:
 
 <<>>=
 chl27 <- sfbayChla[, "s27"]
@@ -198,13 +198,13 @@ The Seasonal Kendall test is not informative when trends for different months di
 
 <<>>=
 x <- sfbayChla
-plotSeasonTrend(x, yrs = c(1978, 2009), ncol = 4, scales = 'free_y')
+plotSeasonTrend(x, ncol = 4, scales = 'free_y')
 @
 \setkeys{Gin}{width=1\textwidth}
 \begin{figure}[tb]
   \begin{center}
 <<fig=TRUE, echo=FALSE, width=6.5, height=5>>=
-print(plotSeasonTrend(x, yrs = c(1978, 2009), ncol = 4, scales = 'free_y'))
+print(plotSeasonTrend(x, ncol = 4, scales = 'free_y'))
 @
     \caption{Mann-Kendall tests of chlorophyll trends for individual months at stations in San Francisco Bay. Trends are expressed in original units per year, in this case $\mu$g l$^{-1}$ yr$^{-1}$.}
     \label{fig:plotseasontrend}
@@ -214,7 +214,7 @@ print(plotSeasonTrend(x, yrs = c(1978, 2009), ncol = 4, scales = 'free_y'))
 
 \subsection{Empirical Orthogonal Functions}
 
-Empirical Orthogonal Function (\textsc{EOF}) analysis is a term used primarily in the earth sciences for principal component analysis applied to simultaneous time series at different spatial locations. \cite{Hannachi2007vf} provides a recent comprehensive summary. The function \texttt{eof} in this package, based on \texttt{prcomp} in the \texttt{stats} package, scales the time series and applies a promax rotation to the \textsc{EOF}s.  
+Empirical Orthogonal Function (\textsc{EOF}) analysis is a term used primarily in the earth sciences for principal component analysis applied to simultaneous time series at different spatial locations. \cite{hannachi2007} provides a recent comprehensive summary. The function \texttt{eof} in this package, based on \texttt{prcomp} in the \texttt{stats} package, scales the time series and applies a promax rotation to the \textsc{EOF}s.  
 
 \texttt{eof} does not permit \texttt{NA}s and some kind of data imputation or omission will usually be required. The function \texttt{interpTs} is handy for small data gaps. Here, we use it to bridge gaps of up to three months. The interpolated series is then plotted in red and the original series overplotted in blue (Figure~\ref{fig:interp}).
 
@@ -277,7 +277,7 @@ print(plotEof(e1, type = "amp"))
   \end{center}
 \end{figure}
 
-Principal component analysis can also be useful in studying the way different seasonal ``modes'' of variability contribute to overall year-to-year variability of a single time series \citep{Jassby1999oq}. The basic approach is to consider each month as determining a separate annual time series and then to calculate the eigenvalues for the resulting $12 \times n$ years time series matrix. The function \texttt{ts2df} is useful for expressing a monthly time series in the form needed by \texttt{eof}. For example, the following code converts the monthly chlorophyll time series for Station 27 in San Francisco Bay to the appropriate data frame with October, the first month of the local ``water year'', in the first column, and years with missing data omitted:
+Principal component analysis can also be useful in studying the way different seasonal ``modes'' of variability contribute to overall year-to-year variability of a single time series \citep{jassby1999a}. The basic approach is to consider each month as determining a separate annual time series and then to calculate the eigenvalues for the resulting $12 \times n$ years time series matrix. The function \texttt{ts2df} is useful for expressing a monthly time series in the form needed by \texttt{eof}. For example, the following code converts the monthly chlorophyll time series for Station 27 in San Francisco Bay to the appropriate data frame with October, the first month of the local ``water year'', in the first column, and years with missing data omitted:
 
 <<>>=
 chl27b <- interpTs(sfbayChla[, "s27"], gap = 3)
@@ -304,7 +304,7 @@ print(plotEof(e2, type = "coef"))
 
 \subsection{Time series decomposition}
 
-An analysis of chlorophyll \textit{a} time series from many coastal and estuarine sites around the world demonstrates that the standard deviation of chlorophyll is approximately proportional to the mean, both among and within sites, as well as at different time scales \citep{Cloern2010yx}. One consequence is that these monthly time series are well described by a multiplicative seasonal model: $c_{ij} = C y_i m_j \epsilon_{ij}$, where $c_{ij}$ is chlorophyll concentration in year $i$ and month $j$; $C$ is the long-term mean; $y_i$ is the annual effect; $m_j$ is the average seasonal (in this case monthly) effect; and $\epsilon_{ij}$ is the residual series, which we sometimes refer to as the ``events'' component. The annual effect is simply the annual mean $Y_{i} = (1/12) \sum_{j=1}^{12}c_{ij}$ divided by the long-term mean: $y_{i}=Y_{i}/C$. The average monthly effect is given by $m_{j}=(1/N) \sum_{i=1}^{N} M_{ij}/Y_{i}$, where $M_{ij}$ is the value for month $j$ in year $i$, and $N$ is the total number of years. The events component is then obtained by $\epsilon_{ij}=c_{ij}/C y_{i} m_{j}$. This simple approach is motivated partly by the observation that many important events for estuaries (e.g., persistent dry periods, species invasions) start or stop suddenly. Smoothing to extract the annualized term, which can disguise the timing of these events and make analysis of them unnecessarily difficult, is not used.
+An analysis of chlorophyll \textit{a} time series from many coastal and estuarine sites around the world demonstrates that the standard deviation of chlorophyll is approximately proportional to the mean, both among and within sites, as well as at different time scales \citep{cloern2010}. One consequence is that these monthly time series are well described by a multiplicative seasonal model: $c_{ij} = C y_i m_j \epsilon_{ij}$, where $c_{ij}$ is chlorophyll concentration in year $i$ and month $j$; $C$ is the long-term mean; $y_i$ is the annual effect; $m_j$ is the average seasonal (in this case monthly) effect; and $\epsilon_{ij}$ is the residual series, which we sometimes refer to as the ``events'' component. The annual effect is simply the annual mean $Y_{i} = (1/12) \sum_{j=1}^{12}c_{ij}$ divided by the long-term mean: $y_{i}=Y_{i}/C$. The average monthly effect is given by $m_{j}=(1/N) \sum_{i=1}^{N} M_{ij}/Y_{i}$, where $M_{ij}$ is the value for month $j$ in year $i$, and $N$ is the total number of years. The events component is then obtained by $\epsilon_{ij}=c_{ij}/C y_{i} m_{j}$. This simple approach is motivated partly by the observation that many important events for estuaries (e.g., persistent dry periods, species invasions) start or stop suddenly. Smoothing to extract the annualized term, which can disguise the timing of these events and make analysis of them unnecessarily difficult, is not used.
 
 The \texttt{decompTs} listed here accomplishes this multiplicative decomposition (an option allows additive decomposition as an alternative). It requires input of a time series matrix in which the columns are monthly time series. It allows missing data, but it is up to the user to decide how many data are sufficient and if the pattern of missing data will lead to bias in the results. If so, it would be advisable to eliminate problem years beforehand by setting all month values to \texttt{NA} for those years. There are two cases of interest here: one in which the seasonal effect is held constant from year to year, and another in which it is allowed to vary by not distinguishing a separate events component. The choice is made by setting \texttt{event = TRUE} or \texttt{event = FALSE}, respectively, in the input. If no specific starting or ending year is given, the input data will be extended to cover January of the earliest or December of the latest year, respectively. The output of this function is a matrix time series containing the original time series and its multiplicative model components.
 

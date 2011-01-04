@@ -9,7 +9,7 @@ setGeneric(
 setMethod(
   f = "phenoPhase",
   signature = "ts",
-  definition = function(x, mon.range = c(1, 12)) {
+  definition = function(x, mon.range = c(1, 12), ...) {
 
 ### Calculates months of max, center of gravity, weighted mean
 ### Args
@@ -39,8 +39,8 @@ setMethod(
         low <- min(x)
         up <- max(x)
         fun1 <- approxfun(x, y, rule = 2)
-        fopt <- function(z) abs(integrate(fun1, low, z)$value -
-        	0.5*integrate(fun1, low, up)$value)
+        fopt <- function(z) abs(integrate(fun1, low, z, ...)$value -
+        	0.5*integrate(fun1, low, up, ...)$value)
         optimize(fopt, lower = low, upper = up)$minimum
       }
     }
@@ -69,7 +69,7 @@ setMethod(
   f = "phenoPhase",
   signature = "zoo",
   definition = function(x, mon.range = c(1, 12), out = c('date', 'doy',
-  	'julian')) {
+  	'julian'), ...) {
 
 ### Calculates day of max, center of gravity, weighted mean
 ### Args
@@ -112,8 +112,8 @@ setMethod(
         up <- julian(as.Date(paste(yr, m2, mon.length[m2], sep = '-')),
         	origin = as.Date("1970-01-01"))
         fun1 <- approxfun(x, y, rule = 2)
-        fopt <- function(z) abs(integrate(fun1, lo, z)$value -
-        	0.5*integrate(fun1, lo, up)$value)
+        fopt <- function(z) abs(integrate(fun1, lo, z, ...)$value -
+        	0.5*integrate(fun1, lo, up, ...)$value)
         optimize(fopt, lower = lo, upper = up)$minimum
       }
     }
