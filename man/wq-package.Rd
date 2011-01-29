@@ -15,11 +15,10 @@ Type: \tab Package\cr
 Version: \tab 0.2-9\cr
 Date: \tab 2010-12-30\cr
 Depends: \tab R (>= 2.11.0), methods, zoo\cr
-Suggests: \tab ggplot2, lattice, reshape\cr
+Suggests: \tab ggplot2, reshape\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 LazyData: \tab yes\cr
-URL: \tab http://bitbucket.org/nyeinchan/wq/\cr
 }
 }
 \author{

@@ -54,7 +54,7 @@ Thiebaux H.J. and Zwiers F.W. (1984) The interpretation and estimation of effect
 }
 
 \seealso{
-\code{\link{eof}}, \code{\link{interpTs}}, \code{\link{monthCor}}, \code{\link{plotEof}}
+\code{\link{eof}}, \code{\link{interpTs}}, \code{\link{monthCor}}, \code{\link{eofPlot}}
 }
 
 \examples{

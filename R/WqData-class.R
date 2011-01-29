@@ -35,14 +35,13 @@ setMethod(
 setMethod(
   f = "plot",
   signature = "WqData",
-  definition = function(x, y = "missing", vars, ...) {
-    if (missing(vars)) vars = unique(x$variable)[1:10]
-    require(lattice)
-    stripplot(site ~ value|variable, data = as.data.frame(x),
-      subset = variable %in% vars,
-      scales = list(x = list(relation = 'free')),
-      layout = c(1, 1),
-      ...
-    )
+  definition =  function(x, y = "missing", vars, num.col = NULL) {
+    if (missing(vars)) 
+      vars = unique(x$variable)[1:10]
+    require(ggplot2)
+    d <- subset(as.data.frame(x), variable %in% vars)
+    ggplot(d, aes(x = value, y = site, z = variable)) + 
+      geom_point(colour = 'blue', shape = 1) +
+      facet_wrap(~ variable, scales = "free_x", ncol = num.col)
   }
 )
