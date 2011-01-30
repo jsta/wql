@@ -36,7 +36,7 @@ the kind of decomposition, either multiplicative ("mult") or additive ("add")
 
 A multiplicative decomposition will typically be useful for a biological community- or population-related variable (e.g., chlorophyll-a) that experiences exponential changes in time and is approximately lognormal, whereas an additive deomposition is more suitable for a normal variable.  Aside from the long-term mean, each component of a multiplicative decomposition will average 1, whereas each component of an additive decomposition will average 0.   
 
-If \code{event = TRUE}, the seasonal component represents a recurring monthly pattern and the events component a residual series. Otherwise, the seasonal component becomes the residual series. The latter is appropriate when seasonal patterns change systematically over time. You can use \code{\link{plotSeason}} and \code{\link{plotSeasonTrend}} to investigate the way seasonality changes.
+If \code{event = TRUE}, the seasonal component represents a recurring monthly pattern and the events component a residual series. Otherwise, the seasonal component becomes the residual series. The latter is appropriate when seasonal patterns change systematically over time. You can use \code{\link{plotSeason}} and \code{\link{seasonTrend}} to investigate the way seasonality changes.
 }
 
 \value{
@@ -53,7 +53,7 @@ Cloern, J.E. and Jassby, A.D. (2010) Patterns and scales of phytoplankton variab
 }
 
 \seealso{
-\code{\link{plotSeason}}, \code{\link{plotSeasonTrend}}
+\code{\link{plotSeason}}, \code{\link{seasonTrend}}
 }
 
 \examples{

@@ -1,10 +1,29 @@
+CHANGES SINCE 0.2-9
+
+New features
+
+* All plot functions now produce objects of class "ggplot".
+* layOut: Lays out graphs of class ggplot.
+* mannKen: Added mts and plot options.
+* meanSub: Utility function to average subsets.
+* mts2ts: Prepare spatial time series for further analysis.
+* plotSeason: Added another way of plotting.
+* seaRoll: Plotting is an additional option.
+* trendHomog: Test for homogeneity of seasonal trends.
+* tsSub: Utility function to drop seasons in a ts.
+
+Terminology changes
+
+* plotEof: Changed to eofPlot.
+* seasonTrend: Changed to seasonTrend.
+
 CHANGES SINCE 0.2-8
 
 New features
 
 * phenoPhase: Integration defaults can now be changed, if necessary.
 * plotSeason: Added smoother when type='by.month'.
-* plotSeasonTrend: Changed appearance and some options.
+* seasonTrend: Changed appearance and some options.
 
 Bugs fixed
 
@@ -23,7 +42,7 @@ New features
 
 * ammFrac: New function for un-ionized ammonium.
 * plotSeason: Added option to plot individual months for entire record.
-* plotSeasonTrend: New function for time series trends by season.
+* seasonTrend: New function for time series trends by season.
 * tsMake: Now allows for more ways of specifying depths.
 
 Bugs fixed

@@ -46,7 +46,7 @@ Richman, M. (1986) Rotation of principal components. \emph{Journal of Climatolog
 }
 
 \seealso{
-\code{\link{eofNum}}, \code{\link{plotEof}}, \code{\link{monthCor}}, \code{\link{ts2df}}
+\code{\link{eofNum}}, \code{\link{eofPlot}}, \code{\link{monthCor}}, \code{\link{ts2df}}
 }
 \examples{
 # Create an annual matrix time series

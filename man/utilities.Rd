@@ -3,7 +3,9 @@
 \alias{decyear2date}
 \alias{layerMean}
 \alias{leapYear}
+\alias{meanSub}
 \alias{monthNum}
+\alias{tsSub}
 \alias{years}
 
 \title{
@@ -19,7 +21,11 @@
   
   \code{leapYear}: \code{TRUE} if \code{x} is a leap year, \code{FALSE} otherwise.
   
+  \code{meanSub}: Mean of a subset of a vector.
+  
   \code{monthNum}: Converts dates to the corresponding numeric month.
+  
+  \code{tsSub}: Drops seasons from a matrix or vector time series.
 
   \code{years}: Converts dates to the corresponding numeric years.
 }
@@ -31,7 +37,11 @@ layerMean(d)
 
 leapYear(x)
 
+meanSub(x, sub, na.rm = FALSE)
+
 monthNum(y)
+
+tsSub(x1, seas = 1:frequency(x1))
 
 years(y)
 }
@@ -40,8 +50,20 @@ years(y)
   \item{d}{
     A numeric matrix or data frame with depth in the first column and observations for some variable in each of the remaining columns.
   }
+  \item{na.rm}{
+    Should missing data be removed?
+  }
+  \item{seas}{
+    An integer vector of seasons to be retained.
+  }
+  \item{sub}{
+    An integer vector.
+  }
   \item{x}{
-    A vector of class \code{"numeric"}.
+    A numeric vector.
+  }
+  \item{x1}{
+    A matrix or vector time series.
   }
   \item{y}{
     A vector of class \code{"Date"} or \code{"POSIX"} date-time.
@@ -58,7 +80,15 @@ layerMean(cbind(z, x))
 leapYear(seq(1500, 2000, 100))
 leapYear(c(1996.9, 1997))
 
+## Aggregate monthly time series over Feb-Apr only.
+aggregate(sfbayChla, 1, meanSub, sub=2:4)
+
 monthNum(as.Date(c('2007-03-17', '2003-06-01')))
+
+## Ignore certain seasons in a Seasonal Kendall test.
+c27 <- sfbayChla[, 's27']
+seaKen(tsSub(c27))  # Aug and Dec missing the most key data
+seaKen(tsSub(c27, seas = c(1:7, 9:11)))
 
 y = Sys.time()
 years(y)

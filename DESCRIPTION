@@ -1,8 +1,8 @@
 Package: wq
 Type: Package
 Title: Exploring water quality monitoring data
-Version: 0.2-9
-Date: 2010-12-30
+Version: 0.3-1
+Date: 2011-01-29
 Author: Alan D. Jassby and James E. Cloern
 Maintainer: Alan Jassby <adjassby@ucdavis.edu>
 Description: Functions to assist in the processing and exploration of
@@ -12,11 +12,10 @@ Description: Functions to assist in the processing and exploration of
         programs that sample approximately monthly at discrete
         stations.
 Depends: R (>= 2.11.0), methods, zoo
-Suggests: ggplot2, lattice, reshape
+Suggests: ggplot2, reshape
 License: GPL-2
 LazyLoad: yes
 LazyData: yes
-URL: http://bitbucket.org/nyeinchan/wq/
-Packaged: 2011-01-03 20:34:44 UTC; alanjassby
+Packaged: 2011-01-29 23:40:01 UTC; alanjassby
 Repository: CRAN
-Date/Publication: 2011-01-04 07:29:18
+Date/Publication: 2011-01-30 08:53:06

@@ -1,6 +1,6 @@
-\name{plotEof}
+\name{eofPlot}
 \Rdversion{1.1}
-\alias{plotEof}
+\alias{eofPlot}
 
 \title{
 Plot results of an EOF analysis
@@ -11,7 +11,7 @@ Plots the rotated empirical orthogonal functions or amplitude time series result
 }
 
 \usage{
-plotEof(x, type = c('coef', 'amp'), rev = FALSE, ord = FALSE)
+eofPlot(x, type = c('coef', 'amp'), rev = FALSE, ord = FALSE)
 }
 
 \arguments{
@@ -38,7 +38,7 @@ The vertical guide lines at 0.2 and 0.35 are meant to reflect the Monte Carlo st
 }
 
 \value{
-A plot of the EOF coefficients or amplitudes (and corresponding object of class \dQuote{trellis}).
+A plot of the EOF coefficients or amplitudes (and corresponding object of class \dQuote{ggplot}).
 }
 
 \references{
@@ -56,8 +56,8 @@ chla1 <- chla1[, 1:12]  # remove stations with missing years
 
 # eofNum (see examples) suggests n = 1
 e1 <- eof(chla1, n = 1)
-plotEof(e1, type = 'coef')
-plotEof(e1, type = 'amp')
+eofPlot(e1, type = 'coef')
+eofPlot(e1, type = 'amp')
 }
 
 \keyword{Graphics}

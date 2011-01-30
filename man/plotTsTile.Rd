@@ -11,7 +11,8 @@
 }
 
 \usage{
-plotTsTile(x, title = NULL, trim = TRUE, four = TRUE, loganom = TRUE)
+plotTsTile(x, plot.title = NULL, legend.title = NULL, four = TRUE,
+	loganom = TRUE, square = TRUE, legend = TRUE, trim = TRUE)
 }
 
 \arguments{
@@ -19,28 +20,38 @@ plotTsTile(x, title = NULL, trim = TRUE, four = TRUE, loganom = TRUE)
   \item{x}{
     monthly time series.
   }
-  \item{title}{
-    main title for plot
-  }
-  \item{trim}{
-    logical value indicating whether leading and trailing NA values should be removed.
+  \item{plot.title}{
+    plot title.
+  }  
+  \item{legend.title}{
+    legend title.
   }
   \item{four}{
-    logical value indicating whether data should be binned into four special groups or into deciles.
+    logical indicating if data should be binned into 4 special groups or into deciles.
   }
   \item{loganom}{
-    logical value indicating whether data should be transformed into log-anomalies.
+    logical indicating if data should be transformed into log-anomalies.
   }
-
+  \item{square}{
+    logical indicating if tiles should be square.
+  }
+  \item{legend}{
+    logical indicating if a legend should be included.
+  }
+  \item{trim}{
+    logical indicating if leading and trailing NA values should be removed.
+  }
 }
 \details{
   If \code{four = TRUE}, then \code{x} is first divided into a positive and negative bin. Each bin is then further divided into two bins by its mean, yielding a total of four bins. If \code{four=FALSE}, then \code{x} is simply divided into deciles. In either case, each bin has its own assigned color, with colors ranging from dark blue (smallest numbers) through light blue and pink to red.
 
   Although \code{four = TRUE} can be useful for any data in which 0 represents a value with special significance, it is especially so for data converted into log-anomalies, i.e., \code{log10(x)/mean(x, na.rm=TRUE)}. The mean month then has value 0, and a value of -1, for example, indicates original data equal to one-tenth the mean. Log-anomaly transforms can be particularly appropriate for biological populations, in which variability is often approximately proportional to the mean.
+  
+  You may want to set \code{square = FALSE} and then adjust the plot window manually if you plan to use the plot in a subsequent layout or if there is too much white space.
 }
 
 \value{
-  An image plot of monthly values classified into either deciles or into four bins as described above (and corresponding object of class \dQuote{trellis}).
+  An image plot of monthly values classified into either deciles or into four bins as described above (and corresponding object of class \dQuote{ggplot}).
 }
 
 \references{
@@ -54,12 +65,11 @@ plotTsTile(x, title = NULL, trim = TRUE, four = TRUE, loganom = TRUE)
 \examples{
 # plot log-anomalies in four bins
 chl27 = sfbayChla[, 's27']
-plotTsTile(chl27, 
-  title = 'SF Bay station 27\nlog-anomalies of chlorophyll')
+plotTsTile(chl27, legend.title = 'Chl log-anomaly')
 
 # plot deciles
-plotTsTile(chl27, title = 'SF Bay station 27\n chlorophyll', 
-  four = FALSE, loganom = FALSE)
+plotTsTile(chl27, plot.title = 'SF Bay station 27', legend.title =
+	'chlorophyll', four = FALSE, loganom = FALSE, square = FALSE)
 }
 
 \keyword{hplot}
