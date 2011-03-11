@@ -1,3 +1,11 @@
+CHANGES SINCE 0.3-1
+
+* plot method for class "WqData": Boxplots instead of stripcharts. Also fixed behaviour when less than 10 unique variables.
+* plotSeason: Changed "by.month" option to standardized anomalies.
+* tsMake: Added option to create series for "bottom" of water column. 
+* Version requirement is R 10.0.
+* Vignette file size fixed so it can be downloaded from HTML help.
+
 CHANGES SINCE 0.2-9
 
 New features
