@@ -21,6 +21,15 @@ setMethod(
     ## Assemble all depths
     d <- as.data.frame(object)
     if (missing(layer)) layer = list(c(-Inf, Inf))
+    if (length(layer) == 1) {
+      if (layer == 'max.depths') {
+          depth.code <- max(d$depth, na.rm=TRUE) + 1
+          f <- function(x) subset(x, depth == max(depth, na.rm=TRUE))
+          d <- ddply(d, c('time', 'site', 'variable'), f)
+          d$depth <- depth.code
+          layer <- depth.code
+      }
+    }
     if (!is.list(layer)) layer = list(layer)
     depths <- NULL
     for (el in layer) {

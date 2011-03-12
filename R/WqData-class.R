@@ -37,11 +37,13 @@ setMethod(
   signature = "WqData",
   definition =  function(x, y = "missing", vars, num.col = NULL) {
     if (missing(vars)) 
-      vars = unique(x$variable)[1:10]
+      vars <- unique(x$variable)
+      num.plots <- max(10, length(vars))
+      vars <- vars[1:num.plots]
     require(ggplot2)
     d <- subset(as.data.frame(x), variable %in% vars)
-    ggplot(d, aes(x = value, y = site, z = variable)) + 
-      geom_point(colour = 'blue', shape = 1) +
-      facet_wrap(~ variable, scales = "free_x", ncol = num.col)
+    ggplot(d, aes(x = site, y = value, z = variable)) + 
+      geom_boxplot(outlier.colour = 'blue', outlier.shape = 1) +
+      facet_wrap(~ variable, scales = "free_y", ncol = num.col)
   }
 )

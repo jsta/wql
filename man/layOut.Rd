@@ -33,7 +33,7 @@ chl27 = sfbayChla[, 's27']
 g1 <- plotTsTile(chl27, legend.title = 'Chl log-anomaly', 
     square=FALSE)
 g2 <- seasonTrend(chl27, plot = TRUE, legend = TRUE)
-g3 <- plotSeason(chl27, num = 3, ylab = expression(paste('Chl-', italic(a), ', ', mu*g~L^{-1})))
+g3 <- plotSeason(chl27, num.era = 3, ylab = expression(paste('Chl-', italic(a), ', ', mu*g~L^{-1})))
 ## quartz("", 10, 6)  # e.g., in mac os x, or:
 ## grid.newpage()  # to re-use existing plot window
 layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10), list(g3, 3:5, 1:8))

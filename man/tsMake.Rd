@@ -22,7 +22,7 @@ Object of class \code{"WqData"}.
 Name of a site or water quality variable.
 }
   \item{layer}{
-Number specifying a depth, numeric vector specifying top and bottom depths of layer, or list specifying multiple depths and/or layers. 
+Number specifying a depth; a numeric vector specifying top and bottom depths of layer; a list specifying multiple depths and/or layers; or just the string \code{"max.depths"}. 
 }
   \item{type}{
 \code{ts.mon} to get a monthly time series, \code{zoo} to get an object of class \code{"zoo"} with individual observation dates.
@@ -30,7 +30,7 @@ Number specifying a depth, numeric vector specifying top and bottom depths of la
 }
 
 \details{
-The function currently averages all included depths for each day, the implicit assumption being that the layer is well-mixed and/or the samples are evenly distributed with depth in the layer. It produces a matrix time series of all variables for the specified site or all sites for the specified variable. A monthly time series is produced, from which a quarterly or annual series can be created if needed. If no layer is specified, all depths will be used. If you want values for the actual dates of observation, then set \code{type = "zoo"}.
+The function currently averages all included depths for each day, the implicit assumption being that the layer is well-mixed and/or the samples are evenly distributed with depth in the layer. If \code{layer = "max.depths"}, then only the value at the maximum depth for each time, site and variable combination will be used. The function produces a matrix time series of all variables for the specified site or all sites for the specified variable. A monthly time series is produced, from which a quarterly or annual series can be created if needed. If no layer is specified, all depths will be used. If you want values for the actual dates of observation, then set \code{type = "zoo"}.
 }
 
 \note{
@@ -56,9 +56,9 @@ plot(y, main = 'Station 27')
 y <- tsMake(sfb, focus = 'chl', layer = list(c(0, 2), 5))
 plot(y, main = 'Chlorophyll a, ug/L')
 
-y <- tsMake(sfb, focus = 'chl', layer = c(0, 5), type = 'zoo')
+y <- tsMake(sfb, focus = 'dox', layer = "max.depths", type = 'zoo')
 head(y)
-plot(y, main = 'Chlorophyll a, ug/L')
+plot(y, type="h", main = "'Bottom' DO, mg/L")
 }
 
 \keyword{ts}

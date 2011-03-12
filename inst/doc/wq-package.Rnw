@@ -1,50 +1,30 @@
 \documentclass[12pt]{article}
-\usepackage{url}
 \usepackage{pdfsync}
-\usepackage{tikz}
-\usetikzlibrary{arrows}
+\usepackage{Sweave}
+\SweaveOpts{engine=R, eps=FALSE}
 
 % \VignetteIndexEntry{wq: exploring water quality monitoring data}
 % \VignetteDepends{wq, zoo, ggplot2}
 % \VignetteKeyword{ts}
 
-%%% PACKAGES
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{paralist}
-\usepackage{verbatim}
-\usepackage{subfigure}
-\usepackage{rotating}
-
-%%% PAGE DIMENSIONS
+%%% LAYOUT
 \usepackage{geometry}
 \geometry{left=1.25in, right=1.25in, top=1.25in, bottom=1.25in}
+\usepackage{rotating}
 
 %%% HEADERS & FOOTERS
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}
-\lhead{}\chead{}\rhead{}
-\lfoot{}\cfoot{\thepage}\rfoot{}
-
-%%% SECTION TITLE APPEARANCE
-\usepackage{sectsty}
-\allsectionsfont{\sffamily\mdseries\upshape}
 
 %%% LINKS
-\usepackage{color}
-\usepackage[pdftex,bookmarks,colorlinks,breaklinks]{hyperref}
-\definecolor{dullmagenta}{rgb}{0.4,0,0.4}
-\definecolor{darkblue}{rgb}{0,0,0.4}
-\hypersetup{linkcolor=red,citecolor=blue,filecolor=dullmagenta,urlcolor=darkblue}
+\usepackage{url}
+\usepackage[bookmarks,colorlinks,breaklinks]{hyperref}
 
-%%% Bibliography:
+%%% BIBLIOGRAPHY:
 \usepackage{natbib}
 \bibpunct{(}{)}{,}{a}{}{,}
 
-\SweaveOpts{engine=R, eps=FALSE}
-
-\title{\texttt{wq:} Exploring water quality monitoring data\\(version 0.3-1)}
+\title{\texttt{wq:} Exploring water quality monitoring data}
 \author{Alan D. Jassby and James E. Cloern}
 %\date{}
 
@@ -58,11 +38,12 @@ This package contains functions to assist in the processing and exploration of d
 
 The approach used here involves transformation of external data files into a standard format that existing functions can then handle easily. A conceptualization of this sequence is illustrated in Figure~\ref{fig:typSeq}. Water quality monitoring programs maintain their \emph{data} in a wide variety of formats, and the first step is to \emph{read} data from an external file and store it in a data frame. Often, the external data are stored or at least transmitted in a comma- or tab-delimited format and can be easily handled with \texttt{read.table} or one of its variants. Some \emph{clean}ing or manipulation of the data set may take place during the import process, but more substantive ones are often undertaken immediately after. Typical modifications include renaming variables, dropping unnecessary variables and observations, and coercing variables to different classes. These modifications are chosen with regard to ease of use and the intended analysis, but also in order to facilitate construction of an object with a standardized format. Before constructing this object, though, we may want to \emph{derive} new variables from the original ones (e.g., salinity from conductivity). Next, we \emph{generate} the standardized ``wq data'' object, which is a member of the \texttt{WqData} class defined in this package. We can then \emph{reshape} into various forms---matrix, list, time series vector, data frame, etc.---depending on the analysis. At this point, the data are finally in a form that we can \emph{analyze and visualize}. Some functions may be able to explore a \texttt{WqData} object directly without any additional reshaping.
 
+\setkeys{Gin}{width=.7\textwidth}
 \begin{figure}[tbp]
 \centering
-  \includegraphics[width=.8\textwidth]{wqFlow.pdf}
-  \caption{A typical sequence of data analysis. Example functions from the package are listed underneath the corresponding processes in the sequence.}
-  \label{fig:typSeq}
+\includegraphics{wqFlow.pdf}
+\caption{A typical sequence of data analysis. Example functions from the package are listed underneath the corresponding processes in the sequence.}
+\label{fig:typSeq}
 \end{figure}
 
 This package is intended to facilitate all of these activities. We will illustrate some of the steps in Figure~\ref{fig:typSeq} using the accompanying data set \texttt{sfbay}. The exercise should demonstrate most of the current capability of the package and make its use more clear.
@@ -124,27 +105,28 @@ There is a \texttt{summary} method for this class that tabulates the number of o
 summary(sfb)
 @
 
-\noindent Plotting a \texttt{"WqData"} object produces a page for each variable specified, each page containing a strip plot of the values for each site (Figure~\ref{fig:strip}). If no variables are specified, then the first 10 will be plotted:
+\noindent Plotting a \texttt{"WqData"} object produces a plot for each variable specified, each plot containing a boxplot of the values for each site (Figure~\ref{fig:strip}). If no variables are specified, then the first 10 will be plotted:
 
 <<>>=
-plot(sfb, vars = c('chl', 'dox', 'spm'), num.col = 2)
+plot(sfb, vars = c('dox', 'temp'), num.col = 2)
 @
 
+\setkeys{Gin}{width=.8\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
-<<fig=TRUE, echo=FALSE, width=6, height=4>>=
-print(plot(sfb, vars = c('chl', 'dox', 'spm'), num.col = 2))
+\begin{center}
+<<fig=TRUE, echo=FALSE, width=5, height=3.1>>=
+print(plot(sfb, vars = c('dox', 'temp'), num.col = 2))
 @
-    \caption{Plotting specific variables of a \texttt{"WqData"} object, in this case chlorophyll-\emph{a}, dissolved oxygen, and suspended particulate matter.}
-    \label{fig:strip}
-  \end{center}
+\caption{Plotting specific variables of a \texttt{"WqData"} object, in this case dissolved oxygen and temperature.}
+\label{fig:strip}
+\end{center}
 \end{figure}
 
 Apart from \texttt{summary} and \texttt{plot}, existing methods for data frames will produce an object of class \texttt{"data.frame"} rather than one of class \texttt{"WqData"}.   
 
 \section{Reshaping} \label{sec:reshape}
 
-Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. All replicates are first averaged and then the mean is found for the depth layers of interest. If no layers are specified, all depths will be used. The \texttt{layer} argument allows for flexibility in specifying depths, including negative depths used as codes for, say, ``near botton'' or ``entire water column''. The default time series plot is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}):
+Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. All replicates are first averaged and then the mean is found for the depth layers of interest. If no layers are specified, all depths will be used. If \texttt{layer = "max.depths"}, the time series will be values of the deepest sample for each time, site and variable. This can be useful, for example, in pinpointing the worst DO conditions. The \texttt{layer} argument allows for flexibility in specifying depths, including a list of layers and negative depths used as codes for, say, ``near botton'' or ``entire water column''. The default time series plot is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}):
 
 <<>>=
 y <- tsMake(sfb, focus = "chl", layer = c(0, 5))
@@ -153,14 +135,15 @@ tsp(y)
 plot(y, main = "Chlorophyll in San Francisco Bay")
 @
 
+\setkeys{Gin}{width=.8\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
-<<fig=TRUE, echo=FALSE>>=
+\begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=4>>=
 plot(y, main = "Chlorophyll in San Francisco Bay")
 @
-    \caption{Monthly mean chlorophyll ($\mu$g L$^{-1}$) in 0-5 m layer of San Francisco Bay.}
-    \label{fig:6chlTs}
-  \end{center}
+\caption{Monthly mean chlorophyll ($\mu$g L$^{-1}$) in 0-5 m layer of San Francisco Bay.}
+\label{fig:6chlTs}
+\end{center}
 \end{figure}
 
 \noindent If the option \texttt{type = "zoo"}, then \texttt{tsMake} produces an object of class \texttt{"zoo"} containing values by date of observation, rather than a monthly time series.
@@ -205,14 +188,15 @@ mannKen(y)
 mannKen(y, plot=TRUE, type='pct', order = TRUE)
 @
 
+\setkeys{Gin}{width=.8\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
-<<fig=TRUE, echo=FALSE, width=5, height=3.1>>=
+\begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=4>>=
 print(mannKen(y, plot=TRUE, type='pct', order = TRUE))
 @
-    \caption{Chlorophyll-\emph{a} ($\mu$g L$^{-1}$ year$^{-1}$) trends in San Francisco Bay.}
-    \label{fig:mk}
-  \end{center}
+\caption{Chlorophyll-\emph{a} trends in San Francisco Bay.}
+\label{fig:mk}
+\end{center}
 \end{figure}
 
 A main role for \texttt{mannKen} in this package is as a support function for the Seasonal Kendall test of trend \citep{hirsch1982, helsel2002}. The Seasonal Kendall test combines information about trends for individual months (or some other subdivision of the year such as quarters) and produces an overall test of trend for a series. \texttt{mannKen} collects certain information on the pattern of missing data that is then used to determine if a Seasonal Kendall test is warranted. In particular, there is an option to report a result only if more than half the seasons are each missing less than half the possible comparisons between the first and last 20\% of the years \citep{schertz1991}:
@@ -234,17 +218,17 @@ The Seasonal Kendall test is not informative when trends for different months di
 x <- sfbayChla
 seasonTrend(x, plot = TRUE, ncol = 4, scales = 'free_y')
 @
+
 \setkeys{Gin}{width=1\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
-<<fig=TRUE, echo=FALSE, width=6.5, height=7>>=
+\begin{center}
+<<fig=TRUE, echo=FALSE, width=6.5, height=8>>=
 print(seasonTrend(x, plot = TRUE, ncol = 4, scales = 'free_y'))
 @
-    \caption{Mann-Kendall tests of chlorophyll trends for individual months at stations in San Francisco Bay. Trends are expressed in original units per year, in this case $\mu$g L$^{-1}$ year$^{-1}$.}
-    \label{fig:seasonTrend}
-  \end{center}
+\caption{Mann-Kendall tests of chlorophyll trends for individual months at stations in San Francisco Bay. Trends are expressed in original units per year, in this case $\mu$g L$^{-1}$ year$^{-1}$.}
+\label{fig:seasonTrend}
+\end{center}
 \end{figure}
-\setkeys{Gin}{width=0.8\textwidth}
 
 \noindent The function \texttt{trendHomog} can also be used to test directly for the homogeneity of seasonal trends ~\citep{belle1984}:
 
@@ -273,18 +257,19 @@ plot(chl27a, col = "red", lwd = .5, xlab = "")
 lines(chl27, col = "blue", lwd = 1.5)
 @
 
+\setkeys{Gin}{width=.8\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
+\begin{center}
 <<fig=TRUE, echo=FALSE, width=6, height=4>>=
 plot(chl27a, col = "red", lwd = .5, xlab = "")
 lines(chl27, col = "blue", lwd = 1.5)
 @
-    \caption{Interpolation of a monthly time series (interpolated data in \emph{red}).}
-    \label{fig:interp}
-  \end{center}
+\caption{Interpolation of a monthly time series (interpolated data in \emph{red}).}
+\label{fig:interp}
+\end{center}
 \end{figure}
 
-\texttt{eof} requires an estimate of the number of \textsc{EOF}s to retain for rotation. \texttt{eofNum} provides a guide to this number by plotting the eigenvalues and their confidence intervals in a ``scree" plot. The significance of each eigenvalue is also assessed using \emph{rule N}, which repeatedly computes eigenvalues of the correlation matrix for an appropriately-sized random variable matrix and returns the 0.95 quantiles. Here, we apply \texttt{eofNum} to annualized San Francisco Bay chlorophyll data and retain the stations with no missing data, namely, the first 12 stations.
+\texttt{eof} requires an estimate of the number of \textsc{EOF}s to retain for rotation. \texttt{eofNum} provides a guide to this number by plotting the eigenvalues and their confidence intervals in a ``scree'' plot. The significance of each eigenvalue is also assessed using \emph{rule N}, which repeatedly computes eigenvalues of the correlation matrix for an appropriately-sized random variable matrix and returns the 0.95 quantiles. Here, we apply \texttt{eofNum} to annualized San Francisco Bay chlorophyll data and retain the stations with no missing data, namely, the first 12 stations.
 
 <<>>=
 chla1 <- aggregate(sfbayChla, 1, mean, na.rm = TRUE)
@@ -292,14 +277,15 @@ chla1 <- chla1[, 1:12]
 eofNum(chla1, distr = "lognormal", reps = 2000)
 @
 
+\setkeys{Gin}{width=.8\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
+\begin{center}
 <<fig=TRUE, echo=FALSE, width=6, height=4>>=
 print(eofNum(chla1, distr = "lognormal", reps = 2000))
 @
-    \caption{Eigenvalues of the San Francisco Bay chlorophyll time series matrix.}
-    \label{fig:scree}
-  \end{center}
+\caption{Eigenvalues of the San Francisco Bay chlorophyll time series matrix.}
+\label{fig:scree}
+\end{center}
 \end{figure}
 
 \noindent These stations have similar coefficients for the first EOF and appear to act as one with respect to chlorophyll variability on the annual scale (Figure~\ref{fig:scree}). It suggests that further exploration of the interannual variability of these stations can be simplified by using a single time series, namely, the first \textsc{EOF}.
@@ -311,18 +297,19 @@ e1
 
 \noindent The function \texttt{eofPlot} produces a graph of either the \textsc{EOF}s or their accompanying time series. In this case, with \texttt{n = 1}, there is only one plot for each such graph (Figure~\ref{fig:eof1}).
 
-<<>>=
+<<eval=FALSE>>=
 eofPlot(e1, type = "amp")
 @
 
+\setkeys{Gin}{width=.8\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
+\begin{center}
 <<fig=TRUE, echo=FALSE, width=6, height=3>>=
 print(eofPlot(e1, type = "amp"))
 @
-    \caption{Time series for the first \textsc{EOF} of the San Francisco Bay chlorophyll time series matrix.}
-    \label{fig:eof1}
-  \end{center}
+\caption{Time series for the first \textsc{EOF} of the San Francisco Bay chlorophyll time series matrix.}
+\label{fig:eof1}
+\end{center}
 \end{figure}
 
 Principal component analysis can also be useful in studying the way different seasonal ``modes'' of variability contribute to overall year-to-year variability of a single time series \citep{jassby1999a}. The basic approach is to consider each month as determining a separate annual time series and then to calculate the eigenvalues for the resulting $12 \times n$ years time series matrix. The function \texttt{ts2df} is useful for expressing a monthly time series in the form needed by \texttt{eof}. For example, the following code converts the monthly chlorophyll time series for Station 27 in San Francisco Bay to the appropriate data frame with October, the first month of the local ``water year'', in the first column, and years with missing data omitted:
@@ -340,14 +327,15 @@ e2 <- eof(chl27b, n = 2)
 eofPlot(e2, type = "coef")
 @
 
+\setkeys{Gin}{width=.8\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
+\begin{center}
 <<fig=TRUE, echo=FALSE, width=6, height=4>>=
 print(eofPlot(e2, type = "coef"))
 @
-    \caption{Rotated EOFs for the San Francisco Bay Station 27 month $\times$ year chlorophyll time series.}
-    \label{fig:eof2}
-  \end{center}
+\caption{Rotated EOFs for the San Francisco Bay Station 27 month $\times$ year chlorophyll time series.}
+\label{fig:eof2}
+\end{center}
 \end{figure}
 
 \subsection{Time series decomposition}
@@ -364,67 +352,67 @@ d1 <- decompTs(chl27)
 plot(d1, nc = 1, main = "Station 27 Chl-a decomposition")
 @
 
+\setkeys{Gin}{width=.8\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
-<<fig=TRUE, echo=FALSE>>=
+\begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=6>>=
 plot(d1, nc = 1, main = "Station 27 Chl-a decomposition")
 @
-    \caption{Multiplicative decomposition of chlorophyll at Station 27 in San Francisco Bay.}
-    \label{fig:decomp}
-  \end{center}
+\caption{Multiplicative decomposition of chlorophyll at Station 27 in San Francisco Bay.}
+\label{fig:decomp}
+\end{center}
 \end{figure}
 
 The average seasonal pattern does not provide any information about potential secular trends in the pattern. A solution is to apply the decomposition to a moving time window. The window should be big enough to yield a meaningful average of interannual variability but short enough to allow a trend to manifest. This may be different for different systems, but a decadal window can be used as a starting point. A more convenient, albeit restrictive, way to examine changing seasonality is with the dedicated function \texttt{plotSeason}. It divides the time period into equal intervals and plots a composite of the seasonal pattern in each interval. It also warns of months that may not be represented by enough data by colouring them red (Figure~\ref{fig:seas}). \texttt{plotSeason} is an easy way to decide on the value for the \texttt{event} option in \texttt{decompTs}.
 
-<<>>=
-plotSeason(chl27, num = 3, same.plot = FALSE, ylab = 'Stn 27 Chl-a')
+<<eval=FALSE>>=
+plotSeason(chl27, num.era = 3, same.plot = FALSE, ylab = 'Stn 27 Chl-a')
 @
 
-\setkeys{Gin}{width=1\textwidth}
+\setkeys{Gin}{width=.9\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
-<<fig=TRUE, echo=FALSE, width=6, height=4>>=
-print(plotSeason(chl27, num = 3, same.plot = FALSE, ylab = 'Stn 27 Chl-a'))
+\begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=3>>=
+print(plotSeason(chl27, num.era = 3, same.plot = FALSE, ylab = 'Stn 27 Chl-a'))
 @
-    \caption{Composites of seasonal pattern in \texttt{chl27} for three multi-year intervals in different plots.}
-    \label{fig:seas}
-  \end{center}
+\caption{Composites of seasonal pattern in \texttt{chl27} for three multi-year intervals in different plots.}
+\label{fig:seas}
+\end{center}
 \end{figure}
-\setkeys{Gin}{width=.8\textwidth}
 
 \noindent The same boxplots can also be combined in one plot, with boxplots for the same month grouped together (Figure~\ref{fig:seas2}): 
 
-<<>>=
-plotSeason(chl27, num = 3, same.plot = TRUE, ylab = 'Stn 27 Chl-a')
+<<eval=FALSE>>=
+plotSeason(chl27, num.era = 3, same.plot = TRUE, ylab = 'Stn 27 Chl-a')
 @
 
+\setkeys{Gin}{width=1\textwidth}
 \begin{sidewaysfigure}[tbp]
-  \begin{center}
+\begin{center}
 <<fig=TRUE, echo=FALSE, width=8, height=4>>=
-print(plotSeason(chl27, num = 3, same.plot = TRUE, ylab = 'Stn 27 Chl-a'))
+print(plotSeason(chl27, num.era = 3, same.plot = TRUE, ylab = 'Stn 27 Chl-a'))
 @
-    \caption{Composites of seasonal pattern in \texttt{chl27} for three multi-year intervals in one plot.}
-    \label{fig:seas2}
-  \end{center}
+\caption{Composites of seasonal pattern in \texttt{chl27} for three multi-year intervals in one plot.}
+\label{fig:seas2}
+\end{center}
 \end{sidewaysfigure}
 
-\noindent \texttt{plotSeason} also has an option to plot all individual months separately for the entire record (Figure~\ref{fig:seas3}). 
+\noindent \texttt{plotSeason} also has an option to plot all individual months separately as standardized anomalies for the entire record (Figure~\ref{fig:seas3}). 
 
-<<>>=
-plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a', scales = "free_y")
+<<eval=FALSE>>=
+plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a')
 @
 
 \setkeys{Gin}{width=1\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
+\begin{center}
 <<fig=TRUE, echo=FALSE>>=
-print(plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a', scales = "free_y"))
+print(plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a'))
 @
-    \caption{Changing seasonal pattern in \texttt{chl27} described by the time series for individual months.}
-    \label{fig:seas3}
-  \end{center}
+\caption{Changing seasonal pattern in \texttt{chl27} described by the time series of standardized anomalies for individual months.}
+\label{fig:seas3}
+\end{center}
 \end{figure}
-\setkeys{Gin}{width=.8\textwidth}
 
 \noindent With all types of seasonal plots, it is often helpful to adjust the device aspect ratio and size manually to get the clearest information.
 
@@ -466,51 +454,51 @@ plotTsTile(chl27)
 
 \setkeys{Gin}{width=1\textwidth}
 \begin{figure}[tbp]
-  \begin{center}
-<<fig=TRUE, echo=FALSE, width=6, height=2.25>>=
+\begin{center}
+<<fig=TRUE, echo=FALSE, width=6, height=2.5>>=
 print(plotTsTile(chl27))
 @
-    \caption{Image plot of monthly log-anomaly time series for Station 27 chlorophyll.}
-    \label{fig:tile}
-  \end{center}
+\caption{Image plot of monthly log-anomaly time series for Station 27 chlorophyll.}
+\label{fig:tile}
+\end{center}
 \end{figure}
-\setkeys{Gin}{width=0.8\textwidth}
 
 \noindent This plot shows clearly the change in autumn-winter chlorophyll magnitude after 1999 (Figure~\ref{fig:tile}).
 
 The \texttt{layOut} function is a convenient way to create a graph consisting of two or more plots produced by the \textbf{ggplot2} package. The position of each plot is determined by the beginning row and column numbers. The relative size of each plot is determined by the sequence lengths of row and column numbers. The total grid size of the graph is determined automatically by the grid numbers used for individual plots. Manual adjustment of the graphics window may be useful to get proper aspect ratios and prevent text from overlapping (Figure~\ref{fig:layout}):
 
-<<>>=
+<<eval=FALSE>>=
 chl27 = sfbayChla[, 's27']
 g1 <- plotTsTile(chl27, legend.title = 'Chl log-anomaly', 
     square=FALSE)
 g2 <- seasonTrend(chl27, plot = TRUE, legend = TRUE)
-g3 <- plotSeason(chl27, num = 3, ylab = expression(paste('Chl-', italic(a), ', ', mu*g~L^{-1})))
+g3 <- plotSeason(chl27, num.era = 3, ylab = expression(paste('Chl-', italic(a), ', ', mu*g~L^{-1})))
 ## quartz("", 10, 6)  # e.g., in mac os x, or:
 ## grid.newpage()  # to re-use existing plot window
 layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10), list(g3, 3:5, 1:8))
 @
 
+\setkeys{Gin}{width=1\textwidth}
 \begin{sidewaysfigure}[tbp]
-  \begin{center}
-<<fig=TRUE, echo=FALSE, width=10, height=6>>=
+\begin{center}
+<<fig=TRUE, echo=FALSE, results=hide, width=10, height=6>>=
+chl27 = sfbayChla[, 's27']
+g1 <- plotTsTile(chl27, legend.title = 'Chl log-anomaly', 
+square=FALSE)
+g2 <- seasonTrend(chl27, plot = TRUE, legend = TRUE)
+g3 <- plotSeason(chl27, num.era = 3, ylab = expression(paste('Chl-', italic(a), ', ', mu*g~L^{-1})))
 print(layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10), list(g3, 3:5, 1:8)))
 @
-    \caption{Example of use of \texttt{layOut} function for the chlorophyll-\emph{a} monthly time series at station 27 in San Francisco Bay.}
-    \label{fig:layout}
-  \end{center}
+\caption{Example of use of \texttt{layOut} function for the chlorophyll-\emph{a} monthly time series at station 27 in San Francisco Bay.}
+\label{fig:layout}
+\end{center}
 \end{sidewaysfigure}
 
 
 \section{Concluding Remarks}
 
-In the near future, this package will remain focused on typical data sets that have accumulated in long-term coastal water quality monitoring programs, namely, those collected at a frequency of about $10^1$ to $10^2$ times per year at $10^1$ to $10^2$ sites. Aside from incremental revision and addition of specific functions, the main structural change envisioned is in the class definition for data objects. 
+In the near future, this package will remain focused on typical data sets that have accumulated in long-term coastal water quality monitoring programs, namely, those collected at a frequency of about $10^1$ to $10^2$ times per year at $10^1$ to $10^2$ sites. Aside from incremental revision and addition of specific functions, the package direction will be driven by the needs of people actually using it. Suggestions are therefore welcome.
 
-In this regard, it is helpful to examine what constitutes a water quality observation, i.e., the essential components of this class. The minimum information typically needed is of four kinds: the location, the time, the analyte and the observed value. As discussed in Section~\ref{sec:wqClass}, additional information about the location and the analytical method is inherent in the unique codes used for each location and analyte. Sometimes, however, it may be more convenient to include additional information explicitly with the actual observations, such as censoring limits that may change throughout a project. Other complications are introduced by the different ways in which location, time, and even observed values can be recorded. For example, surface location information can come in the form of site names, latitude-longitude coordinates or distance along the axis of a channel from some fixed point. Observed values may be numbers, numeric ranges or discrete classifications. Ideally, one wants each of the basic four kinds of information to accommodate all forms in common use.  
-
-An obvious extension of the \texttt{WqData} object would be to include additional slots for site and variable metadata, so that there is no ambiguity about the availability of this information. A more significant change would be to define classes for the fields described above as superclasses of basic classes, as already done for time (the \texttt{"DateTime"} class). For example, a \texttt{site} class could accommodate factors, numeric vectors or matrices. Location could then be given by discrete site name, \textit{x} position as distance from a fixed point, or \textit{x} and \textit{y} positions as latitude and longitude. Similarly, depth could accommodate factors or numeric vectors, the former as names of depth layers (``top 5 m") or as non-numeric depths (``just below surface" or "bottom"). Currently, non-numeric depths can be coded as negative numbers.
-
-Ultimately, the package direction will be driven by the needs of people actually using it. Suggestions for revisions and additions are therefore welcome.
 
 \bibliographystyle{limnology_and_oceanography}
 \bibliography{wq}{}

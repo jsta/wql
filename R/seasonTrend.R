@@ -24,8 +24,7 @@ seasonTrend <- function(x, first, last, type = c("slope",
     ## Trend function for single series
     if (method == "mk") {
         trend <- function(x) unlist(mannKen(x)[c(1:3, 6)])
-    }
-    else {
+    } else {
         trend <- function(x) {
             lm1 <- summary(lm(x ~ time(x)))[["coefficients"]]
             slope <- lm1["time(x)", "Estimate"]
@@ -64,8 +63,7 @@ seasonTrend <- function(x, first, last, type = c("slope",
     ## Plot or tabulate results
     if (!plot) {
         ans1
-    }
-    else {
+    } else {
         ans2 <- na.omit(ans1)
         nr <- nrow(ans2)
         if (is.null(xlab)) 
@@ -84,20 +82,19 @@ seasonTrend <- function(x, first, last, type = c("slope",
             opts(panel.grid.minor =	theme_blank())
         if (miss) {
             p1 <- p1 + 
-               geom_point(aes(colour = p < 0.05, shape = missing
+                geom_point(aes(colour = p < 0.05, shape = missing
             	   < 0.5)) +
             	scale_colour_manual(
                   expression(paste(italic(p), "-value < 0.05")), 
                   values = c(`FALSE` = "#1B9E77", `TRUE` = "#D95F02")
                   ) + 
-               scale_shape_manual(
+                scale_shape_manual(
                   expression("missing < 50%"), 
                   values = c(`FALSE` = 1, `TRUE` = 16)
                   ) 
-        }
-        else {
+        } else {
             p1 <- p1 + 
-               geom_point(aes(colour = p < 0.05)) +
+                geom_point(aes(colour = p < 0.05)) +
             	scale_colour_manual(
                   expression(paste(italic(p), "-value < 0.05")), 
                   values = c(`FALSE` = "#1B9E77", `TRUE` = "#D95F02")

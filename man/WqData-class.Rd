@@ -35,7 +35,7 @@
     
     plot(x, vars, num.col = NULL)
     
-    Multiple stripcharts of observations, each stripchart containing all sites for one variable. An argument \code{vars} can be given specifying a character string of variables to be plotted. Otherwise, only the first 10 variables will be plotted if the number of variables is more than 10. The number of columns plotted is determined automatically unless \code{num.col} is given an integer value.
+    Multiple plots, each containing boxplots of data at each site for the same variable. An argument \code{vars} can be given specifying a character string of variables to be plotted. Otherwise, only the first 10 variables will be plotted if the number of variables is more than 10. The number of columns plotted is determined automatically unless \code{num.col} is given an integer value.
     }
   }   
   \describe{

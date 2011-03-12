@@ -1,5 +1,6 @@
-plotSeason <- function(x, type = c('by.era', 'by.month'), num = 4,
-	same.plot = TRUE, ylab = NULL, ...) {
+plotSeason <-
+function(x, type = c('by.era', 'by.month'), num.era = 4,
+  same.plot = TRUE, ylab = NULL, num.col = 3) {
 
    require(reshape)
    require(ggplot2)
@@ -14,14 +15,14 @@ plotSeason <- function(x, type = c('by.era', 'by.month'), num = 4,
 
    if (type == 'by.era') {
       ## Break data into eras
-      d <- transform(d, int = {if (num > 1) cut(yr, breaks = num,
+      d <- transform(d, int = {if (num.era > 1) cut(yr, breaks = num.era,
       	include.lowest = TRUE, dig.lab = 4, ordered_result = TRUE) else
       	rep('all', nrow(d))})
       colnames(d)[1] <- 'value'
       d <- na.omit(d)
       
       ## Find missing fraction by month and era
-      len <- length(unique(d$yr))/num
+      len <- length(unique(d$yr))/num.era
       t1 <- table(d$mon, d$int)/len
       t2 <- t1 < 0.5
       t3 <- melt(t2)
@@ -45,17 +46,20 @@ plotSeason <- function(x, type = c('by.era', 'by.month'), num = 4,
             scale_y_continuous(ylab) +
             scale_colour_manual("", values = cols, legend = FALSE) +
             opts(panel.grid.minor = theme_blank())
-         if (num > 1) 
+         if (num.era > 1) 
             p1 <- p1 + facet_wrap(~ int, nrow = 1) 
          p1
       }
    } else {
-      ## Plot time series for each month with smooth
+      ## Plot standardized anomalies for each month
+      x1 <- matrix(x, ncol=12, byrow=TRUE)
+      x2 <- scale(x1)
+      x3 <- as.numeric(t(x2))
+      d <- transform(d, x = as.numeric(x3))
       ggplot(d, aes(x=yr, y=x)) +
-         geom_point(colour = 'grey20') +
-         geom_smooth(method='loess', span=1) +
+         geom_bar(colour = 'grey', stat='identity') + 
          opts(axis.text.x=theme_text(angle=90, hjust=1)) +
          labs(x="", y=ylab) +
-         facet_wrap(~mon, ...)
-   }
+         facet_wrap(~mon, ncol=num.col)
+    }
 }
