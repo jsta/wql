@@ -11,7 +11,8 @@ Creates a matrix time series object from an object of class \code{"WqData"}, eit
 }
 
 \usage{
-\S4method{tsMake}{WqData}(object, focus, layer, type = c("ts.mon", "zoo")) 
+\S4method{tsMake}{WqData}(object, focus, layer,
+    type = c("ts.mon", "zoo"), qprob = NULL)
 }
 
 \arguments{
@@ -22,15 +23,20 @@ Object of class \code{"WqData"}.
 Name of a site or water quality variable.
 }
   \item{layer}{
-Number specifying a depth; a numeric vector specifying top and bottom depths of layer; a list specifying multiple depths and/or layers; or just the string \code{"max.depths"}. 
+Number specifying a depth; a numeric vector specifying top and bottom depths of layer; a list specifying multiple depths and/or layers; or just the string \code{"max.depths"}.
 }
   \item{type}{
 \code{ts.mon} to get a monthly time series, \code{zoo} to get an object of class \code{"zoo"} with individual observation dates.
-}  
+}
+\item{qprob}{
+    quantile probability, a number between 0 and 1.
+}
 }
 
 \details{
-The function currently averages all included depths for each day, the implicit assumption being that the layer is well-mixed and/or the samples are evenly distributed with depth in the layer. If \code{layer = "max.depths"}, then only the value at the maximum depth for each time, site and variable combination will be used. The function produces a matrix time series of all variables for the specified site or all sites for the specified variable. A monthly time series is produced, from which a quarterly or annual series can be created if needed. If no layer is specified, all depths will be used. If you want values for the actual dates of observation, then set \code{type = "zoo"}.
+When \code{qprob = NULL}, the function averages all included depths for each day, the implicit assumption being that the layer is well-mixed and/or the samples are evenly distributed with depth in the layer. If \code{layer = "max.depths"}, then only the value at the maximum depth for each time, site and variable combination will be used (this can take a relatively long time). The function produces a matrix time series of all variables for the specified site or all sites for the specified variable. If no layer is specified, all depths will be used. If \code{type = "ts.mon"}, available daily data are averaged to produce a monthly time series, from which a quarterly or annual series can be created if needed. If you want values for the actual dates of observation, then set \code{type = "zoo"}.
+
+When \code{qprob} is a number from 0 to 1, it is interpreted as a probability and the corresponding quantile is used to aggregate observations within the specified layer. So to get the maximum, for example, use qprob = 1. If \code{type = "ts.mon"}, the same quantile is used to aggregate all the available daily values.
 }
 
 \note{
@@ -47,15 +53,23 @@ A matrix of class \code{"mts"} or \code{"zoo"}.
 
 \examples{
 # Create new WqData object
-sfb <- wqData(sfbay, c(1, 3:4), 5:12, site.order = TRUE, 
+sfb <- wqData(sfbay, c(1, 3:4), 5:12, site.order = TRUE,
          time.format = "\%m/\%d/\%Y", type = "wide")
 
-y <- tsMake(sfb, focus = 's27', layer = c(0, 2)) 
+# Find means in the 0-10 m layer
+y <- tsMake(sfb, focus = 's27', layer = c(0, 10))
 plot(y, main = 'Station 27')
+# Or select medians in the same layer
+y1 <- tsMake(sfb, focus = 's27', layer = c(0, 10), qprob = 0.5)
+plot(y1, main = 'Station 27')
+# Compare means:medians
+apply(y/y1, 2, mean, na.rm=TRUE)
 
+# Combine a layer with a single additional depth
 y <- tsMake(sfb, focus = 'chl', layer = list(c(0, 2), 5))
 plot(y, main = 'Chlorophyll a, ug/L')
 
+# Use values from the deepest samples
 y <- tsMake(sfb, focus = 'dox', layer = "max.depths", type = 'zoo')
 head(y)
 plot(y, type="h", main = "'Bottom' DO, mg/L")

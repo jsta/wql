@@ -1,9 +1,26 @@
+CHANGES SINCE 0.3-2
+
+New features
+
+* plotTsAnom: time series anomaly plot.
+* tsMake: Now aggregates depths (and days) by quantiles as well as means.
+
+Bugs fixed
+
+* plotSeason: Fixed problem with missing data treatment.
+* tsSub: Fixed problem with incorrect starting month.
+
 CHANGES SINCE 0.3-1
+
+New features
 
 * plot method for class "WqData": Boxplots instead of stripcharts. Also fixed behaviour when less than 10 unique variables.
 * plotSeason: Changed "by.month" option to standardized anomalies.
-* tsMake: Added option to create series for "bottom" of water column. 
+* tsMake: Added option to create series for "bottom" of water column.
 * Version requirement is R 10.0.
+
+Bugs fixed
+
 * Vignette file size fixed so it can be downloaded from HTML help.
 
 CHANGES SINCE 0.2-9
@@ -76,6 +93,6 @@ Bugs fixed
 * seaRoll: Fixed problem with frequencies other than 12.
 * tsMake: Remove need to specify layer if no depth info.
 * WqData subset method: Removed because of strategy that WqData objects	should not be changed.
-* wqData: Argument value "narrow" changed to more conventional "long". 
+* wqData: Argument value "narrow" changed to more conventional "long".
 * wqData: Now requires time.format to be specified.
 * wqData: Now ensures variable is a factor when type = "long".

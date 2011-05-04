@@ -5,10 +5,11 @@
 Plots seasonal patterns for a time series
 }
 \description{
-Divides the time range for a monthly time series into different eras and plots composites of seasonal pattern. Can also plot each month separately for the entire record. 
+Divides the time range for a monthly time series into different eras and plots composites of seasonal pattern. Can also plot each month separately for the entire record.
 }
 \usage{
-plotSeason(x, type = c("by.era", "by.month"), num.era = 4, same.plot = TRUE, ylab = NULL, num.col = 3)
+plotSeason(x, type = c("by.era", "by.month"), num.era = 4,
+    same.plot = TRUE, ylab = NULL, num.col = 3)
 }
 
 \arguments{
@@ -33,7 +34,7 @@ plotSeason(x, type = c("by.era", "by.month"), num.era = 4, same.plot = TRUE, yla
 }
 
 \details{
-When plotted \code{"by.era"} and \code{same.plot = FALSE}, the composite patterns are plotted in a horizontal row for easier comparison, which limits the number of periods that can be examined. Boxes based on fewer than half of the maximum possible years available are outlined in red. If \code{same.plot = TRUE}, a single plot is produced with era boxplots arranged by month. When plotted \code{"by.month"}, values for each month are first converted to standardized anomalies, i.e., by subtraction of long-term mean and division by standard deviation. As always, and especially with these plots, experiment with the device aspect ratio and size to get the clearest information. 
+When plotted \code{"by.era"} and \code{same.plot = FALSE}, the composite patterns are plotted in a horizontal row for easier comparison, which limits the number of periods that can be examined. Boxes based on fewer than half of the maximum possible years available are outlined in red. If \code{same.plot = TRUE}, a single plot is produced with era boxplots arranged by month. When plotted \code{"by.month"}, values for each month are first converted to standardized anomalies, i.e., by subtraction of long-term mean and division by standard deviation. As always, and especially with these plots, experiment with the device aspect ratio and size to get the clearest information.
 }
 
 \value{
