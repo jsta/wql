@@ -107,7 +107,7 @@ summary(sfb)
 
 \noindent Plotting a \texttt{"WqData"} object produces a plot for each variable specified, each plot containing a boxplot of the values for each site (Figure~\ref{fig:strip}). If no variables are specified, then the first 10 will be plotted:
 
-<<>>=
+<<eval=FALSE>>=
 plot(sfb, vars = c('dox', 'temp'), num.col = 2)
 @
 
@@ -126,12 +126,14 @@ Apart from \texttt{summary} and \texttt{plot}, existing methods for data frames 
 
 \section{Reshaping} \label{sec:reshape}
 
-Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. All replicates are first averaged and then the mean is found for the depth layers of interest. If no layers are specified, all depths will be used. If \texttt{layer = "max.depths"}, the time series will be values of the deepest sample for each time, site and variable. This can be useful, for example, in pinpointing the worst DO conditions. The \texttt{layer} argument allows for flexibility in specifying depths, including a list of layers and negative depths used as codes for, say, ``near botton'' or ``entire water column''. The default time series plot is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}):
+Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. If the quantile probability \texttt{qprob = NULL}, all replicates are first averaged and then the mean is found for the depth layers of interest. Otherwise the respective quantile will be used both to aggregate depths for each day and to aggregate days for each month. If no layers are specified, all depths will be used. If \texttt{layer = "max.depths"}, the time series will be values of the deepest sample for each time, site and variable. This can be useful, for example, in pinpointing the worst DO conditions. The \texttt{layer} argument allows for flexibility in specifying depths, including a list of layers and negative depths used as codes for, say, ``near botton'' or ``entire water column''. The default time series plot is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}):
 
 <<>>=
 y <- tsMake(sfb, focus = "chl", layer = c(0, 5))
 y[1:6, ]
 tsp(y)
+@
+<<eval=FALSE>>=
 plot(y, main = "Chlorophyll in San Francisco Bay")
 @
 
@@ -185,6 +187,8 @@ y <- sfbayChla
 y1 <- tsSub(y, seas = c(1:7, 9:11))  # Aug and Dec often missing
 y2 <- aggregate(y1, 1, mean, na.rm=FALSE)
 mannKen(y)
+@
+<<eval=FALSE>>=
 mannKen(y, plot=TRUE, type='pct', order = TRUE)
 @
 
@@ -216,6 +220,8 @@ The Seasonal Kendall test is not informative when trends for different months di
 
 <<>>=
 x <- sfbayChla
+@
+<<eval=FALSE>>=
 seasonTrend(x, plot = TRUE, ncol = 4, scales = 'free_y')
 @
 
@@ -253,6 +259,8 @@ Empirical Orthogonal Function (\textsc{EOF}) analysis is a term used primarily i
 <<>>=
 chl27 <- sfbayChla[, "s27"]
 chl27a <- interpTs(chl27, gap = 3)
+@
+<<eval=FALSE>>=
 plot(chl27a, col = "red", lwd = .5, xlab = "")
 lines(chl27, col = "blue", lwd = 1.5)
 @
@@ -274,6 +282,8 @@ lines(chl27, col = "blue", lwd = 1.5)
 <<>>=
 chla1 <- aggregate(sfbayChla, 1, mean, na.rm = TRUE)
 chla1 <- chla1[, 1:12]
+@
+<<eval=FALSE>>=
 eofNum(chla1, distr = "lognormal", reps = 2000)
 @
 
@@ -324,6 +334,8 @@ The following example plots the \textsc{EOFs} from an analysis of this month $\t
 
 <<>>=
 e2 <- eof(chl27b, n = 2)
+@
+<<eval=FALSE>>=
 eofPlot(e2, type = "coef")
 @
 
@@ -349,6 +361,8 @@ The average seasonal pattern may not resemble observed seasonality in a given ye
 <<>>=
 chl27 <- sfbayChla[, "s27"]
 d1 <- decompTs(chl27)
+@
+<<eval=FALSE>>=
 plot(d1, nc = 1, main = "Station 27 Chl-a decomposition")
 @
 
@@ -445,10 +459,14 @@ head(phenoPhase(zchl27, c(1, 6), out = 'julian'))
 
 \subsection{Miscellaneous plotting functions}
 
+\texttt{plotTsAnom} plots departures of time series from their long-term mean and can be a useful way of examining trends in annualized data.
+
 \texttt{plotTsTile} plots a monthly time series as a month $\times$ year grid of tiles, with color representing magnitude. The data can be binned in either of two ways. The first is simply by deciles. The second, which is intended for log-anomaly data, is by four categories: Positive numbers higher or lower than the mean positive value, and negative numbers higher or lower than the mean negative value. In this version of \texttt{plotTsTile}, the anomalies are calculated with respect to the overall mean month. 
 
 <<>>=
 chl27 <- sfbayChla[, "s27"]
+@
+<<eval=FALSE>>=
 plotTsTile(chl27)
 @
 
@@ -467,7 +485,7 @@ print(plotTsTile(chl27))
 
 The \texttt{layOut} function is a convenient way to create a graph consisting of two or more plots produced by the \textbf{ggplot2} package. The position of each plot is determined by the beginning row and column numbers. The relative size of each plot is determined by the sequence lengths of row and column numbers. The total grid size of the graph is determined automatically by the grid numbers used for individual plots. Manual adjustment of the graphics window may be useful to get proper aspect ratios and prevent text from overlapping (Figure~\ref{fig:layout}):
 
-<<eval=FALSE>>=
+<<>>=
 chl27 = sfbayChla[, 's27']
 g1 <- plotTsTile(chl27, legend.title = 'Chl log-anomaly', 
     square=FALSE)
@@ -475,6 +493,8 @@ g2 <- seasonTrend(chl27, plot = TRUE, legend = TRUE)
 g3 <- plotSeason(chl27, num.era = 3, ylab = expression(paste('Chl-', italic(a), ', ', mu*g~L^{-1})))
 ## quartz("", 10, 6)  # e.g., in mac os x, or:
 ## grid.newpage()  # to re-use existing plot window
+@
+<<eval=FALSE>>=
 layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10), list(g3, 3:5, 1:8))
 @
 
@@ -482,18 +502,12 @@ layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10), list(g3, 3:5, 1:8))
 \begin{sidewaysfigure}[tbp]
 \begin{center}
 <<fig=TRUE, echo=FALSE, results=hide, width=10, height=6>>=
-chl27 = sfbayChla[, 's27']
-g1 <- plotTsTile(chl27, legend.title = 'Chl log-anomaly', 
-square=FALSE)
-g2 <- seasonTrend(chl27, plot = TRUE, legend = TRUE)
-g3 <- plotSeason(chl27, num.era = 3, ylab = expression(paste('Chl-', italic(a), ', ', mu*g~L^{-1})))
 print(layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10), list(g3, 3:5, 1:8)))
 @
 \caption{Example of use of \texttt{layOut} function for the chlorophyll-\emph{a} monthly time series at station 27 in San Francisco Bay.}
 \label{fig:layout}
 \end{center}
 \end{sidewaysfigure}
-
 
 \section{Concluding Remarks}
 

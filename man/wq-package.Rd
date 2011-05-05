@@ -12,9 +12,9 @@ Functions to assist in the processing and exploration of data from monitoring pr
 \tabular{ll}{
 Package: \tab wq\cr
 Type: \tab Package\cr
-Version: \tab 0.3-2\cr
-Date: \tab 2011-03-11\cr
-Depends: \tab R (>= 2.10.0), methods, zoo\cr
+Version: \tab 0.3-3\cr
+Date: \tab 2011-03-25\cr
+Depends: \tab R (>= 2.12.0), methods, zoo\cr
 Suggests: \tab ggplot2, reshape\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr

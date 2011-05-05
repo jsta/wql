@@ -7,7 +7,9 @@ Determine seasonal trends
 Find the trend for each season of a time series (matrix or vector) and indicates statistical significance.
 }
 \usage{
-seasonTrend(x, first, last, type = c("slope", "slope.pct"), method = c("mk", "lin"), plot = FALSE, xlab = NULL, ylab = NULL, miss = FALSE, legend = FALSE, ...)
+seasonTrend(x, first, last, type = c("slope", "slope.pct"),
+    method = c("mk", "lin"), plot = FALSE, xlab = NULL,
+    ylab = NULL, miss = FALSE, legend = FALSE, ...)
 }
 \arguments{
   \item{x}{
@@ -45,7 +47,7 @@ Further parameters to pass to the plotting function.
 }
 }
 \details{
-The slope estimate and its significance are calculated for each season and time series. If \code{type = "slope.pct"}, the slopes are multiplied by 100 and divided by the overall mean (not the median, which can be zero even in cases where a trend estimate is useful). If \code{method = 'mk'}. the Theil-Sen slope is calculated with the Mann-Kendall test of significance. Otherwise, linear regression is used to determine the slope and significance. 
+The slope estimate and its significance are calculated for each season and time series. If \code{type = "slope.pct"}, the slopes are multiplied by 100 and divided by the overall mean (not the median, which can be zero even in cases where a trend estimate is useful). If \code{method = 'mk'}. the Theil-Sen slope is calculated with the Mann-Kendall test of significance. Otherwise, linear regression is used to determine the slope and significance.
 
 If \code{plot = TRUE}, each time series is represented by a dot plot showing the trend for each season. The colour of the dot indicates whether the trend is significant or not. When \code{method = 'mk'}, the dot shape (solid or empty circle) indicates whether the proportion of slopes joining the first and last fifths of the data is < 0.5 or not. If this value is 0.5 or more, the trend results may not be a good representation of the entire period and a different time window should be considered. Indication of missing values and the graph legend is optional.
 

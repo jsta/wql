@@ -93,7 +93,7 @@ sfb <- new('WqData', m1)
 ## Summarize the data
 summary(sfb)
 
-## Create strip chart summary of data
+## Create boxplot summary of data
 plot(sfb, vars = c('chl', 'dox', 'spm'), num.col = 2)
 }
 
