@@ -34,13 +34,15 @@ Number specifying a depth; a numeric vector specifying top and bottom depths of 
 }
 
 \details{
-When \code{qprob = NULL}, the function averages all included depths for each day, the implicit assumption being that the layer is well-mixed and/or the samples are evenly distributed with depth in the layer. If \code{layer = "max.depths"}, then only the value at the maximum depth for each time, site and variable combination will be used (this can take a relatively long time). The function produces a matrix time series of all variables for the specified site or all sites for the specified variable. If no layer is specified, all depths will be used. If \code{type = "ts.mon"}, available daily data are averaged to produce a monthly time series, from which a quarterly or annual series can be created if needed. If you want values for the actual dates of observation, then set \code{type = "zoo"}.
+When \code{qprob = NULL}, the function averages all included depths for each day, the implicit assumption being that the layer is well-mixed and/or the samples are evenly distributed with depth in the layer. If \code{layer = "max.depths"}, then only the value at the maximum depth for each time, site and variable combination will be used. If no layer is specified, all depths will be used.
+
+The function produces a matrix time series of all variables for the specified site or all sites for the specified variable. If \code{type = "ts.mon"}, available daily data are averaged to produce a monthly time series, from which a quarterly or annual series can be created if needed. If you want values for the actual dates of observation, then set \code{type = "zoo"}.
 
 When \code{qprob} is a number from 0 to 1, it is interpreted as a probability and the corresponding quantile is used to aggregate observations within the specified layer. So to get the maximum, for example, use qprob = 1. If \code{type = "ts.mon"}, the same quantile is used to aggregate all the available daily values.
 }
 
 \note{
-The layer list can include negative numbers, which may have been used in the \code{WqData} object to denote variables that apply to the water column as a whole, such as, say, -1 for light attenuation coefficient. This enables \code{focus = 's27'} and \code{layer = list(-1, c(0, 5))} to produce a time series matrix for station 27 that includes both attenuation coefficient and chlorophyll averaged over the top 5 m. Negative numbers may also have been used in the \code{WqData} object to identify qualitative depths such as \dQuote{near bottom}, which is not uncommon in historical data sets. So data from such depths can  be aggregated easily with other data to make these time series.
+The layer list is allowed to include negative numbers, which may have been used in the \code{WqData} object to denote variables that apply to the water column as a whole, such as, say, -1 for light attenuation coefficient. This enables \code{focus = 's27'} and \code{layer = list(-1, c(0, 5))} to produce a time series matrix for station 27 that includes both attenuation coefficient and chlorophyll averaged over the top 5 m. Negative numbers may also have been used in the \code{WqData} object to identify qualitative depths such as \dQuote{near bottom}, which is not uncommon in historical data sets. So data from such depths can be aggregated easily with other data to make these time series.
 }
 
 \value{

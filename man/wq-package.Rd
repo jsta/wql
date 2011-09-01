@@ -6,14 +6,14 @@
 Exploring water quality monitoring data
 }
 \description{
-Functions to assist in the processing and exploration of data from monitoring programs for aquatic ecosystems. The focus is on time series data for physical and chemical properties of water, as well as the plankton. The package is intended for programs that sample approximately monthly at discrete stations.
+Functions to assist in the processing and exploration of data from monitoring programs for aquatic ecosystems. The name "wq" stands for "water quality" and reflects a focus on time series data for physical and chemical properties of water, as well as the plankton. The package is intended for programs that sample approximately monthly at discrete stations, a feature of many legacy data sets. Although our emphasis is on aquatic ecosystems, most of the functions should be useful for analysis of similar-frequency time series regardless of the subject matter.
 }
 \details{
 \tabular{ll}{
 Package: \tab wq\cr
 Type: \tab Package\cr
-Version: \tab 0.3-3\cr
-Date: \tab 2011-03-25\cr
+Version: \tab 0.3-4\cr
+Date: \tab 2011-09-01\cr
 Depends: \tab R (>= 2.12.0), methods, zoo\cr
 Suggests: \tab ggplot2, reshape\cr
 License: \tab GPL-2\cr
