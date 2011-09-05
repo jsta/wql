@@ -34,9 +34,9 @@
 
 \section{Introduction}
 
-This package contains functions to assist in the processing and exploration of data from monitoring programs for aquatic ecosystems. The name \textit{wq} stands for \textit{w}ater \textit{q}uality and reflects a focus on time series data for physical and chemical properties of water, as well as the plankton. The package is  intended for programs that sample approximately monthly at discrete stations, a feature of many legacy data sets. Although our emphasis is mainly estuarine and nearshore coastal ecosystems, most functions should be applicable for a wide range of systems, from freshwater to open ocean.
+This package contains functions to assist in the processing and exploration of data from monitoring programs for aquatic ecosystems. The name \textit{wq} stands for \textit{w}ater \textit{q}uality and reflects a focus on time series data for physical and chemical properties of water, as well as the plankton. The package is intended for programs that sample approximately monthly at discrete stations, a feature of many legacy data sets. Although our emphasis is on aquatic ecosystems, many of the functions should be useful for time series analysis regardless of the subject matter.
 
-The approach used here involves transformation of external data files into a standard format that existing functions can then handle easily. A conceptualization of this sequence is illustrated in Figure~\ref{fig:typSeq}. Water quality monitoring programs maintain their \emph{data} in a wide variety of formats, and the first step is to \emph{read} data from an external file and store it in a data frame. Often, the external data are stored or at least transmitted in a comma- or tab-delimited format and can be easily handled with \texttt{read.table} or one of its variants. Some \emph{clean}ing or manipulation of the data set may take place during the import process, but more substantive ones are often undertaken immediately after. Typical modifications include renaming variables, dropping unnecessary variables and observations, and coercing variables to different classes. These modifications are chosen with regard to ease of use and the intended analysis, but also in order to facilitate construction of an object with a standardized format. Before constructing this object, though, we may want to \emph{derive} new variables from the original ones (e.g., salinity from conductivity). Next, we \emph{generate} the standardized ``wq data'' object, which is a member of the \texttt{WqData} class defined in this package. We can then \emph{reshape} into various forms---matrix, list, time series vector, data frame, etc.---depending on the analysis. At this point, the data are finally in a form that we can \emph{analyze and visualize}. Some functions may be able to explore a \texttt{WqData} object directly without any additional reshaping.
+The approach used here involves transformation of external data files into a standard format that existing functions can then handle easily. A conceptualization of this sequence is illustrated in Figure~\ref{fig:typSeq}. Water quality monitoring programs maintain their \emph{data} in a wide variety of formats, and the first step is to \emph{read} data from an external file and store it in a data frame. Often, the external data are stored or at least transmitted in a comma- or tab-delimited format and can be easily handled with \texttt{read.table} or one of its variants. Some \emph{clean}ing or manipulation of the data set may take place during the import process, but more substantive ones are often undertaken immediately after. Typical modifications include renaming variables, dropping unnecessary variables and observations, and coercing variables to different classes. These modifications are chosen with regard to ease of use and the intended analysis, but also in order to facilitate construction of an object with a standardized format. Before constructing this object, though, we may want to \emph{derive} new variables from the original ones (e.g., salinity from conductivity). Next, we \emph{generate} the standardized ``wq data'' object, which is a member of the \texttt{WqData} class defined in this package (this step can be bypassed if it turns out not to be useful). We can then \emph{reshape} into various forms---matrix, list, time series vector, data frame, etc.---depending on the analysis. At this point, the data are finally in a form that we can \emph{analyze and visualize}. Some functions may be able to explore a \texttt{WqData} object directly without any additional reshaping.
 
 \setkeys{Gin}{width=.7\textwidth}
 \begin{figure}[tbp]
@@ -77,9 +77,9 @@ sfbay1 <- transform(sfbay, dox = round(100 * dox/oxySol(sal, temp), 1))
 sfbay1[x, "dox"]
 @
 
-\noindent Aside from \texttt{ec2pss} and \texttt{oxySol}, the function \texttt{ammFrac} is available for estimating the fraction of total ammonium in the un-ionized form.
+\noindent Aside from \texttt{ec2pss} and \texttt{oxySol}, the function \texttt{ammFrac} is available for estimating the fraction of total ammonium in un-ionized form.
 
-As will be seen below, much of the manipulation work needed to form the \texttt{WqData} object is taken care of by a generating function in the package, and there is really nothing more that needs to be done. In fact, not even the renaming of the variables was necessary: only the initial \texttt{read.csv} function was required. This is partly due to the way the original data were formatted in the downloaded file and more work may be needed in other cases.
+As will be seen below, much of the manipulation work needed to form the \texttt{WqData} object is taken care of by a generating function in the package, and there is really nothing more that needs to be done. In fact, not even the renaming of the variables was necessary: only the initial \texttt{read.csv} function was required. This is partly due to the way the original data were formatted in the downloaded file and more work may be needed in other cases. Also, one can always create the time series of interest directly, bypassing the \texttt{WqData} object if it turns out to be of little benefit or if the data come from other subject areas where ``depth'' has no relevance. Even in the latter case, though, some arbitrary depth could be assigned to all observations in order to take advantage of functions that operate on \texttt{WqData} objects.
 
 \section{The \texttt{WqData} class} \label{sec:wqClass} 
 
@@ -99,7 +99,7 @@ sfb <- wqData(sfbay, c(1, 3:4), 5:12, site.order = TRUE, type = "wide",
 head(sfb)
 @
 
-There is a \texttt{summary} method for this class that tabulates the number of observations by site and variable, as well as the mean and  quartiles for individual variables:
+There is a \texttt{summary} method for this class that tabulates the number of observations by site and variable, as well as the mean and quartiles for individual variables:
 
 <<>>=
 summary(sfb)
@@ -126,7 +126,7 @@ Apart from \texttt{summary} and \texttt{plot}, existing methods for data frames 
 
 \section{Reshaping} \label{sec:reshape}
 
-Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. If the quantile probability \texttt{qprob = NULL}, all replicates are first averaged and then the mean is found for the depth layers of interest. Otherwise the respective quantile will be used both to aggregate depths for each day and to aggregate days for each month. If no layers are specified, all depths will be used. If \texttt{layer = "max.depths"}, the time series will be values of the deepest sample for each time, site and variable. This can be useful, for example, in pinpointing the worst DO conditions. The \texttt{layer} argument allows for flexibility in specifying depths, including a list of layers and negative depths used as codes for, say, ``near botton'' or ``entire water column''. The default time series plot is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}):
+Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. \texttt{tsMake} is a function for \texttt{WqData} objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option \texttt{type = "ts.mon"}. If the quantile probability \texttt{qprob = NULL}, all replicates are first averaged and then the mean is found for the depth layers of interest. Otherwise the respective quantile will be used both to aggregate depths for each day and to aggregate days for each month. If no layers are specified, all depths will be used. If \texttt{layer = "max.depths"}, the time series will be values of the deepest sample for each time, site and variable. The \texttt{layer} argument allows for flexibility in specifying depths, including a list of layers and negative depths used as codes for, say, ``near botton'' or ``entire water column''. The function \texttt{plotTs} is convenient for a quick look at the series (Figure~\ref{fig:6chlTs}); it produces a line plot but includes isolated data points as well:
 
 <<>>=
 y <- tsMake(sfb, focus = "chl", layer = c(0, 5))
@@ -134,14 +134,14 @@ y[1:6, ]
 tsp(y)
 @
 <<eval=FALSE>>=
-plot(y, main = "Chlorophyll in San Francisco Bay")
+plotTs(y, ylab = "Chlorophyll in San Francisco Bay", ncol = 2)
 @
 
-\setkeys{Gin}{width=.8\textwidth}
+\setkeys{Gin}{width=1\textwidth}
 \begin{figure}[tbp]
 \begin{center}
-<<fig=TRUE, echo=FALSE, width=6, height=4>>=
-plot(y, main = "Chlorophyll in San Francisco Bay")
+<<fig=TRUE, echo=FALSE, width=6, height=4.5>>=
+print(plotTs(y, ylab = "Chlorophyll in San Francisco Bay", ncol = 2))
 @
 \caption{Monthly mean chlorophyll ($\mu$g L$^{-1}$) in 0-5 m layer of San Francisco Bay.}
 \label{fig:6chlTs}
@@ -163,11 +163,11 @@ chl27 <- round(chl27, 1)
 head(ts2df(chl27))
 @
 
-\noindent Another example of its use is shown in Section~\ref{sec:eof} below. Another similar reshaping function is \texttt{mts2ts}, which converts a matrix time series to a vector time series for various analyses. It first aggregates the multivariate matrix time series by year, then converts it to a vector time series in which the ``seasons'' correspond to these annnualized values for the original variables. The \texttt{seas} parameter enables focusing the subsequent analysis on seasons of special interest, or to ignore seasons where there are too many missing data. The function can be used in conjunction with \texttt{seaKen} to conduct a Regional Kendall trend analysis, as described in Section~\ref{sec:trends} below:
+\noindent Another example of its use is shown in Section~\ref{sec:eof} below. A similar reshaping function is \texttt{mts2ts}, which converts a matrix time series to a vector time series for various analyses. It first aggregates the multivariate matrix time series by year, then converts it to a vector time series in which the ``seasons'' correspond to these annnualized values for the original variables. The \texttt{seas} parameter enables focusing the subsequent analysis on seasons of special interest, or to ignore seasons where there are too many missing data. The function can be used in conjunction with \texttt{seaKen} to conduct a Regional Kendall trend analysis, as described in Section~\ref{sec:trends} below:
 
 <<>>=
-y <- window(sfbayChla, s=2005, end = c(2009, 12))  # 5 years, 16 sites
-mts2ts(y, seas = 2:4)  # focus on Feb-Apr spring bloom
+y <- window(sfbayChla, start = 2005, end = c(2009, 12))  # 5 years, 16 sites
+round(mts2ts(y, seas = 2:4), 1)  # focus on Feb-Apr spring bloom
 @
 
 \section{Analyzing}
@@ -180,16 +180,16 @@ The function \texttt{mannKen} does a Mann-Kendall test of trend on a time series
 mannKen(Nile)
 @
 
-\noindent \texttt{mannKen} can also handle matrix time series, with  options for plotting trends in the original units per year, as percent per year, or as Kendall's tau. The first option is suitable when time series are all in the same units, such as chlorophyll-\emph{a} measurements from different stations. The second makes sense with variables of different units but is not suitable for variables that can span zero (e.g., sea level, or temperature in $^\circ$C). The last option can always be used but measures the strength of the correlation with time rather than the trend level. Plotted variables can be ordered by the size of their trends, and both statistical significance and excessive missing data are mapped to point colour and shape (see discussion of \texttt{seasonTrend} below). When aggregating monthly series to produce an annual series for trend testing, there is a utility function \texttt{tsSub} that allows subsetting the months beforehand. It can be useful for avoiding months with many missing data, or to focus attention on a particular time of year (Figure~\ref{fig:mk}):
+\noindent \texttt{mannKen} can also handle matrix time series, with options for plotting trends in the original units per year, as percent per year, or as Kendall's tau. The first option is suitable when time series are all in the same units, such as chlorophyll-\emph{a} measurements from different stations. The second makes sense with variables of different units but is not suitable for variables that can span zero (e.g., sea level, or temperature in $^\circ$C). The last option can always be used but measures the strength of the correlation with time rather than the trend level. Plotted variables can be ordered by the size of their trends, and both statistical significance and excessive missing data are mapped to point colour and shape (see discussion of \texttt{seasonTrend} below). When aggregating monthly series to produce an annual series for trend testing, there is a utility function \texttt{tsSub} that allows subsetting the months beforehand (\texttt{meanSub} is actually more efficient when aggregation is the goal). It can be useful for avoiding months with many missing data, or to focus attention on a particular time of year (Figure~\ref{fig:mk}):
 
 <<>>=
 y <- sfbayChla
-y1 <- tsSub(y, seas = c(1:7, 9:11))  # Aug and Dec often missing
-y2 <- aggregate(y1, 1, mean, na.rm=FALSE)
-mannKen(y)
+y1 <- tsSub(y, seas = 2:4)  # focus on Feb-Apr spring bloom
+y2 <- aggregate(y1, 1, mean, na.rm = FALSE)
+signif(mannKen(y2), 3)
 @
 <<eval=FALSE>>=
-mannKen(y, plot=TRUE, type='pct', order = TRUE)
+mannKen(y2, plot=TRUE, type='pct', order = TRUE)
 @
 
 \setkeys{Gin}{width=.8\textwidth}
@@ -254,7 +254,7 @@ seaKen(mts2ts(chl, 2:4))  # regional trend in spring bloom
 
 Empirical Orthogonal Function (\textsc{EOF}) analysis is a term used primarily in the earth sciences for principal component analysis applied to simultaneous time series at different spatial locations. \cite{hannachi2007} provides a recent comprehensive summary. The function \texttt{eof} in this package, based on \texttt{prcomp} in the \texttt{stats} package, scales the time series and applies a promax rotation to the \textsc{EOF}s.  
 
-\texttt{eof} does not permit \texttt{NA}s and some kind of data imputation or omission will usually be required. The function \texttt{interpTs} is handy for small data gaps. Here, we use it to bridge gaps of up to three months. The interpolated series is then plotted in red and the original series overplotted in blue (Figure~\ref{fig:interp}).
+\texttt{eof} does not permit \texttt{NA}s and some kind of data imputation or omission will usually be required. The function \texttt{interpTs} is handy for interpolating small data gaps. It can also be used for filling in larger gaps with long-term means or medians. Here, we use it to bridge gaps of up to three months. The interpolated series is then plotted in red and the original series overplotted in blue (Figure~\ref{fig:interp}).
 
 <<>>=
 chl27 <- sfbayChla[, "s27"]
@@ -420,7 +420,7 @@ plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a')
 \setkeys{Gin}{width=1\textwidth}
 \begin{figure}[tbp]
 \begin{center}
-<<fig=TRUE, echo=FALSE>>=
+<<fig=TRUE, echo=FALSE, width = 7, height = 4>>=
 print(plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a'))
 @
 \caption{Changing seasonal pattern in \texttt{chl27} described by the time series of standardized anomalies for individual months.}
@@ -428,7 +428,7 @@ print(plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a'))
 \end{center}
 \end{figure}
 
-\noindent With all types of seasonal plots, it is often helpful to adjust the device aspect ratio and size manually to get the clearest information.
+\noindent With all types of seasonal plots, it is often helpful to adjust the device aspect ratio and size manually to get the clearest information. 
 
 \subsection{Phenological parameters}
 
@@ -459,7 +459,27 @@ head(phenoPhase(zchl27, c(1, 6), out = 'julian'))
 
 \subsection{Miscellaneous plotting functions}
 
-\texttt{plotTsAnom} plots departures of time series from their long-term mean and can be a useful way of examining trends in annualized data.
+\texttt{plotTsAnom} plots (unstandardized) departures of vector or matrix time series from their long-term mean and can be a useful way of examining trends in annualized data (Figure~\ref{fig:anom}).
+
+<<>>=
+chl <- aggregate(sfbayChla[, 1:6], 1, meanSub, 2:4, na.rm = TRUE)
+@
+<<eval=FALSE>>=
+plotTsAnom(chl, ylab = 'Chlorophyll-a', strip.labels = paste('Station', substring(colnames(chl), 2, 3)))
+@
+
+\setkeys{Gin}{width=1\textwidth}
+\begin{figure}[tbp]
+\begin{center}
+<<fig=TRUE, echo=FALSE, width=6.5, height=4>>=
+print(plotTsAnom(chl, ylab = 'Chlorophyll-a', strip.labels = paste('Station', substring(colnames(chl), 2, 3)))
+)
+@
+\caption{Anomaly plots for the ``spring bloom'' (mean Feb--Apr chlorophyll) at six stations in San Francisco Bay.}
+\label{fig:anom}
+\end{center}
+\end{figure}
+
 
 \texttt{plotTsTile} plots a monthly time series as a month $\times$ year grid of tiles, with color representing magnitude. The data can be binned in either of two ways. The first is simply by deciles. The second, which is intended for log-anomaly data, is by four categories: Positive numbers higher or lower than the mean positive value, and negative numbers higher or lower than the mean negative value. In this version of \texttt{plotTsTile}, the anomalies are calculated with respect to the overall mean month. 
 
@@ -511,8 +531,7 @@ print(layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10), list(g3, 3:5, 1:8)))
 
 \section{Concluding Remarks}
 
-In the near future, this package will remain focused on typical data sets that have accumulated in long-term coastal water quality monitoring programs, namely, those collected at a frequency of about $10^1$ to $10^2$ times per year at $10^1$ to $10^2$ sites. Aside from incremental revision and addition of specific functions, the package direction will be driven by the needs of people actually using it. Suggestions are therefore welcome.
-
+In the near future, this package will remain focused on typical data sets that have accumulated in long-term coastal water quality monitoring programs, namely, those collected at a frequency of about $10^1$ to $10^2$ times per year at $10^1$ to $10^2$ sites. Aside from incremental revision and addition of specific functions, the package direction will be driven by the needs of people actually using it. Suggestions or reports of any problems are welcome.
 
 \bibliographystyle{limnology_and_oceanography}
 \bibliography{wq}{}

@@ -1,5 +1,5 @@
 interpTs <-
-function(x, gap = 1, type = c("linear", "median", "mean")) {
+function(x, type = c("linear", "series.median", "series.mean", "cycle.median", "cycle.mean"), gap = NULL) {
 
 ### Imputes missing data in a time series vector or matrix
 ### Args:
@@ -11,10 +11,27 @@ function(x, gap = 1, type = c("linear", "median", "mean")) {
 	require(zoo)
 	
 	## Validate arguments
-	if (is.na(as.numeric(gap)) || gap < 1 || gap > nrow(as.matrix(x)) - 2)
+  gap.max <- nrow(as.matrix(x)) - 2
+  if (is.null(gap))
+    gap <- gap.max
+	if (is.na(as.numeric(gap)) || gap < 1 || gap > gap.max)
 		stop("gap must be a number between 1 and the length - 2")
-	type = match.arg(type)
-	
+  type = match.arg(type)
+  if (!is(x, "ts") && type %in% c("cycle.median", "cycle.mean"))
+    stop("x must be a time series for these types")
+ 	
+  ## Define function for replacement by cycle
+  tspx <- tsp(x)
+  replaceNA <- function (x, stat) {
+    x <- ts(x, st = tspx[1], fr = tspx[3])
+    x1 <- window(x, st = start(x)[1], en = c(end(x)[1], 12), ex = TRUE)
+    x2 <- matrix(x1, byrow = TRUE, ncol = 12)
+    stats <- apply(x2, 2, stat, na.rm = TRUE)
+    indx  <- (1:length(x1))[is.na(x1)]
+    x3 <- replace(x1, indx, stats[cycle(x1)[indx]])
+    window(x3, st = tspx[1], en = tspx[2])
+  }
+  
 	## Define function for vectors
 	f1 <- function(x, gap, type) {
 		if (sum(!is.na(x)) < 2) {
@@ -22,8 +39,10 @@ function(x, gap = 1, type = c("linear", "median", "mean")) {
 		} else {
 		    x1 <- switch(type,
 		      linear = na.approx(x, na.rm = FALSE),
-		      median = ifelse(is.na(x), median(x, na.rm = TRUE), x),
-		      mean = ifelse(is.na(x), mean(x, na.rm = TRUE), x)
+		      series.median = ifelse(is.na(x), median(x, na.rm = TRUE), x),
+		      series.mean = ifelse(is.na(x), mean(x, na.rm = TRUE), x),
+          cycle.median = replaceNA(x, median),
+          cycle.mean = replaceNA(x, mean)
 		      )
         for (i in seq_len(length(x) - gap)) {
           seq1 <- i:(i + gap)

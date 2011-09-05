@@ -43,7 +43,7 @@ The Seasonal Kendall tests were introduced by Hirsch et al. (1982) and are furth
 
 The function \code{seaRoll} applies \code{seaKen} to rolling time windows of width \code{w}. A minimum \code{w} of five years is required. The only rules currently implemented are: (1) ignore missing data; and (2) report a result only if more than half the seasons are each missing less than half the possible comparisons between the first and last 20\% of the years (Schertz et al. [1991] discuss these and related decisions about missing data). 
 
-If \code{plot = TRUE} in the latter function, a point plot will be drawn with the Sen slope plotted at the leading year of the trend window. Filled circles indicate \emph{p}value < 0.01, and a legend will be drawn if requested.
+If \code{plot = TRUE} in the latter function, a point plot will be drawn with the Sen slope plotted at the leading year of the trend window. Filled circles indicate \emph{p}-value < 0.01, and a legend will be drawn if requested.
 
 Both functions can be used in conjunction with \code{mts2ts} to calculate a Regional Kendall test of significance for annualized data, along with a regional estimate of trend (Helsel and Frans 2006). See the examples below.
 }

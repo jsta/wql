@@ -53,14 +53,8 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
       }
    } else {
       ## Plot standardized anomalies for each month
-      x1 <- matrix(x, ncol=12, byrow=TRUE)
-      x2 <- scale(x1)
-      x3 <- as.numeric(t(x2))
-      d <- transform(d, x = as.numeric(x3))
-      ggplot(d, aes(x=yr, y=x)) +
-         geom_bar(stat='identity') +
-         opts(axis.text.x=theme_text(angle=90, hjust=1)) +
-         labs(x="", y=ylab) +
-         facet_wrap(~mon, ncol=num.col)
+      x1 <- ts2df(x)
+      x2 <- ts(x1, st = start(x))
+      plotTsAnom(x2, ylab = ylab, scales = "free_y")
     }
 }

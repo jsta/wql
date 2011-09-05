@@ -1,3 +1,17 @@
+CHANGES SINCE 0.3-3
+
+New features
+
+* date2decyear: Converts dates to numeric years.
+* interpTs: More options for replacing NAs.
+* plotTs: Time series line plot plus isolated points
+* plotTsAnom: Now works for matrix time series.
+* theme_wq: Simplified version of theme_grey in package "ggplot2".
+
+Bugs fixed
+
+* tsMake: No longer excruciatingly slow when layer = "max.depths"
+
 CHANGES SINCE 0.3-2
 
 New features

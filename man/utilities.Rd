@@ -1,10 +1,12 @@
 \name{utilities}
 \Rdversion{1.1}
+\alias{date2decyear}
 \alias{decyear2date}
 \alias{layerMean}
 \alias{leapYear}
 \alias{meanSub}
 \alias{monthNum}
+\alias{theme_wq}
 \alias{tsSub}
 \alias{years}
 
@@ -14,6 +16,8 @@
 
 \description{
   A variety of small utilities used in other functions.
+  
+  \code{date2decyear}: Converts object of class \code{"Date"} to decimal year assuming time of day is noon.
   
   \code{decyear2date}: Converts decimal year to object of class \code{"Date"}.
 
@@ -25,12 +29,16 @@
   
   \code{monthNum}: Converts dates to the corresponding numeric month.
   
+  \code{theme_wq}: A simplified version of \code{theme_grey} in \pkg{ggplot2}: Omits axis ticks, minor grid and strip background.
+  
   \code{tsSub}: Drops seasons from a matrix or vector time series.
 
   \code{years}: Converts dates to the corresponding numeric years.
 }
 
 \usage{
+date2decyear(w)
+
 decyear2date(x)
 
 layerMean(d)
@@ -41,12 +49,20 @@ meanSub(x, sub, na.rm = FALSE)
 
 monthNum(y)
 
+theme_wq(base_size = 12, base_family = "")
+
 tsSub(x1, seas = 1:frequency(x1))
 
 years(y)
 }
 
 \arguments{
+  \item{base_family}{
+    Base font family for plots.
+  }
+  \item{base_size}{
+    Base font size in points for plots.
+  }
   \item{d}{
     A numeric matrix or data frame with depth in the first column and observations for some variable in each of the remaining columns.
   }
@@ -58,6 +74,9 @@ years(y)
   }
   \item{sub}{
     An integer vector.
+  }
+  \item{w}{
+    A vector of class \code{"Date"}.
   }
   \item{x}{
     A numeric vector.
@@ -71,7 +90,10 @@ years(y)
 }
 
 \examples{
-decyear2date(c(1996.001, 1999.999, 2004.162, 2005.162))
+dates <- as.Date(c("1996-01-01", "1999-12-31", "2004-02-29", "2005-03-01"))
+date2decyear(dates)
+
+decyear2date(c(1996.0014, 1999.9986, 2004.1626, 2005.1630))
 
 z = c(1,2,3,5,10)  # 5 depths
 x = matrix(rnorm(30), nrow = 5)  # 6 variables at 5 depths
@@ -84,6 +106,14 @@ leapYear(c(1996.9, 1997))
 aggregate(sfbayChla, 1, meanSub, sub=2:4)
 
 monthNum(as.Date(c('2007-03-17', '2003-06-01')))
+
+## Simplify plot with theme_wq
+library(ggplot2)
+df <- data.frame(times = as.numeric(time(sfbayChla)), 
+  sfbayChla[, c('s27', 's30')])
+df1 <- melt(df, id = 'times')
+qplot(times, value, data = df1, facets = variable ~ ., geom = 'line', 
+  xlab = '', ylab = 'Chl a') + theme_wq() 
 
 ## Ignore certain seasons in a Seasonal Kendall test.
 c27 <- sfbayChla[, 's27']
