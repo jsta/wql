@@ -1,6 +1,6 @@
 plotTs <- function(x, xlab, ylab, dot.size = 1, plot.order = colnames(x), strip.labels = colnames(x), ...) {
 
-  require(reshape)
+  require(reshape2)
   require(ggplot2)
   
   ## Validate arguments
@@ -12,6 +12,11 @@ plotTs <- function(x, xlab, ylab, dot.size = 1, plot.order = colnames(x), strip.
     ylab = ""
 
   if (is(x, 'mts')) {  # a matrix time series
+    
+    # Fix possible spaces in column names
+    strip.labels <- strip.labels
+    colnames(x) <- gsub(' ','.', colnames(x))
+    plot.order <- gsub(' ','.', plot.order)
 
     ## identify isolated points
     x.forward <- rbind(rep(NA, ncol(x)), x[1:(nrow(x)-1), ])

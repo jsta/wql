@@ -23,7 +23,7 @@ Object of class \code{"WqData"}.
 Name of a site or water quality variable.
 }
   \item{layer}{
-Number specifying a depth; a numeric vector specifying top and bottom depths of layer; a list specifying multiple depths and/or layers; or just the string \code{"max.depths"}.
+Number specifying a single depth; a numeric vector of length 2 specifying top and bottom depths of layer; a list specifying multiple depths and/or layers; or just the string \code{"max.depths"}.
 }
   \item{type}{
 \code{ts.mon} to get a monthly time series, \code{zoo} to get an object of class \code{"zoo"} with individual observation dates.

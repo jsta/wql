@@ -2,7 +2,7 @@ wqData <-
 function(data, locus, wqdata, site.order, time.format = "%Y-%m-%d",
   type = c("long", "wide")) {    
 
-  require(reshape)
+  require(reshape2)
 
   ## Validate args
   cnames <- colnames(data)

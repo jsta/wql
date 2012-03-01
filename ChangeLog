@@ -1,3 +1,9 @@
+CHANGES SINCE 0.3-4
+
+* Addresses issues introduced with version 0.9 of ggplot2. 
+* Uses reshape2 instead of reshape.
+* plotTsAnom and seasonTrend: minor plotting changes.
+
 CHANGES SINCE 0.3-3
 
 New features

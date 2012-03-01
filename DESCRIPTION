@@ -1,8 +1,8 @@
 Package: wq
 Type: Package
 Title: Exploring water quality monitoring data
-Version: 0.3-4
-Date: 2011-09-01
+Version: 0.3-5
+Date: 2012-03-01
 Author: Alan D. Jassby and James E. Cloern
 Maintainer: Alan Jassby <adjassby@ucdavis.edu>
 Description: Functions to assist in the processing and exploration of
@@ -15,11 +15,10 @@ Description: Functions to assist in the processing and exploration of
         ecosystems, most of the functions should be useful for analysis
         of similar-frequency time series regardless of the subject
         matter.
-Depends: R (>= 2.12.0), methods, zoo
-Suggests: ggplot2, reshape
+Depends: R (>= 2.14), methods, zoo
+Suggests: ggplot2 (>= 0.9), grid, reshape2
 License: GPL-2
-LazyLoad: yes
 LazyData: yes
-Packaged: 2011-09-05 15:53:23 UTC; alanjassby
+Packaged: 2012-03-01 22:54:31 UTC; alanjassby
 Repository: CRAN
-Date/Publication: 2011-09-05 19:37:53
+Date/Publication: 2012-03-02 05:00:53

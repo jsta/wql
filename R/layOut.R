@@ -1,5 +1,7 @@
 layOut = function(...) {
 
+    require(grid)
+    
     x <- list(...)
     n <- max(sapply(x, function(x) max(x[[2]])))
     p <- max(sapply(x, function(x) max(x[[3]])))

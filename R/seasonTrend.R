@@ -58,52 +58,31 @@ seasonTrend <- function(x, first, last, type = c("slope",
     }
     ts.id <- factor(rep(tsnames, each = fr), levels = tsnames, 
         ordered = TRUE)
-    ans1 <- data.frame(trend = ans[, type], ans[, 3:4], season = rep(1:fr, 
-        times = nc), ts.id)
+    ans1 <- data.frame(trend = ans[, type], ans[, 3:4], season = as.factor(rep(1:fr, 
+        times = nc)), ts.id)
     ## Plot or tabulate results
     if (!plot) {
         ans1
     } else {
         ans2 <- na.omit(ans1)
         nr <- nrow(ans2)
-        if (is.null(xlab)) 
-            xlab <- ifelse(type == "slope", 
+        if (is.null(ylab)) 
+            ylab <- ifelse(type == "slope", 
                 expression(paste("Trend (units ", year^{ -1 }, ")")),
                 expression(paste("Trend (% ", year^{ -1 }, ")")))
-        if (is.null(ylab)) 
-            ylab = ifelse(fr == 12, "Month", ifelse(fr == 
-                4, "Quarter", "Season"))
-        ticklab <- ifelse(1:fr == 1:12, month.abb, ifelse(1:fr == 1:4,
-        	   paste("Q1, Q2, Q3, Q4"), 1:fr))
-        p1 <- ggplot(ans2, aes(x = trend, y = season)) +
-            geom_hline(yintercept = 1:fr, colour = "white") +
-            scale_y_continuous(breaks = 1:fr, labels = ticklab) +
+        if (is.null(xlab)) 
+            xlab = ifelse(fr == 12, "Month", ifelse(fr == 
+                4, "Quarter", "Season"))    
+        if (miss) ans2 <- subset(ans2, missing < 0.5)
+        p1 <- ggplot(ans2, aes(x = season, y = trend, fill = p < .05)) +
+            geom_bar(stat = 'identity') +
+            scale_fill_manual(expression(paste(italic(p), "-value < 0.05")), values = c(`FALSE` = "grey65", `TRUE` = "dodgerblue")) +
             labs(list(y = ylab, x = xlab)) + 
             opts(panel.grid.minor =	theme_blank())
-        if (miss) {
-            p1 <- p1 + 
-                geom_point(aes(colour = p < 0.05, shape = missing
-            	   < 0.5)) +
-            	scale_colour_manual(
-                  expression(paste(italic(p), "-value < 0.05")), 
-                  values = c(`FALSE` = "#1B9E77", `TRUE` = "#D95F02")
-                  ) + 
-                scale_shape_manual(
-                  expression("missing < 50%"), 
-                  values = c(`FALSE` = 1, `TRUE` = 16)
-                  ) 
-        } else {
-            p1 <- p1 + 
-                geom_point(aes(colour = p < 0.05)) +
-            	scale_colour_manual(
-                  expression(paste(italic(p), "-value < 0.05")), 
-                  values = c(`FALSE` = "#1B9E77", `TRUE` = "#D95F02")
-                  ) 
-        }
-        if (nc > 1) 
-            p1 <- p1 + facet_wrap(~ ts.id, ...)
-        if (!legend) 
-            p1 <- p1 + opts(legend.position = "none")
-        p1
+            if (nc > 1) 
+                p1 <- p1 + facet_wrap(~ ts.id, ...)
+            if (!legend) 
+                p1 <- p1 + opts(legend.position = "none")
+            p1
     }
 } 

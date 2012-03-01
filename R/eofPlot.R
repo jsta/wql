@@ -8,6 +8,7 @@ eofPlot <- function(x, type = c("coef", "amp"),
     ###  rev: If TRUE, then coefficients and amplitudes are multiplied by -1
     ### Returns: ggplot object
 
+    require(reshape2)
     require(ggplot2)
 
     ## Validate args

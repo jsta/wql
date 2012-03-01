@@ -35,7 +35,7 @@ Conversion specification for \code{time} defined by \acronym{ISO C/POSIX} standa
   }
 }
 
-\details{ If the data are already in long format, the function has little to do but rename the data fields. If in wide format, the \pkg{reshape} package is called to \code{melt} the data. The function also removes \code{NA} observations, converts \code{site} to (possibly ordered) factors with valid variable names, and converts \code{time} to class \code{"Date"} or \code{"POSIXct"} and ISO 8601 format, depending on \code{time.format}.  }
+\details{ If the data are already in long format, the function has little to do but rename the data fields. If in wide format, the \pkg{reshape2} package is called to \code{melt} the data. The function also removes \code{NA} observations, converts \code{site} to (possibly ordered) factors with valid variable names, and converts \code{time} to class \code{"Date"} or \code{"POSIXct"} and ISO 8601 format, depending on \code{time.format}.  }
 
 \value{
   An object of class \code{"WqData"}.

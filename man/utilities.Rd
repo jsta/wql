@@ -6,7 +6,6 @@
 \alias{leapYear}
 \alias{meanSub}
 \alias{monthNum}
-\alias{theme_wq}
 \alias{tsSub}
 \alias{years}
 
@@ -29,8 +28,6 @@
   
   \code{monthNum}: Converts dates to the corresponding numeric month.
   
-  \code{theme_wq}: A simplified version of \code{theme_grey} in \pkg{ggplot2}: Omits axis ticks, minor grid and strip background.
-  
   \code{tsSub}: Drops seasons from a matrix or vector time series.
 
   \code{years}: Converts dates to the corresponding numeric years.
@@ -49,21 +46,13 @@ meanSub(x, sub, na.rm = FALSE)
 
 monthNum(y)
 
-theme_wq(base_size = 12, base_family = "")
-
 tsSub(x1, seas = 1:frequency(x1))
 
 years(y)
 }
 
 \arguments{
-  \item{base_family}{
-    Base font family for plots.
-  }
-  \item{base_size}{
-    Base font size in points for plots.
-  }
-  \item{d}{
+   \item{d}{
     A numeric matrix or data frame with depth in the first column and observations for some variable in each of the remaining columns.
   }
   \item{na.rm}{
@@ -106,14 +95,6 @@ leapYear(c(1996.9, 1997))
 aggregate(sfbayChla, 1, meanSub, sub=2:4)
 
 monthNum(as.Date(c('2007-03-17', '2003-06-01')))
-
-## Simplify plot with theme_wq
-library(ggplot2)
-df <- data.frame(times = as.numeric(time(sfbayChla)), 
-  sfbayChla[, c('s27', 's30')])
-df1 <- melt(df, id = 'times')
-qplot(times, value, data = df1, facets = variable ~ ., geom = 'line', 
-  xlab = '', ylab = 'Chl a') + theme_wq() 
 
 ## Ignore certain seasons in a Seasonal Kendall test.
 c27 <- sfbayChla[, 's27']
