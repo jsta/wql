@@ -10,13 +10,13 @@ setMethod(
   definition = function(object, focus, layer, type = c("ts.mon", "zoo"),
     qprob = NULL)
   {
-    require(reshape)
+    require(reshape2)
     require(zoo)
 
     ## Validate args
     d <- data.frame(object)
     if ( missing(focus) || length(focus) > 1 )
-      stop("'focus' must be the name of a single site or       	variable.")
+      stop("'focus' must be the name of a single site or variable.")
     if (match(focus, d$site, nomatch = 0) > 0) {
       d <- subset(d, site == focus)
       if (nrow(d) == 0) 
@@ -45,7 +45,7 @@ setMethod(
         layer <- list(layer)
       for (el in layer) {
         if ( !is(el, "numeric") || length(el) > 2 )
-          stop("layer list items must be numbers or numeric vectors of length 2")
+          stop("layer is not specified correctly")
         if (length(el) > 1) {
           depths1 <- unique(subset(d, depth >= el[1] & depth <= el[2])$depth)
           depths <- c(depths, depths1)
@@ -67,17 +67,18 @@ setMethod(
 
     ## Reshape data
     if (match(focus, d$site, nomatch = 0) > 0) {
-      c1 <- cast(d, time ~ variable, fun.aggregate = f, na.rm = TRUE)
+      c1 <- dcast(d, time ~ variable, fun.aggregate = f, na.rm = TRUE)
     } else {
-      c1 <- cast(d, time ~ site, fun.aggregate = f, na.rm = TRUE)
+      c1 <- dcast(d, time ~ site, fun.aggregate = f, na.rm = TRUE)
     } 
 
     ## Create zoo or ts object
-    class(c1) <- "data.frame"  # otherwise colnames are dropped
     z1 <- zoo(c1[, -1], c1[, 1])
     if (type == 'ts.mon') {
       z1 <- aggregate(z1, as.yearmon, f, na.rm = TRUE)
-      if (is.null(nrow(z1)) || nrow(z1) > 1) z1 <- as.ts(z1)
+      z1names <- colnames(z1)
+      z1 <- as.ts(z1)
+      colnames(z1) <- z1names
     }
     z1
   }

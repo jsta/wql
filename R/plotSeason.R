@@ -2,7 +2,7 @@ plotSeason <-
 function(x, type = c('by.era', 'by.month'), num.era = 4,
   same.plot = TRUE, ylab = NULL, num.col = 3) {
 
-   require(reshape)
+   require(reshape2)
    require(ggplot2)
 
    ## Validate args
@@ -45,7 +45,7 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
             scale_x_discrete('', breaks = month.abb, labels = c('Jan',
             	'', '', 'Apr', '', '', 'Jul', '', '', 'Oct', '', '')) +
             scale_y_continuous(ylab) +
-            scale_colour_manual("", values = cols, legend = FALSE) +
+            scale_colour_manual("", values = cols, guide="none") +
             opts(panel.grid.minor = theme_blank())
          if (num.era > 1)
             p1 <- p1 + facet_wrap(~ int, nrow = 1)

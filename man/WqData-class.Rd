@@ -72,7 +72,7 @@ sfb1$date <- NULL
 
 ## 'Melt' the data into the correct format
 ## which automatically gives required variable and value fields.
-require(reshape)
+require(reshape2)
 m1 <- melt(sfb1, id.vars = c('time', 'stn', 'depth'))
 
 ## Make sure names of id.vars conform to WqData requirements

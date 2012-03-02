@@ -6,7 +6,7 @@ Anomaly plot of time series
 }
 
 \description{
-Series are illustrated by vertical lines extending from individual data values to the long-term mean. The axes are not scaled in any way. Anomaly plots are useful for visualizing trends.
+Series are illustrated by vertical lines extending from individual data values to the long-term mean. The axes are not scaled in any way. Anomaly plots are useful for visualizing shifts in time series levels.
 }
 
 \usage{

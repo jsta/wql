@@ -1,6 +1,6 @@
 plotTsAnom <- function(x, xlab, ylab, plot.order = colnames(x), strip.labels = colnames(x), ...) {
 
-  require(reshape)
+  require(reshape2)
   require(ggplot2)
  
   ## Validate arguments
@@ -16,19 +16,19 @@ plotTsAnom <- function(x, xlab, ylab, plot.order = colnames(x), strip.labels = c
     ## Create data frame
     x.mean = apply(x, 2, mean, na.rm=TRUE)
     x.mean.df <- data.frame(variable = factor(names(x.mean)), x.mean)
-    d <- data.frame(time = as.numeric(time(x)), x)
+    d <- data.frame(time=as.Date(time(x)), x)
     d1 <- melt(d, id = 'time')
     d2 <- merge(d1, x.mean.df)
     d3 <- transform(d2, variable = factor(variable, levels = plot.order, labels = strip.labels))
     
     ## Plot
-    ggplot(d3, aes(x = time, y = value, ymin = ifelse(value >= x.mean, x.mean, value), ymax = ifelse(value >= x.mean, value, x.mean))) +
+    ggplot(d3, aes(x = time, y = value, ymin = ifelse(value >= x.mean, x.mean, value), ymax = ifelse(value >= x.mean, value, x.mean), colour = value >= x.mean)) +
       geom_linerange() +
-      geom_hline(aes(yintercept = x.mean), colour = "blue") +
+      geom_hline(aes(yintercept = x.mean), size = 0.25) +
       labs(x = xlab, y = ylab) +
       facet_wrap(~ variable, ...) +
-      opts(axis.text.x = theme_text(angle=45, colour="grey50"))
-
+      opts(legend.position='none', panel.grid.minor = theme_blank())
+      
   } else {  # a vector time series
     
     ## Create data frame
@@ -36,9 +36,9 @@ plotTsAnom <- function(x, xlab, ylab, plot.order = colnames(x), strip.labels = c
     d1 <- data.frame(time = as.Date(x), x, x.mean)
     
     ## Plot
-    ggplot(d1, aes(x = time, y = x, ymin = ifelse(x >= x.mean, x.mean, x), ymax = ifelse(x >= x.mean, x, x.mean))) +
+    ggplot(d1, aes(x = time, y = x, ymin = ifelse(x >= x.mean, x.mean, x), ymax = ifelse(x >= x.mean, x, x.mean), colour = x >= x.mean)) +
       geom_linerange() +
-      geom_hline(aes(yintercept = x.mean), colour = "blue") +
+      geom_hline(aes(yintercept = x.mean), size = 0.25) +
       labs(x = xlab, y = ylab)
   }
 }
