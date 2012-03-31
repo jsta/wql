@@ -1,2 +1,2 @@
 monthNum <- function(y)
-  match(months(y, abbrev = TRUE), month.abb)
+  match(months(y, abbreviate = TRUE), month.abb)

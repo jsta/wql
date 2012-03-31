@@ -1,3 +1,7 @@
+CHANGES SINCE 0.3-5
+
+* Minor changes to code, with no changes in behaviour.
+
 CHANGES SINCE 0.3-4
 
 * Addresses issues introduced with version 0.9 of ggplot2. 

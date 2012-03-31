@@ -54,7 +54,7 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
    } else {
       ## Plot standardized anomalies for each month
       x1 <- ts2df(x)
-      x2 <- ts(x1, st = start(x))
+      x2 <- ts(x1, start = start(x))
       plotTsAnom(x2, ylab = ylab, scales = "free_y")
     }
 }

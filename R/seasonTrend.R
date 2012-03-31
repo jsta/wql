@@ -46,7 +46,7 @@ seasonTrend <- function(x, first, last, type = c("slope",
     for (j in 1:nc) {
         xj <- x1[, j]
         for (i in 1:fr) {
-            xij <- ts(xj[cycle(x1) == i], s = first, end = last)
+            xij <- ts(xj[cycle(x1) == i], start = first, end = last)
             ans[i + (j - 1) * fr, ] <- trend(xij)
         }
     }

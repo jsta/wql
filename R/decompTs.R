@@ -41,7 +41,7 @@ function(x, startyr, endyr, event = TRUE, type = c('mult', 'add'))
   ## Annual component
   annualmean <- aggregate(x, 1, mean, na.rm=TRUE)
   annualmeanReps <- as.vector(t(matrix(rep(annualmean, 12), ncol=12)))
-  annualmeanTs <- ts(annualmeanReps, s=startyr, f=12) %/-% grandmean   
+  annualmeanTs <- ts(annualmeanReps, start=startyr, frequency=12) %/-% grandmean   
 
   ## Remaining components
   if(event) {
@@ -49,11 +49,11 @@ function(x, startyr, endyr, event = TRUE, type = c('mult', 'add'))
     x2 <- matrix(x, nrow=12)
     monthdev <- sweep(x2, 2, annualmean, '%/-%')
     monthmean <- apply(monthdev, 1, mean, na.rm=TRUE)
-    seasonal <- ts(rep(monthmean, endyr - startyr + 1), s=startyr, f=12)
+    seasonal <- ts(rep(monthmean, endyr - startyr + 1), start=startyr, frequency=12)
 
   ## Events component
     resids <- sweep(monthdev, 1, monthmean, '%/-%')
-    events <- ts(as.vector(resids), s=startyr, f=12)
+    events <- ts(as.vector(resids), start=startyr, frequency=12)
   }
   else {
   ## Monthly component

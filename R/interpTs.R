@@ -23,13 +23,13 @@ function(x, type = c("linear", "series.median", "series.mean", "cycle.median", "
   ## Define function for replacement by cycle
   tspx <- tsp(x)
   replaceNA <- function (x, stat) {
-    x <- ts(x, st = tspx[1], fr = tspx[3])
-    x1 <- window(x, st = start(x)[1], en = c(end(x)[1], 12), ex = TRUE)
+    x <- ts(x, start = tspx[1], frequency = tspx[3])
+    x1 <- window(x, start = start(x)[1], end = c(end(x)[1], 12), extend = TRUE)
     x2 <- matrix(x1, byrow = TRUE, ncol = 12)
     stats <- apply(x2, 2, stat, na.rm = TRUE)
     indx  <- (1:length(x1))[is.na(x1)]
     x3 <- replace(x1, indx, stats[cycle(x1)[indx]])
-    window(x3, st = tspx[1], en = tspx[2])
+    window(x3, start = tspx[1], end = tspx[2])
   }
   
 	## Define function for vectors
