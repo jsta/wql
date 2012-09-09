@@ -1,3 +1,4 @@
+
 seasonTrend <- function(x, first, last, type = c("slope", 
     "slope.pct"), method = c("mk", "lin"), plot = FALSE, 
     xlab = NULL, ylab = NULL, miss = FALSE, legend = FALSE, 
@@ -78,11 +79,11 @@ seasonTrend <- function(x, first, last, type = c("slope",
             geom_bar(stat = 'identity') +
             scale_fill_manual(expression(paste(italic(p), "-value < 0.05")), values = c(`FALSE` = "grey65", `TRUE` = "dodgerblue")) +
             labs(list(y = ylab, x = xlab)) + 
-            opts(panel.grid.minor =	theme_blank())
+            theme(panel.grid.minor =	element_blank())
             if (nc > 1) 
                 p1 <- p1 + facet_wrap(~ ts.id, ...)
             if (!legend) 
-                p1 <- p1 + opts(legend.position = "none")
+                p1 <- p1 + theme(legend.position = "none")
             p1
     }
 } 

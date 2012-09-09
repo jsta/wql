@@ -1,3 +1,11 @@
+CHANGES SINCE 0.3-7
+
+* Updated for ggplot2 0.9.2.
+
+CHANGES SINCE 0.3-6
+
+* Minor changes to manual.
+
 CHANGES SINCE 0.3-5
 
 * Minor changes to code, with no changes in behaviour.

@@ -4,7 +4,7 @@
 Determine seasonal trends
 }
 \description{
-Find the trend for each season of a time series (matrix or vector) and indicates statistical significance.
+Finds the trend for each season of a time series (matrix or vector) and indicates statistical significance.
 }
 \usage{
 seasonTrend(x, first, last, type = c("slope", "slope.pct"),

@@ -12,8 +12,8 @@ Functions to assist in the processing and exploration of data from monitoring pr
 \tabular{ll}{
 Package: \tab wq\cr
 Type: \tab Package\cr
-Version: \tab 0.3-6\cr
-Date: \tab 2012-04-01\cr
+Version: \tab 0.3-8\cr
+Date: \tab 2012-09-09\cr
 Depends: \tab R (>= 2.14), methods, zoo\cr
 Suggests: \tab ggplot2 (>= 0.9), grid, reshape2\cr
 License: \tab GPL-2\cr

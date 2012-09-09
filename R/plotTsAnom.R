@@ -27,7 +27,7 @@ plotTsAnom <- function(x, xlab, ylab, plot.order = colnames(x), strip.labels = c
       geom_hline(aes(yintercept = x.mean), size = 0.25) +
       labs(x = xlab, y = ylab) +
       facet_wrap(~ variable, ...) +
-      opts(legend.position='none', panel.grid.minor = theme_blank())
+      theme(legend.position='none', panel.grid.minor = element_blank())
       
   } else {  # a vector time series
     

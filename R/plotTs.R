@@ -36,7 +36,7 @@ plotTs <- function(x, xlab, ylab, dot.size = 1, plot.order = colnames(x), strip.
       geom_line(aes(x = time, y = value)) +
       facet_wrap(~ variable, ...) +
       labs(x = xlab, y = ylab) +
-      opts(axis.text.x = theme_text(angle=45, colour="grey50"))
+      theme(axis.text.x = element_text(angle=45, colour="grey50"))
     if (sum(!is.na(d2$iso)) == 0) {
       g1
     } else {

@@ -51,7 +51,7 @@ seaRoll <- function(x, w = 5, rule = 2, plot = FALSE,
                 "< 0.05")) + 
             labs(x = "", y = ylab)
         if (!legend) 
-            p1 <- p1 + opts(legend.position = "none")
+            p1 <- p1 + theme(legend.position = "none")
         p1
     }
     else {

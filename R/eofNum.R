@@ -45,7 +45,7 @@ function (x, distr = c("normal", "lognormal"), n = nrow(x), reps =
     	vjust = 0) +
     scale_colour_discrete("rule N", breaks = c(TRUE, FALSE), labels =
       c(expression(p < 0.05), expression(p >= 0.05))) +
-    labs(list(x = "Rank", y = "Eigenvalue")) + opts(panel.grid.minor =
-    	theme_blank()) +
+    labs(list(x = "Rank", y = "Eigenvalue")) + theme(panel.grid.minor =
+    	element_blank()) +
     theme_bw()
 }

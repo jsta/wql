@@ -46,7 +46,7 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
             	'', '', 'Apr', '', '', 'Jul', '', '', 'Oct', '', '')) +
             scale_y_continuous(ylab) +
             scale_colour_manual("", values = cols, guide="none") +
-            opts(panel.grid.minor = theme_blank())
+            theme(panel.grid.minor = element_blank())
          if (num.era > 1)
             p1 <- p1 + facet_wrap(~ int, nrow = 1)
          p1
