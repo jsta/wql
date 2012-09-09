@@ -63,10 +63,11 @@ plotTsTile <- function(x, plot.title = NULL, legend.title = NULL,
       scale_y_discrete(name = "", expand = c(0, 0)) +
     	scale_fill_manual(name = legend.title, values = cols, breaks =
     	   levels(x3$value), labels = levels(x3$value)) + theme_bw() +
-    	opts(title = plot.title, panel.grid.minor = theme_blank(),
-    	   panel.grid.major = theme_blank())
+    	theme(panel.grid.minor = element_blank(),
+    	   panel.grid.major = element_blank()) +
+    	labs(title = plot.title)
     if (!legend) 
-        p1 <- p1 + opts(legend.position = "none")
+        p1 <- p1 + theme(legend.position = "none")
     if (square) 
         p1 + coord_equal()
     else p1
