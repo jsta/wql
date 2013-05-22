@@ -15,4 +15,4 @@ citHeader("To cite package 'wq' in publications use:")
               paste("Alan D. Jassby and James E. Cloern (",
                     year,
                     "). wq: Some tools for exploring water quality monitoring data. ",
-                    vers, ".", sep=""))
+                    vers, ". http://cran.r-project.org/web/packages/wq/index.html", sep=""))
