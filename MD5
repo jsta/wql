@@ -1,5 +1,5 @@
-fbff14464c87b73495d0875ab93fc232 *ChangeLog
-596fb8054634fdcfce918ec70b4c9532 *DESCRIPTION
+abcefee77926cff70d45d18a255e5528 *ChangeLog
+02f7b9216aada220c2f04a9c50638eb1 *DESCRIPTION
 94a5b6a1d1932239afe7bec0c8654b19 *NAMESPACE
 855f26cdc1f2897b5c7a608fb6639bf9 *R/DateTime-class.R
 1b27af4decfb5db531975ede0029dc35 *R/R2pss.R
@@ -74,7 +74,7 @@ f64b20d0090edadc3c401465d4df4739 *man/tsMake-methods.Rd
 ca521d69211fcba90b71a3f4fdd706bb *man/tsMake.Rd
 aba965442de79aa0d072dc069dab4fa0 *man/utilities.Rd
 8e5a32e2346479707e71e5eaa3731a6e *man/wq-internal.Rd
-b53dfa45eef5e13f66dd258503c98312 *man/wq-package.Rd
+19e43b9d0ab757e2bd7b1f94038718d9 *man/wq-package.Rd
 fd31989bb013ec4b1a11bbc3698c075b *man/wqData.Rd
 04b3874ddb38ff81f48f1886df10e8b6 *man/zoo-class.Rd
 61ca10d221296009e2d0008e923cc0cb *vignettes/limnology_and_oceanography.bst
