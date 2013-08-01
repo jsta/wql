@@ -2,16 +2,18 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{WqData-class}
-\alias{subset,WqData-method}
+\alias{[,WqData-method}
 \alias{summary,WqData-method}
 \alias{plot,WqData-method}
 
 \title{Class "WqData"}
 \description{A simple extension or subclass of the \code{"data.frame"} class for typical \dQuote{discrete} water quality monitoring programs that examine phenomena on a time scale of days or longer. It requires water quality data to be in a specific \dQuote{long} format, although a generating function \code{\link{wqData}} can be used for different forms of data.
 }
+
 \section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("WqData", d)}, where \code{d} is a data.frame. \code{d} should have columns named \code{time, site, depth, variable, value} of class \code{"DateTime", "factor", "numeric", "factor", "numeric"}, respectively.
 }
+
 \section{Slots}{
   \describe{
     \item{\code{.Data}:}{Object of class \code{"data.frame"} as described above} 
@@ -23,13 +25,25 @@
     \item{\code{.S3Class}:}{Object of class \code{"character"} describing which S3 class is extended by this class.}
   }
 }
+
 \section{Extends}{
   Class \code{"\linkS4class{data.frame}"}, directly.
   Class \code{"\linkS4class{list}"}, by class "data.frame", distance 2.
   Class \code{"\linkS4class{oldClass}"}, by class "data.frame", distance 2.
   Class \code{"\linkS4class{vector}"}, by class "data.frame", distance 3.
 }
+
 \section{Methods}{
+
+  \describe{
+    \item{[}{\code{signature(x = "WqData")}:
+    
+    x[i, ]
+    
+    Extracts a subset of the data, based on either row numbers or a logical expression involving the columns (\code{time, site, depth, variable, value}). The returned value is also a \code{WqData} object.
+    }
+  }
+    
   \describe{
     \item{plot}{\code{signature(x = "WqData")}:
     
@@ -37,7 +51,8 @@
     
     Multiple plots, each containing boxplots of data at each site for the same variable. An argument \code{vars} can be given specifying a character string of variables to be plotted. Otherwise, only the first 10 variables will be plotted if the number of variables is more than 10. The number of columns plotted is determined automatically unless \code{num.col} is given an integer value.
     }
-  }   
+  }
+     
   \describe{
     \item{summary}{\code{signature(x = "WqData")}: 
     
@@ -56,45 +71,16 @@
 }
 \examples{
 showClass("WqData")
-
-## Make a WqData object from sfbay data:
-## Combine date and time into a POSIXct object called time.
-## In this case, requires first making sure all sfbay times have 4
-## digits. Also drop date, which is no longer needed.
-sfb1 <- transform(sfbay, time = substring(10000 + time, 2, 5))
-sfb1 <- transform(sfb1, time = paste(date, time, sep = " "))
-sfb1 <- transform(sfb1, time = as.POSIXct(time, format = "\%m/\%d/\%Y \%H\%M"))
-sfb1$date <- NULL
-
-## If time of day were not needed, then the following would suffice:
-## sfb1 <- transform(sfbay, time = as.Date(date, "\%m/\%d/\%Y"))
-## sfb1$date <- NULL
-
-## 'Melt' the data into the correct format
-## which automatically gives required variable and value fields.
-require(reshape2)
-m1 <- melt(sfb1, id.vars = c('time', 'stn', 'depth'))
-
-## Make sure names of id.vars conform to WqData requirements
-names(m1)[2] <- "site"
-
-## Make sure all column classes conform to WqData requirements
-m1 <- transform(m1, 
-        site = factor(paste("s", site, sep = ""), ordered = TRUE)
-      )
-
-## Remove NAs
-m1 <- subset(m1, !is.na(value))
-rownames(m1) <- 1:nrow(m1)
-
-## Create the new WqData object
-sfb <- new('WqData', m1)
-
-## Summarize the data
+# Construct the WqData object sfb as shown in the wqData examples.
+sfb <- wqData(sfbay, c(1,3,4), 5:12, site.order = TRUE, type = "wide", 
+              time.format = "\%m/\%d/\%Y")
+# Summarize the data
 summary(sfb)
-
-## Create boxplot summary of data
+# Create boxplot summary of data
 plot(sfb, vars = c('chl', 'dox', 'spm'), num.col = 2)
+# Extract some of the data as a WqData object
+sfb[1:10,]  # first 10 observations
+sfb[sfb$depth==20,]  # all observations at 20 m
 }
 
 \keyword{classes}

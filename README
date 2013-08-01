@@ -1,0 +1,40 @@
+The main purpose of wq is to explore seasonal time series through plots and 
+nonparametric trend tests. It was created originally to examine water quality 
+data sets (hence, "wq") but is suitable as a more general purpose set of tools 
+for looking at annual or seasonal time series. One of the more tedious tasks in
+exploring environmental data sets is creating usable time series from the 
+original complex data sets, especially when you want many series at will that 
+group data in different ways. So wq also provides a way of transforming data 
+sets to a common format that then allows a diversity of time series to be 
+created quickly. Finally, a few functions that are specific to the fields of 
+limnology and oceanography are a reminder of the package's original intent.
+
+Some of the time series functions include:
+
+* a variety of plots to examine changes in seasonal patterns
+* nonparametric trend tests
+* time series interpolation and related manipulations
+* a simple decomposition of a series into different time scales
+* phenological analyses
+* the use of empirical orthogonal functions to detect multiple independent 
+mechanisms underlying temporal change
+
+Two functions are used mainly for preparing the times series:
+
+* a function that transforms incoming data to a common data structure in the 
+form of the "WqData" class
+* a function that easily prepares time series objects from this class
+
+The WqData class can be easily adapted to non-aquatic data. Obviously, the 
+"depth" field can be used for elevation in atmospheric studies. But more
+generally, the "site" and "depth" fields can be used for many two-way 
+classifications and don't need to refer to spatial location.
+
+A few functions are specialized for the aquatic sciences:
+
+* converting oxygen concentrations to percent saturation
+* finding salinity from conductivity
+* estimating the un-ionized fraction of total ammonia
+
+The capabilities of wq are more fully explained in the accompanying vignette:
+wq: Some tools for exploring water quality monitoring data.

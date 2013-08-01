@@ -1,6 +1,9 @@
 mannKen <- function(x, plot = FALSE, type = c("slope", 
     "pct", "tau"), order = FALSE) {
 
+	# Variables that otherwise have no visible binding
+	sen.slope <- sen.slope.pct <- tau <- p.value <- miss <- NULL
+
     require(ggplot2)
     ## Validate args
     if (!is(x, "ts")) 
@@ -75,11 +78,11 @@ mannKen <- function(x, plot = FALSE, type = c("slope",
         ans1 = na.omit(data.frame(ans, variable = rownames(ans)))
         if (order) 
             ans1 <- switch(type, 
-               slope = transform(ans1, variable = reorder(variable,
+               slope = within(ans1, variable <- reorder(variable,
                	sen.slope, mean)),
-               pct = transform(ans1, variable = reorder(variable,
+               pct = within(ans1, variable <- reorder(variable,
                	sen.slope.pct, mean)),
-               tau = transform(ans1, variable = reorder(variable, tau,
+               tau = within(ans1, variable <- reorder(variable, tau,
                	mean))
          )
          p1 <- switch(type, 

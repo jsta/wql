@@ -18,12 +18,12 @@ setMethod(
     if ( missing(focus) || length(focus) > 1 )
       stop("'focus' must be the name of a single site or variable.")
     if (match(focus, d$site, nomatch = 0) > 0) {
-      d <- subset(d, site == focus)
+      d <- d[d$site == focus, ]
       if (nrow(d) == 0) 
         stop("No data for this site.")
     } else {
       if (match(focus, d$variable, nomatch = 0) > 0) {
-        d <- subset(d, variable == focus)
+        d <- d[d$variable == focus, ]
         if (nrow(d) == 0) 
           stop("No data for this variable.")
       } else {
@@ -47,14 +47,14 @@ setMethod(
         if ( !is(el, "numeric") || length(el) > 2 )
           stop("layer is not specified correctly")
         if (length(el) > 1) {
-          depths1 <- unique(subset(d, depth >= el[1] & depth <= el[2])$depth)
+          depths1 <- unique(d[d$depth >= el[1] & d$depth <= el[2], "depth"])
           depths <- c(depths, depths1)
         } else {
           depths <- c(depths, el)
         }
       }
     }
-    d <- subset(d, depth %in% depths)
+    d <- d[d$depth %in% depths, ]
     if (nrow(d) == 0) 
       stop("No data for this layer.")
 

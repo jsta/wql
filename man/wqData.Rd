@@ -50,19 +50,18 @@ Conversion specification for \code{time} defined by \acronym{ISO C/POSIX} standa
 \examples{
 # Create new WqData object from sfbay data. First combine date and time
 # into a single string after making sure that all times have 4 digits.
-sfb <- transform(sfbay, time = substring(10000 + time, 2, 5))
-sfb <- transform(sfb, time = paste(date, time, sep = ' '))
+sfb <- within(sfbay, time <- substring(10000 + time, 2, 5))
+sfb <- within(sfb, time <- paste(date, time, sep = ' '))
 sfb <- wqData(sfb, 2:4, 5:12, site.order = TRUE, type = "wide",
     time.format = "\%m/\%d/\%Y \%H\%M")
 
 head(sfb)
+tail(sfb)
 
 # If time of day were not required, then the following would suffice:
 sfb <- wqData(sfbay, c(1,3,4), 5:12, site.order = TRUE, type = "wide", 
   time.format = "\%m/\%d/\%Y")
 
-head(sfb)
-summary(sfb)
 }
 
 \keyword{classes}

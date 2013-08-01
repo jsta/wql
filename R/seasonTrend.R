@@ -1,8 +1,11 @@
-
 seasonTrend <- function(x, first, last, type = c("slope", 
     "slope.pct"), method = c("mk", "lin"), plot = FALSE, 
     xlab = NULL, ylab = NULL, miss = FALSE, legend = FALSE, 
     ...) {
+
+	# Variables that otherwise have no visible binding
+	season <- p <- NULL
+
     require(ggplot2)
     ## Validate args
     if (!is(x, "ts")) 
@@ -74,7 +77,7 @@ seasonTrend <- function(x, first, last, type = c("slope",
         if (is.null(xlab)) 
             xlab = ifelse(fr == 12, "Month", ifelse(fr == 
                 4, "Quarter", "Season"))    
-        if (miss) ans2 <- subset(ans2, missing < 0.5)
+        if (miss) ans2 <- ans2[ans2$missing < 0.5, ]
         p1 <- ggplot(ans2, aes(x = season, y = trend, fill = p < .05)) +
             geom_bar(stat = 'identity') +
             scale_fill_manual(expression(paste(italic(p), "-value < 0.05")), values = c(`FALSE` = "grey65", `TRUE` = "dodgerblue")) +

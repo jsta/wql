@@ -1,21 +1,35 @@
 plotTsTile <- function(x, plot.title = NULL, legend.title = NULL, 
-    four = TRUE, loganom = TRUE, square = TRUE, legend = TRUE, 
-    trim = TRUE) {
-    ### Produces a month x year image plot with data in 10 or 4 groups.
-    ### x: monthly time series vector
-    ### plot.title: title above plot
-    ### legend.title: title placed above legend
-    ### four: If TRUE, divide into 4 special groups; otherwise deciles.
-    ### loganom: Should x be converted to log-anomaly data?
-    ### legend: Should legend be included?
-    ### trim: If TRUE, leading and trailing NAs are removed.
-    ### Returns ggplot object
-    require(ggplot2)
-    ## Validate args
+    four = TRUE, loganom = TRUE, square = TRUE, legend = TRUE, trim = TRUE, 
+    overall = TRUE, stat = c("mean", "median")) {
+    # Produces a month x year image plot with data in 10 or 4 groups.
+    # x: monthly time series vector
+    # plot.title: title above plot
+    # legend.title: title placed above legend
+    # four: If TRUE, divide into 4 special groups; otherwise deciles.
+    # loganom: Should x be converted to log-anomaly data?
+    # legend: Should legend be included?
+    # trim: If TRUE, leading and trailing NAs are removed.
+    # overall: Should anomalies be calculated wrt overall or monthly means
+    # stat: should bins be calculated with mean or medians
+    # Returns ggplot object
+
+	# Variables that otherwise have no visible binding
+	yr <- mon <- value <- NULL
+
+  require(ggplot2)
+  # Validate args
     if (!is(x, "ts") || is(x, "mts") || !identical(frequency(x), 
         12)) 
-        stop("x must be a vector of class 'ts' with freq = 12")
-    ## trim leading and trailing NAS
+        stop("x must be a vector of class 'ts' with frequency = 12")
+    stat <- match.arg(stat)
+    # Define center function
+    center <- function(x, type=stat) {
+      switch(type,
+             mean = mean(x, na.rm=TRUE),
+             median = median(x, na.rm=TRUE)
+      )
+    }
+    # trim leading and trailing NAS
     if (trim) {
         x <- as.zoo(x)
         x <- na.trim(x)
@@ -28,17 +42,25 @@ plotTsTile <- function(x, plot.title = NULL, legend.title = NULL,
     # Transform to log-anomalies
     if (loganom) {
         if (any(x1 <= 0, na.rm = TRUE)) {
-            stop("All values must be positive if loganom=TRUE")
+          stop("All values must be positive if loganom=TRUE")
         }
         else {
-            x1 <- log10(x1/mean(x1, na.rm = TRUE))
+          if (overall) {
+            x1 <- x1/center(x1)
+          }
+          else {
+            x1 <- as.matrix(ts2df(x1))
+            x1 <- sweep(x1, 2, apply(x1, 2, center), "/")
+            x1 <- ts(as.vector(t(x1)), start = c(sx, 1), frequency=12)
+          }
         }
+        x1 <- log10(x1)
     }
     # Break data.
     if (four) {
         mmin <- min(x1, na.rm = TRUE)
-        mlo <- mean(x1[x1 < 0], na.rm = TRUE)
-        mhi <- mean(x1[x1 > 0], na.rm = TRUE)
+        mlo <- center(x1[x1 < 0])
+        mhi <- center(x1[x1 > 0])
         mmax <- max(x1, na.rm = TRUE)
         the.breaks <- c(mmin, mlo, 0, mhi, mmax)
     }

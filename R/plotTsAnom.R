@@ -1,5 +1,8 @@
 plotTsAnom <- function(x, xlab, ylab, plot.order = colnames(x), strip.labels = colnames(x), ...) {
 
+	# Variables that otherwise have no visible binding
+	value <- NULL
+	
   require(reshape2)
   require(ggplot2)
 
@@ -19,7 +22,7 @@ plotTsAnom <- function(x, xlab, ylab, plot.order = colnames(x), strip.labels = c
     d <- data.frame(time=as.Date(time(x)), x)
     d1 <- melt(d, id = 'time')
     d2 <- merge(d1, x.mean.df)
-    d3 <- transform(d2, variable = factor(variable, levels = plot.order, labels = strip.labels))
+    d3 <- within(d2, variable <- factor(variable, levels = plot.order, labels = strip.labels))
 
     ## Plot
     ggplot(d3, aes(x = time, y = value, ymin = ifelse(value >= x.mean, x.mean, value), ymax = ifelse(value >= x.mean, value, x.mean), colour = value >= x.mean)) +
@@ -33,7 +36,7 @@ plotTsAnom <- function(x, xlab, ylab, plot.order = colnames(x), strip.labels = c
 
     ## Create data frame
     x.mean <- mean(x, na.rm = TRUE)
-    d1 <- data.frame(time = as.Date(x), x, x.mean)
+    d1 <- data.frame(time = as.Date(time(x)), x = as.numeric(x), x.mean)
 
     ## Plot
     ggplot(d1, aes(x = time, y = x, ymin = ifelse(x >= x.mean, x.mean, x), ymax = ifelse(x >= x.mean, x, x.mean), colour = x >= x.mean)) +

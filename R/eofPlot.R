@@ -25,7 +25,7 @@ eofPlot <- function(x, type = c("coef", "amp"),
             for (k in 1:num) d1[, k + 1] <- -d1[, k + 1]
         }
         m1 <- melt(d1, id = "id")
-        ggplot(m1, aes(x = value, y = id)) + 
+        ggplot(m1, aes_string(x = "value", y = "id")) + 
             geom_vline(xintercept = c(-0.35, -0.2, 0.2, 0.35), colour = "red", size = 0.2) + 
             geom_point(colour = "blue") + 
             facet_wrap(~variable, ncol = num) + 
@@ -36,9 +36,9 @@ eofPlot <- function(x, type = c("coef", "amp"),
         if (rev) {
             for (k in 1:num) d1[, k + 1] <- -d1[, k + 1]
         }
-        d1 <- transform(d1, id = as.numeric(as.character(d1$id)))
+        d1 <- within(d1, id <- as.numeric(as.character(id)))
         m1 <- melt(d1, id = "id")
-        ggplot(m1, aes(x = id, y = value)) + 
+        ggplot(m1, aes_string(x = "id", y = "value")) + 
             geom_hline(aes(yintecept = 0), colour = "red", size = 0.2) +
             geom_line(colour = "blue") + 
             geom_point(colour = "blue") + 
