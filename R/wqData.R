@@ -19,10 +19,15 @@ function(data, locus, wqdata, site.order, time.format = "%Y-%m-%d",
   } else {
       if (identical(length(wqdata), 1L)) {		
           data <- data.frame(data[, locus], variable =
-            rep(cnames[wqdata], nrow(data)), value = data[x, wqdata])
+            rep(cnames[wqdata], nrow(data)), value = data[, wqdata])
           names(data)[1:3] <- c("time", "site", "depth")
       } else {
-          data <- data.frame(data[, locus], data[, wqdata])
+          ## Avoid possible duplicate names
+          wqd <- data[, wqdata]
+          ind <- match(c("time", "site", "depth"), names(wqd), nomatch=0)
+          names(wqd)[ind] <- paste(names(wqd)[ind], 1, sep="")
+          ## Assemble and reshape data
+          data <- data.frame(data[, locus], wqd)
           names(data)[1:3] <- c("time", "site", "depth")
           data <- melt(data, id.vars = 1:3)
       }
@@ -30,24 +35,24 @@ function(data, locus, wqdata, site.order, time.format = "%Y-%m-%d",
   
   ## Change time to correct format and class if needed
   if(grepl('H', time.format)) {
-    data <- transform(data, time = as.POSIXct(time, format =
+    data <- within(data, time <- as.POSIXct(time, format =
       time.format))
   } else {
-      data <- transform(data, time = as.Date(time, format =
+      data <- within(data, time <- as.Date(time, format =
         time.format))
   }
           
   ## Remove NAs
-  data <- subset(data, !is.na(value))
+  data <- data[!is.na(data$value), ]
   rownames(data) <- 1:nrow(data)
   
   ## Remove unneeded factor levels
-  data <- transform(data, site = factor(site, ordered = site.order))
+  data <- within(data, site <- factor(site, ordered = site.order))
   levels(data$site) <- gsub('X','s', make.names(levels(data$site),
     unique = TRUE))
   
   ## Make sure variable is a factor
-  data <- transform(data, variable = as.factor(variable))
+  data <- within(data, variable <- as.factor(variable))
 
   ##
   new(Class="WqData", data)

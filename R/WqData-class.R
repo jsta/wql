@@ -15,6 +15,31 @@ setClass(
   }
 )
 
+setMethod(
+  f = `[`,
+  signature = "WqData",
+  definition = function(x, i, j="MISSING", drop="MISSING") {
+    if (missing(i))
+      r <- TRUE
+    else {
+      if (is(i, "numeric"))
+        r <- i  
+      else {
+        e <- substitute(i)
+        r <- eval(e, x, parent.frame())
+        if (!is.logical(r)) 
+          stop("'i' must be logical or numeric")
+        r <- r & !is.na(r)
+      }
+    }
+    x.stored <- x
+    df <- `[.data.frame`(x, r, j=1:5, drop=FALSE)
+    for (slot.name in names(getSlots("data.frame"))) {
+      slot(x.stored, slot.name) <- slot(df, slot.name)
+    }
+    return(x.stored)
+  }
+)
 
 setMethod(
   f = "summary", 
@@ -31,7 +56,6 @@ setMethod(
   }
 )
 
-
 setMethod(
   f = "plot",
   signature = "WqData",
@@ -41,7 +65,8 @@ setMethod(
       num.plots <- max(10, length(vars))
       vars <- vars[1:num.plots]
     require(ggplot2)
-    d <- subset(as.data.frame(x), variable %in% vars)
+    d <- data.frame(x)
+    d <- d[d$variable %in% vars, ]
     ggplot(d, aes(x = site, y = value, z = variable)) + 
       geom_boxplot(outlier.colour = 'blue', outlier.shape = 1) +
       facet_wrap(~ variable, scales = "free_y", ncol = num.col)

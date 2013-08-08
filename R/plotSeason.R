@@ -2,6 +2,9 @@ plotSeason <-
 function(x, type = c('by.era', 'by.month'), num.era = 4,
   same.plot = TRUE, ylab = NULL, num.col = 3) {
 
+	# Variables that otherwise have no visible binding
+	yr <- value <- too.few <- NULL
+
    require(reshape2)
    require(ggplot2)
 
@@ -16,7 +19,7 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
 
    if (type == 'by.era') {
       ## Break data into eras
-      d <- transform(d, int = {if (num.era > 1) cut(yr, breaks = num.era,
+      d <- within(d, int <- {if (num.era > 1) cut(yr, breaks = num.era,
       	include.lowest = TRUE, dig.lab = 4, ordered_result = TRUE) else
       	rep('all', nrow(d))})
       colnames(d)[1] <- 'value'
@@ -28,8 +31,11 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
       t2 <- t1 < 0.5
       t3 <- melt(t2)
       colnames(t3) <- c('mon', 'int', 'too.few')
-      t3 <- transform(t3, mon = ordered(mon, levels = levels(d$mon)),
-         int = ordered(int, levels = levels(d$int)))
+      t3 <- within(t3, {
+      				mon <- ordered(mon, levels = levels(d$mon))
+         			int <- ordered(int, levels = levels(d$int))
+         			}
+      )
       d1 <- merge(d, t3)
 
       if (same.plot) {

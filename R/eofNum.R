@@ -35,7 +35,7 @@ function (x, distr = c("normal", "lognormal"), n = nrow(x), reps =
   ## Plot
   d <- data.frame(rank = 1:p, eigs, eigsLo, eigsHi, ruleNok, 
       cumVar)
-  d <- transform(d, cumVarLine = eigsHi + 0.02 * max(eigsHi))
+  d <- within(d, cumVarLine <- eigsHi + 0.02 * max(eigsHi))
   d <- d[1:min(p, 10), ]
   ggplot(data = d, aes(x = rank, y = eigs, colour = ruleNok)) + 
     geom_errorbar(aes(x = rank, ymin = eigsLo, ymax = eigsHi), width =

@@ -28,12 +28,12 @@ plotTs <- function(x, xlab, ylab, dot.size = 1, plot.order = colnames(x), strip.
     ## Create data frame
     d1 <- data.frame(time = as.Date(x), x)
     d2 <- melt(d1, id = 'time')
-    d2 <- transform(d2, variable = factor(variable, levels = plot.order, labels = strip.labels))
+    d2 <- within(d2, variable <- factor(variable, levels = plot.order, labels = strip.labels))
     d2 <- cbind(d2, iso = iso1[, 'value'])
     
     ## Plot
     g1 <- ggplot(d2) +
-      geom_line(aes(x = time, y = value)) +
+      geom_line(aes_string(x = "time", y = "value")) +
       facet_wrap(~ variable, ...) +
       labs(x = xlab, y = ylab) +
       theme(axis.text.x = element_text(angle=45, colour="grey50"))
@@ -57,7 +57,7 @@ plotTs <- function(x, xlab, ylab, dot.size = 1, plot.order = colnames(x), strip.
     
     ## Plot
     g1 <- ggplot(d2) +
-      geom_line(aes(x = time, y = value)) +
+      geom_line(aes_string(x = "time", y = "value")) +
       labs(x = xlab, y = ylab)
     if (sum(!is.na(iso)) == 0) {
       g1

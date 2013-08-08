@@ -1,6 +1,9 @@
 seaRoll <- function(x, w = 5, rule = 2, plot = FALSE, 
     ylab = NULL, legend = FALSE) {
 
+	# Variables that otherwise have no visible binding
+	sen.slope <- p.value <- NULL
+
     ## Validate args
     if (!is(x, "ts")) 
         stop("x must be a 'ts'")
@@ -37,8 +40,7 @@ seaRoll <- function(x, w = 5, rule = 2, plot = FALSE,
     ans[, 3] <- round(ans[, 3], 3)
     if (plot) {
         require(ggplot2)
-        ans <- transform(as.data.frame(ans), yr = (sx + w - 
-            1):ex)
+        ans <- within(as.data.frame(ans), yr <- (sx + w - 1):ex)
         ans <- na.omit(ans)
         if (is.null(ylab)) 
             ylab <- expression(paste("Trend (units ", year^{-1}, ")"))

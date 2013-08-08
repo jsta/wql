@@ -1,18 +1,26 @@
-citHeader("To cite package 'wq' in publications use:")
+# Needed if R < 2.8.0; later versions pass package metadata to citation().
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("wq")
 
-     desc <- packageDescription("wq")
-     year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", desc$Date)
-     vers <- paste("R package version", desc$Version)
+year <- substring(meta$Date, 1, 4)
+vers <- paste("R package version", meta$Version)
 
-     citEntry(entry="Manual",
-              title = "wq: Exploring water quality monitoring data",
-              author = personList(as.person("Alan D. Jassby"),
-                                  as.person("James E. Cloern")),
-              year = year,
-              note = vers,
-
-              textVersion =
-              paste("Alan D. Jassby and James E. Cloern (",
-                    year,
-                    "). wq: Some tools for exploring water quality monitoring data. ",
-                    vers, ". http://cran.r-project.org/web/packages/wq/index.html", sep=""))
+bibentry(key = paste0("jassby", year, "wq"),
+  bibtype = "Manual",
+  title = "wq: Exploring water quality monitoring data",
+  author = c(
+	  person(c("Alan", "D."), "Jassby", role = c("aut", "cre"), 
+	         email = "adjassby@ucdavis.edu"),
+	  person(c("James", "E."), "Cloern", role = c("aut"))
+  ),
+  year = year,
+  note = vers,
+  url = "http://CRAN.R-project.org/package=wq",
+  textVersion = paste0(
+    "Alan D. Jassby and James E. Cloern (", 
+    year, 
+    "). wq: Some tools for exploring water quality monitoring data. ", 
+    vers, 
+    ". http://cran.r-project.org/package=wq"
+  ),
+  header = "To cite wq in publications use:"
+)
