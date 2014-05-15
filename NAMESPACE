@@ -1,4 +1,5 @@
 import(zoo)
+importFrom("methods")
 importFrom("graphics", plot)
 
 exportPattern("^[a-zA-Z]")

@@ -8,8 +8,6 @@ function(x, type = c("linear", "series.median", "series.mean", "cycle.median", "
 ###   type: interpolation method
 ### Returns: interpolated series
 	
-	require(zoo)
-	
 	## Validate arguments
   gap.max <- nrow(as.matrix(x)) - 2
   if (is.null(gap))

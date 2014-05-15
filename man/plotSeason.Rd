@@ -14,32 +14,34 @@ plotSeason(x, type = c("by.era", "by.month"), num.era = 4,
 
 \arguments{
     \item{x}{
-    Monthly time series.
+    Monthly time series
     }
     \item{type}{
-    Plot seasonal pattern by era, or each month for the entire record.
+    Plot seasonal pattern by era, or each month for the entire record
     }
     \item{num.era}{
-    Number of eras.
+    Integer number of eras, or vector of era year breaks
     }
     \item{same.plot}{
     Should eras be plotted by month?
     }
     \item{ylab}{
-    Optional character string label for y-axis.
+    Optional character string label for y-axis
     }
     \item{num.col}{
-    Number of columns when plotted \code{"by.month"}.
+    Number of columns when plotted \code{"by.month"}
     }
 }
 
 \details{
-When plotted \code{"by.era"} and \code{same.plot = FALSE}, the composite patterns are plotted in a horizontal row for easier comparison, which limits the number of periods that can be examined. Boxes based on fewer than half of the maximum possible years available are outlined in red. If \code{same.plot = TRUE}, a single plot is produced with era boxplots arranged by month. When plotted \code{"by.month"}, values for each month are first converted to standardized anomalies, i.e., by subtraction of long-term mean and division by standard deviation. As always, and especially with these plots, experiment with the device aspect ratio and size to get the clearest information.
+If \code{num.era} is an integer, the time range is divided into that many equal eras; otherwise, the time range is divided into eras determined by the \code{num.era} vector of years. When plotted \code{"by.era"} and \code{same.plot = FALSE}, the composite patterns are plotted in a horizontal row for easier comparison, which limits the number of periods that can be examined. Boxes based on fewer than half of the maximum possible years available are outlined in red. If \code{same.plot = TRUE}, a single plot is produced with era boxplots arranged by month. When plotted \code{"by.month"}, values for each month are first converted to standardized anomalies, i.e., by subtraction of long-term mean and division by standard deviation. As always, and especially with these plots, experiment with the device aspect ratio and size to get the clearest information.
 }
 
 \value{
 A plot (and the corresponding object of class \code{"ggplot"}).
 }
+
+\author{A. Jassby and A. Malkassian}
 
 \seealso{
 \code{\link{decompTs}}, \code{\link{seasonTrend}}
@@ -47,7 +49,7 @@ A plot (and the corresponding object of class \code{"ggplot"}).
 
 \examples{
 chl27 <- sfbayChla[, 's27']
-plotSeason(chl27, num.era = 3, ylab = 'Stn 27 Chl-a')
+plotSeason(chl27, num.era = c(1978, 1988, 1998, 2008), ylab = 'Stn 27 Chl-a')
 plotSeason(chl27, num.era = 3, same.plot = FALSE, ylab = 'Stn 27 Chl-a')
 plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a')
 }

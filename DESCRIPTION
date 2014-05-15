@@ -1,10 +1,10 @@
 Package: wq
 Type: Package
 Title: Exploring water quality monitoring data
-Version: 0.3-11
-Date: 2013-08-01
+Version: 0.4-1
+Date: 2014-05-05
 Author: Alan D. Jassby and James E. Cloern
-Maintainer: Alan Jassby <adjassby@ucdavis.edu>
+Maintainer: Anthony Malkassian <anthonym@sfei.org>
 Description: Functions to assist in the processing and exploration of data from
     environmental monitoring programs. The name "wq" stands for "water quality" 
     and reflects the original focus on time series data for physical and 
@@ -17,7 +17,7 @@ Depends: methods, R (>= 3.0.0), zoo
 Suggests: ggplot2 (>= 0.9), grid, reshape2
 License: GPL-2
 LazyData: yes
-Packaged: 2013-08-07 23:32:25 UTC; alanj
+Packaged: 2014-05-09 00:12:26 UTC; anthony
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2013-08-08 08:07:59
+Date/Publication: 2014-05-15 01:03:53

@@ -60,12 +60,12 @@ tsp(Nile)  # an annual time series
 mannKen(Nile)
 
 y <- sfbayChla
-y1 <- tsSub(y, seas = c(1:7, 9:11))  # Aug and Dec often missing
+y1 <- interpTs(y, gap=1)  # interpolate single-month gaps only
 y2 <- aggregate(y1, 1, mean, na.rm=FALSE)
-mannKen(y)
-mannKen(y, plot=TRUE)
-mannKen(y, plot=TRUE, type='pct')
-mannKen(y, plot=TRUE, type='tau', order=TRUE)
+mannKen(y2)
+mannKen(y2, plot=TRUE)
+mannKen(y2, plot=TRUE, type='pct')
+mannKen(y2, plot=TRUE, type='tau', order=TRUE)
 }
 
 \keyword{ts}

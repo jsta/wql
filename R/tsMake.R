@@ -11,7 +11,6 @@ setMethod(
     qprob = NULL)
   {
     require(reshape2)
-    require(zoo)
 
     ## Validate args
     d <- data.frame(object)

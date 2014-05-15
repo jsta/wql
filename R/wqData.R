@@ -5,6 +5,8 @@ function(data, locus, wqdata, site.order, time.format = "%Y-%m-%d",
   require(reshape2)
 
   ## Validate args
+  if (length(locus) != 3)
+      stop("locus must be of length 3")
   cnames <- colnames(data)
   if (is(wqdata, "character"))
       wqdata <- match(wqdata, cnames, nomatch=0)

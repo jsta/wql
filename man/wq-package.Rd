@@ -19,8 +19,8 @@ Functions to assist in the processing and exploration of data from
 \tabular{ll}{
 Package: \tab wq\cr
 Type: \tab Package\cr
-Version: \tab 0.3-11\cr
-Date: \tab 2013-08-01\cr
+Version: \tab 0.4-1\cr
+Date: \tab 2014-05-05\cr
 Depends: \tab 
 methods,
 R (>= 3.0.0),
@@ -31,7 +31,6 @@ grid,
 reshape2\cr
 License: \tab GPL-2\cr
 LazyData: \tab yes\cr
-Built: \tab R 3.0.1; ; 2013-08-06 20:40:04 UTC; unix\cr
 }
 
 Index:
@@ -78,6 +77,6 @@ Further information is available in the following vignettes:
 \author{
 Alan D. Jassby and James E. Cloern
 
-Maintainer: Alan Jassby <adjassby@ucdavis.edu>
+Maintainer: Anthony Malkassian <anthonym@sfei.org>
 }
 \keyword{ package }

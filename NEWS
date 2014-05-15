@@ -1,3 +1,16 @@
+wq 0.4-1
+========
+* DESCRIPTION: Maintainer has changed.
+* mannKen: Preserve station order in data matrix.
+* mannKen: Modify examples to be more useful.
+* NAMESPACE: Add importFrom("methods").
+* NAMESPACE: Remove all require(zoo) from functions.
+* plotSeason: Enable plotting by arbitrary eras.
+* plotSeason: Fixed error when num.era=1.
+* vignette: Remove unnecessary commands from preamble.
+* wqData: Require locus to be length 3.
+* WqData-class: Change tz="UTC" default in as.Date for summary.
+
 wq 0.3-11
 =========
 * `[`: method now exists for WqData objects.

@@ -1,7 +1,6 @@
 \documentclass[12pt]{article}
-\usepackage{pdfsync}
+
 \usepackage{Sweave}
-\SweaveOpts{engine=R, eps=FALSE}
 
 % \VignetteIndexEntry{wq: exploring water quality monitoring data}
 % \VignetteDepends{wq, zoo, ggplot2, grid, reshape2}
@@ -17,7 +16,6 @@
 \pagestyle{fancy}
 
 %%% LINKS
-\usepackage{url}
 \usepackage[bookmarks,colorlinks,breaklinks]{hyperref}
 
 %%% BIBLIOGRAPHY:

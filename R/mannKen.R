@@ -75,7 +75,7 @@ mannKen <- function(x, plot = FALSE, type = c("slope",
             pct = expression(paste("Trend (% ", year^{-1}, ")")), 
             tau = expression("Tau")
         )
-        ans1 = na.omit(data.frame(ans, variable = rownames(ans)))
+        ans1 = na.omit(data.frame(ans, variable = factor(rownames(ans), levels=rownames(ans))))
         if (order) 
             ans1 <- switch(type, 
                slope = within(ans1, variable <- reorder(variable,

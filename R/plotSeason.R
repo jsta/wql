@@ -2,62 +2,77 @@ plotSeason <-
 function(x, type = c('by.era', 'by.month'), num.era = 4,
   same.plot = TRUE, ylab = NULL, num.col = 3) {
 
-	# Variables that otherwise have no visible binding
-	yr <- value <- too.few <- NULL
+  ## Variables with no visible bindings
+  yr <- value <- too.few <- NULL
+  
+  require(reshape2)
+  require(ggplot2)
 
-   require(reshape2)
-   require(ggplot2)
+  ## Validate args
+  if (!is(x, 'ts') || is(x, 'mts'))
+    stop("x must be a single 'ts'")
+  type <- match.arg(type)
+    
+  ## Turn time series into data.frame
+  sx <- start(x)[1]
+  ex <- end(x)[1]
+  x <- window(x, start = sx, end = c(ex, 12), extend = TRUE)
+  d <- data.frame(x = as.numeric(x), mon = ordered(month.abb[cycle(x)], 
+      levels = month.abb), yr = as.numeric(floor(time(x))))
 
-   ## Validate args
-   if (!is(x, 'ts') || is(x, 'mts'))
-      stop("x must be a single 'ts'")
-   type <- match.arg(type)
-
-   x <- window(x, start = start(x)[1], end = c(end(x)[1], 12), extend=TRUE)
-   d <- data.frame(x = as.numeric(x), mon = ordered(month.abb[cycle(x)],
-   	levels = month.abb), yr = as.numeric(floor(time(x))))
-
-   if (type == 'by.era') {
-      ## Break data into eras
-      d <- within(d, int <- {if (num.era > 1) cut(yr, breaks = num.era,
-      	include.lowest = TRUE, dig.lab = 4, ordered_result = TRUE) else
-      	rep('all', nrow(d))})
-      colnames(d)[1] <- 'value'
-      d <- na.omit(d)
-
-      ## Find missing fraction by month and era
-      len <- length(unique(d$yr))/num.era
-      t1 <- table(d$mon, d$int)/len
-      t2 <- t1 < 0.5
-      t3 <- melt(t2)
-      colnames(t3) <- c('mon', 'int', 'too.few')
-      t3 <- within(t3, {
-      				mon <- ordered(mon, levels = levels(d$mon))
-         			int <- ordered(int, levels = levels(d$int))
-         			}
-      )
-      d1 <- merge(d, t3)
-
-      if (same.plot) {
-         ## Nest eras within months
-         ggplot(d1, aes(x=mon, y=value, fill=int)) +
-            geom_boxplot(size=.2, position='dodge') +
-            labs(x="", y=ylab, fill="Era")
-      } else {
-         ## Nest months within eras
-         cols <- c(`TRUE` = "red", `FALSE` = "blue")
-         p1 <- ggplot(d1, aes(x = mon, y = value, colour = too.few)) +
-            geom_boxplot(size = .2) +
-            scale_x_discrete('', breaks = month.abb, labels = c('Jan',
-            	'', '', 'Apr', '', '', 'Jul', '', '', 'Oct', '', '')) +
-            scale_y_continuous(ylab) +
-            scale_colour_manual("", values = cols, guide="none") +
-            theme(panel.grid.minor = element_blank(), axis.text.x = element_text(angle=45, colour="grey50"))
-         if (num.era > 1)
-            p1 <- p1 + facet_wrap(~ int, nrow = 1)
-         p1
+  ## Take care of case where num.era is a scalar
+  if (length(num.era)==1) {
+    if (num.era<1 || round(num.era)!=num.era) {
+      stop("num.era must be a whole number > 0")
+    } else {
+      num.era <- round((0:num.era) * (ex-sx)/num.era + sx, 0)
+    }
+  }
+  
+  if (type == 'by.era') {    
+    ## Break data into eras
+    d <- within(d, {
+      era <- cut(yr, breaks = num.era, include.lowest = TRUE, dig.lab = 4, ordered_result = TRUE)
       }
-   } else {
+    )
+    colnames(d)[1] <- 'value'
+    d <- na.omit(d)
+
+    ## Find missing fraction by month and era
+    t0 <- table(d$mon, d$era)
+    t1 <- sweep(t0, 2, diff(num.era), '/')
+    t2 <- t1 < 0.5
+    t3 <- melt(t2)
+    colnames(t3) <- c('mon', 'era', 'too.few')
+    t4 <- within(t3, {
+      mon <- ordered(mon, levels = levels(d$mon))
+      if (length(unique(era))>1)
+        era <- ordered(era, levels = levels(d$era))
+      }
+    )
+    d1 <- merge(d, t4)
+
+    if (same.plot) {
+       ## Nest eras within months
+       ggplot(d1, aes(x=mon, y=value, fill=era)) +
+          geom_boxplot(size=.2, position='dodge') +
+          labs(x="", y=ylab, fill="Era")
+    } else {
+       ## Nest months within eras
+       cols <- c(`TRUE` = "red", `FALSE` = "blue")
+       p1 <- ggplot(d1, aes(x = mon, y = value, colour = too.few)) +
+          geom_boxplot(size = .2) +
+          scale_x_discrete(' ', breaks = month.abb, labels = c('Jan',
+            ' ', ' ', 'Apr', ' ', ' ', 'Jul', ' ', ' ', 'Oct', ' ', ' ')) +
+          scale_y_continuous(ylab) +
+          scale_colour_manual("", values = cols, guide="none") +
+          theme(panel.grid.minor = element_blank(), axis.text.x = element_text(angle=45, colour="grey50"))
+       if (length(num.era) > 2)
+          p1 <- p1 + facet_wrap(~ era, nrow = 1)
+       p1
+    }
+
+    } else {
       ## Plot standardized anomalies for each month
       x1 <- ts2df(x)
       x2 <- ts(x1, start = start(x))

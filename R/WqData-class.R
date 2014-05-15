@@ -45,7 +45,7 @@ setMethod(
   f = "summary", 
   signature = "WqData", 
   definition = function(object, ...) {
-    trange <- range(as.Date(object$time), na.rm = TRUE)
+    trange <- range(as.Date(format(object$time)), na.rm = TRUE)
     cat("date range: ", paste(trange[1], "to", trange[2]), "\n\n")
     nums <- table(object$site, object$variable)
     quarts <- tapply(object$value, object$variable, summary)
