@@ -6,7 +6,6 @@ seasonTrend <- function(x, first, last, type = c("slope",
 	# Variables that otherwise have no visible binding
 	season <- p <- NULL
 
-    require(ggplot2)
     ## Validate args
     if (!is(x, "ts")) 
         stop("x must be a 'ts'")

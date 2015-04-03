@@ -11,8 +11,6 @@ function (x, distr = c("normal", "lognormal"), n = nrow(x), reps =
 ### Returns:
 ###   ggplot object
 		
-  require(ggplot2)
-  
   ## Validate args
   distr <- match.arg(distr)
   

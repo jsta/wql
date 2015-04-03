@@ -2,9 +2,6 @@ plotTsAnom <- function(x, xlab, ylab, plot.order = colnames(x), strip.labels = c
 
 	# Variables that otherwise have no visible binding
 	value <- NULL
-	
-  require(reshape2)
-  require(ggplot2)
 
   ## Validate arguments
   if (!is(x, 'ts'))

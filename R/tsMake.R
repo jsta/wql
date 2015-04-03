@@ -10,7 +10,6 @@ setMethod(
   definition = function(object, focus, layer, type = c("ts.mon", "zoo"),
     qprob = NULL)
   {
-    require(reshape2)
 
     ## Validate args
     d <- data.frame(object)

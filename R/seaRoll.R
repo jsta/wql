@@ -39,7 +39,6 @@ seaRoll <- function(x, w = 5, rule = 2, plot = FALSE,
     ans[, 1:2] <- signif(ans[, 1:2], 3)
     ans[, 3] <- round(ans[, 3], 3)
     if (plot) {
-        require(ggplot2)
         ans <- within(as.data.frame(ans), yr <- (sx + w - 1):ex)
         ans <- na.omit(ans)
         if (is.null(ylab)) 

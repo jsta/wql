@@ -64,7 +64,6 @@ setMethod(
       vars <- unique(x$variable)
       num.plots <- max(10, length(vars))
       vars <- vars[1:num.plots]
-    require(ggplot2)
     d <- data.frame(x)
     d <- d[d$variable %in% vars, ]
     ggplot(d, aes(x = site, y = value, z = variable)) + 

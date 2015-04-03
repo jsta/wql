@@ -4,7 +4,6 @@ mannKen <- function(x, plot = FALSE, type = c("slope",
 	# Variables that otherwise have no visible binding
 	sen.slope <- sen.slope.pct <- tau <- p.value <- miss <- NULL
 
-    require(ggplot2)
     ## Validate args
     if (!is(x, "ts")) 
         stop("x must be a 'ts'")
@@ -19,8 +18,7 @@ mannKen <- function(x, plot = FALSE, type = c("slope",
             t1 <- n * (n - 1) * (2 * n + 5)
             t2 <- sum(ties.y * (ties.y - 1) * (2 * ties.y + 
                 5))
-            v1 <- (t1 - t2)/18
-            return(v1)
+            (t1 - t2)/18
         }
         ## Extent of NAs in first and last fifths of data
         len <- length(x)

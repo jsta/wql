@@ -16,7 +16,6 @@ plotTsTile <- function(x, plot.title = NULL, legend.title = NULL,
 	# Variables that otherwise have no visible binding
 	yr <- mon <- value <- NULL
 
-  require(ggplot2)
   # Validate args
     if (!is(x, "ts") || is(x, "mts") || !identical(frequency(x), 
         12)) 

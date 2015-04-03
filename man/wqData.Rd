@@ -45,7 +45,7 @@ Conversion specification for \code{time} defined by \acronym{ISO C/POSIX} standa
   \code{\link{as.Date}}, \code{\link{strptime}}, \code{\link{WqData-class}}
 }
 \references{
-  International Organization for Standardization (2004) ISO 8601. Data elements and interchange formats - Information interchange - Representation of dates and times. \url{http://www.iso.org/iso/en/prods-services/popstds/datesandtime.html}
+  International Organization for Standardization (2004) ISO 8601. Data elements and interchange formats - Information interchange - Representation of dates and times.
 }
 \examples{
 # Create new WqData object from sfbay data. First combine date and time

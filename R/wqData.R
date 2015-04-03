@@ -2,8 +2,6 @@ wqData <-
 function(data, locus, wqdata, site.order, time.format = "%Y-%m-%d",
   type = c("long", "wide")) {    
 
-  require(reshape2)
-
   ## Validate args
   if (length(locus) != 3)
       stop("locus must be of length 3")

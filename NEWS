@@ -1,3 +1,9 @@
+wq 0.4.2
+========
+* DESCRIPTION: Supporting packages changed.
+* NAMESPACE: Imports changed.
+* layOut, ammFrac: Removed as off-topic.
+
 wq 0.4-1
 ========
 * DESCRIPTION: Maintainer has changed.

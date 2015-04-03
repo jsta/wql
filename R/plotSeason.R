@@ -5,9 +5,6 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
   ## Variables with no visible bindings
   yr <- value <- too.few <- NULL
   
-  require(reshape2)
-  require(ggplot2)
-
   ## Validate args
   if (!is(x, 'ts') || is(x, 'mts'))
     stop("x must be a single 'ts'")
@@ -62,7 +59,7 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
        cols <- c(`TRUE` = "red", `FALSE` = "blue")
        p1 <- ggplot(d1, aes(x = mon, y = value, colour = too.few)) +
           geom_boxplot(size = .2) +
-          scale_x_discrete(' ', breaks = month.abb, labels = c('Jan',
+          scale_x_discrete('', breaks = month.abb, labels = c('Jan',
             ' ', ' ', 'Apr', ' ', ' ', 'Jul', ' ', ' ', 'Oct', ' ', ' ')) +
           scale_y_continuous(ylab) +
           scale_colour_manual("", values = cols, guide="none") +

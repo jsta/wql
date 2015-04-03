@@ -19,8 +19,8 @@ Functions to assist in the processing and exploration of data from
 \tabular{ll}{
 Package: \tab wq\cr
 Type: \tab Package\cr
-Version: \tab 0.4-1\cr
-Date: \tab 2014-05-05\cr
+Version: \tab 0.4.2\cr
+Date: \tab 2015-04-02\cr
 Depends: \tab 
 methods,
 R (>= 3.0.0),
@@ -37,7 +37,6 @@ Index:
 \preformatted{
 DateTime-class          Class "DateTime"
 WqData-class            Class "WqData"
-ammFrac                 Un-ionized ammonia
 date2decyear            Miscellaneous utility functions
 decompTs                Decompose a time series
 ec2pss                  Convert conductivity to salinity
@@ -45,7 +44,6 @@ eof                     Empirical orthogonal functions
 eofNum                  Assess significance of eigenvalues
 eofPlot                 Plot results of an EOF analysis
 interpTs                Interpolate or substitute missing time series values
-layOut                  Arrange a group of saved plots
 mannKen                 Mann-Kendall test and the Sen slope
 mts2ts                  Converts matrix to vector time series
 oxySol                  Dissolved oxygen at saturation
@@ -77,6 +75,6 @@ Further information is available in the following vignettes:
 \author{
 Alan D. Jassby and James E. Cloern
 
-Maintainer: Anthony Malkassian <anthonym@sfei.org>
+Maintainer: Alan Jassby <wq@fastmail.net>
 }
 \keyword{ package }

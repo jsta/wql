@@ -80,8 +80,6 @@ sfbay1 <- transform(sfbay,
 sfbay1[x, "dox"]
 @
 
-\noindent Aside from \texttt{ec2pss} and \texttt{oxySol}, the function \texttt{ammFrac} is available for estimating the fraction of total ammonium in un-ionized form.
-
 As will be seen below, much of the manipulation work needed to form the \texttt{WqData} object is taken care of by a generating function in the package, and there is really nothing more that needs to be done. In fact, not even the renaming of the variables was necessary: only the initial \texttt{read.csv} function was required. This is partly due to the way the original data were formatted in the downloaded file and more work may be needed in other cases. Also, one can always create the time series of interest directly, bypassing the \texttt{WqData} object if it turns out to be of little benefit or if the data come from other subject areas where ``depth'' has no relevance. Even in the latter case, though, some arbitrary depth could be assigned to all observations in order to take advantage of functions that operate on \texttt{WqData} objects.
 
 \section{The \texttt{WqData} class} \label{sec:wqClass}
@@ -499,35 +497,6 @@ print(plotTsTile(chl27))
 \end{figure}
 
 \noindent This plot shows clearly the change in autumn-winter chlorophyll magnitude after 1999 (Figure~\ref{fig:tile}).
-
-The \texttt{layOut} function is a convenient way to create a graph consisting of two or more plots produced by the \textbf{ggplot2} package. The position of each plot is determined by the beginning row and column numbers. The relative size of each plot is determined by the sequence lengths of row and column numbers. The total grid size of the graph is determined automatically by the grid numbers used for individual plots. Manual adjustment of the graphics window may be useful to get proper aspect ratios and prevent text from overlapping (Figure~\ref{fig:layout}):
-
-<<>>=
-chl27 = sfbayChla[, 's27']
-g1 <- plotTsTile(chl27, legend.title = 'Chl log-anomaly',
-    square=FALSE)
-g2 <- seasonTrend(chl27, plot = TRUE, legend = TRUE)
-g3 <- plotSeason(chl27, num.era = 3,
-                 ylab = expression(paste('Chl-', italic(a), ', ',
-                                         mu*g~L^{-1})))
-## quartz("", 10, 6)  # e.g., in mac os x, or:
-## grid.newpage()  # to re-use existing plot window
-@
-<<eval=FALSE>>=
-layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10), list(g3, 3:5, 1:8))
-@
-
-\setkeys{Gin}{width=1\textwidth}
-\begin{sidewaysfigure}[tbp]
-\begin{center}
-<<fig=TRUE, echo=FALSE, results=hide, width=10, height=6>>=
-print(layOut(list(g1, 1:2, 1:6), list(g2, 1:2, 7:10),
-             list(g3, 3:5, 1:8)))
-@
-\caption{Example of use of \texttt{layOut} function for the chlorophyll-\emph{a} monthly time series at station 27 in San Francisco Bay.}
-\label{fig:layout}
-\end{center}
-\end{sidewaysfigure}
 
 \noindent In general, the \textbf{ggplot2} package offers easy customization of almost all graphic output from \textbf{wq} by saving the output and adding additional \textbf{ggplot2} commands.
 

@@ -1,8 +1,5 @@
 plotTs <- function(x, xlab, ylab, dot.size = 1, plot.order = colnames(x), strip.labels = colnames(x), ...) {
 
-  require(reshape2)
-  require(ggplot2)
-  
   ## Validate arguments
   if (!is(x, 'ts'))
     stop("x must be of class 'ts'")
