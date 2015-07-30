@@ -1,4 +1,10 @@
-wq 0.4.2
+wq 0.4.4
+========
+* NAMESPACE: Changed (and DESCRIPTION, wq-package.Rd changed accordingly).
+* wq-internal.R, wq-internal.Rd: Removed.
+* plot WqData-class: Added global variable definitions.
+
+wq 0.4.3
 ========
 * DESCRIPTION: Supporting packages changed.
 * NAMESPACE: Imports changed.

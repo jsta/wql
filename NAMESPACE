@@ -1,6 +1,10 @@
-import(zoo, ggplot2, reshape2)
-importFrom(graphics, plot)
-importFrom(methods, setClass, setClassUnion, setGeneric, setMethod, setOldClass)
+import("graphics")
+import("grDevices")
+import("methods")
+import("stats")
+import("ggplot2")
+import("reshape2")
+import("zoo")
 
 exportPattern("^[a-zA-Z]")
 exportClassPattern("^[a-zA-Z]")

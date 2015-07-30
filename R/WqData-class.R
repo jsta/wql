@@ -1,3 +1,4 @@
+
 setClass(
   Class = 'WqData', 
   contains = 'data.frame', 
@@ -60,6 +61,8 @@ setMethod(
   f = "plot",
   signature = "WqData",
   definition =  function(x, y = "missing", vars, num.col = NULL) {
+    # Variables that otherwise have no visible binding
+    site <- value <- variable <- NULL
     if (missing(vars)) 
       vars <- unique(x$variable)
       num.plots <- max(10, length(vars))
