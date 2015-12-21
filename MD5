@@ -1,6 +1,6 @@
-ff7ce50961430fdd3574761e4cdff7a9 *DESCRIPTION
+a5adc7163df56a563215246d3fb06c0d *DESCRIPTION
 37c1ccbd0e2c86c6b0e2bbe299b2bb28 *NAMESPACE
-ce05374e0c3dccb9c4fb79e5fe070931 *NEWS
+0f04b4ff27daa7966dac82e5e96765e2 *NEWS
 855f26cdc1f2897b5c7a608fb6639bf9 *R/DateTime-class.R
 1b27af4decfb5db531975ede0029dc35 *R/R2pss.R
 8d3e7568bc977261a5b6b612d96647db *R/WqData-class.R
@@ -10,7 +10,7 @@ b33970254e4e666384700913a59510e5 *R/decompTs.R
 09706a7f37d8fabe1220b3839dd2cf6b *R/ec2pss.R
 3c90734a55eeea1ff99490921786bbba *R/eof.R
 2fe325079d591f4dcd6baa43543a86d9 *R/eofNum.R
-8bcf858e7ef150514f1c6216d0fc6f1a *R/eofPlot.R
+71ef390a07fe96bdad717b4cd57198ef *R/eofPlot.R
 8e0de25eade59a93aac00f2436cedbed *R/interpTs.R
 bd7a2f8991db3baee85d33e8e1751cfd *R/layerMean.R
 bf4ab948f3b0d6bc87323dd3bca68ed5 *R/leapYear.R
@@ -37,12 +37,12 @@ ab2c82a93d951e7303d1e477988dcc3d *R/seasonTrend.R
 e58deeaa2338150b5c8ef778362ffd72 *R/wqData.R
 a827df4b20f8f56eee5666d9185b048d *R/years.R
 47ef59aea098228c0e63a3274c0d5ebc *README
-e4faf2c0b23e66d55f211acdf93f578d *build/vignette.rds
+e91c105d78d6204664de35e88d7c1271 *build/vignette.rds
 a4895da1e7f7fff365b661bf0e39d716 *data/sfbay.rda
 c6dc7ed15c47e503c55ee4274906763c *inst/CITATION
 eb80069fa5eb0e20f0899f538aa0974a *inst/doc/wq-package.R
 480ec5b192e13977822f8dbf8314dbc8 *inst/doc/wq-package.Rnw
-c96facc957f2bbd4887415091186a57c *inst/doc/wq-package.pdf
+043befc0b0ff04386fb31649dade8fc7 *inst/doc/wq-package.pdf
 c12e21f2c383ad69537705ae55dadda8 *man/DateTime-class.Rd
 17dff0b36a876641ab806ff74cfa7c24 *man/WqData-class.Rd
 bac792ddefbcd3b72227d0ca289c1a85 *man/decompTs.Rd
@@ -70,7 +70,7 @@ e78838175552ce39e55926859cb02cc2 *man/ts2df.Rd
 f64b20d0090edadc3c401465d4df4739 *man/tsMake-methods.Rd
 ca521d69211fcba90b71a3f4fdd706bb *man/tsMake.Rd
 aba965442de79aa0d072dc069dab4fa0 *man/utilities.Rd
-549f568a2e05bc25d2578c6629d25fb7 *man/wq-package.Rd
+c4a56656bbe837082aac36db12936c75 *man/wq-package.Rd
 9f896a6b1cf89990f9367fb1859735e6 *man/wqData.Rd
 04b3874ddb38ff81f48f1886df10e8b6 *man/zoo-class.Rd
 61ca10d221296009e2d0008e923cc0cb *vignettes/limnology_and_oceanography.bst

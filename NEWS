@@ -1,3 +1,7 @@
+wq 0.4.5
+========
+* eofPlot.R: Fix argument to geom_hline.
+
 wq 0.4.4
 ========
 * NAMESPACE: Changed (and DESCRIPTION, wq-package.Rd changed accordingly).

@@ -36,7 +36,7 @@ eofPlot <- function(x, type = c("coef", "amp"),
         d1 <- within(d1, id <- as.numeric(as.character(id)))
         m1 <- melt(d1, id = "id")
         ggplot(m1, aes_string(x = "id", y = "value")) + 
-            geom_hline(aes(yintecept = 0), colour = "red", size = 0.2) +
+            geom_hline(aes(yintercept = 0), colour = "red", size = 0.2) +
             geom_line(colour = "blue") + 
             geom_point(colour = "blue") + 
             facet_wrap(~variable, nrow = num) + 
