@@ -1,55 +1,66 @@
-seaKen <-
-function(x) {
+seaKen <- 
+function(x, plot = FALSE, type = c("slope", "relative"), order = FALSE, 
+         pval = .05, mval = .5, pchs = c(19, 21), ...) {
 
-### Calculate Seasonal Sen slope and Seasonal Kendall significance test
-### Args:
-###   x: ts object
-### Returns: a list with
-###   sen.slope: Sen slope
-###   sen.slope.pct: slope as percent of mean
-###   p.value: slope significance
-###   miss: fraction missing in first and last fifths of data for each
-###   season
-		
-	## Validate args
-	if (!is(x, 'ts'))
-		stop("x must be a 'ts'")
-		
-	fr <- frequency(x)
-	S <- 0
-	varS <- 0
-	miss <- NULL
-	slopes <- NULL
-	for (m in 1:fr) {
+  # validate args
+  if (!is.numeric(x) && !is.matrix(x) && !is.data.frame(x))
+    stop("'x' must be a vector, matrix, or data.frame")
+  if (!is.null(ncol(x)) && is.null(colnames(x)))
+    colnames(x) <- paste("series_", 1:ncol(x), sep="")
+  type <- match.arg(type)
+
+  # test for single series
+  sk <- function(x) {
+    
+    # validate args
+    if (!is.ts(x))
+      stop("'x' must be of class 'ts'")
+    if (identical(frequency(x), 1))
+      stop("'x' must be a seasonal time series with frequency > 1")
+    
+    # extend series to full years
+    fr <- frequency(x)
+    xmod <- length(x) %% fr
+    if (!identical(xmod, 0))
+      x <- ts(c(x, rep(NA, fr - xmod)), start = start(x), frequency = fr)
+
+    # apply mannKen to matrix of months
+    x1 <- matrix(x, ncol = fr, byrow = TRUE)
+    mk1 <- mannKen(x1)
+  
+    # calculate sen slope
+    sen.slope <- median(mk1[, "sen.slope"], na.rm = TRUE)
+    sen.slope.rel <- sen.slope / abs(median(x, na.rm = TRUE))
+    
+    # calculate sen slope significance
+    S <- sum(mk1[, "S"])
+    varS <- sum(mk1[, "varS"])
+    Z <- (S - sign(S)) / sqrt(varS)
+    p.value <- 2 * pnorm(-abs(Z))
+    
+    miss <- round(sum(mk1[, "miss"] >= .5) / fr, 3)
+    c(sen.slope = sen.slope, 
+      sen.slope.rel = sen.slope.rel,
+      p.value = p.value, 
+      miss = miss)
+  }
 	
-		## select data for current season
-		xm <- x[cycle(x) == m]
-		tm <- time(x)[cycle(x) == m]
-		
-		## get kendall statistics for current season
-		ken <- mannKen(ts(xm, start = start(x)[1], frequency = 1))
-	    S <- S + ken$S
-		varS <- varS + ken$varS
-		miss <- c(miss, ken$miss)
-		
-		## calculate slopes for current season
-		outr <- outer(xm, xm, '-')/outer(tm, tm, '-')
-		slopes.m <- outr[lower.tri(outr)]		
-		slopes <- c(slopes, slopes.m)		
+  # apply sk for each series
+  if (is.null(dim(x))) return(as.list(sk(x)))
+  if (ncol(x) == 1) return(as.list(sk(x[, 1])))
+  ans <- t(sapply(1:ncol(x), function(i) sk(x[, i])))
+  rownames(ans) <- colnames(x)
+  
+	# plot if TRUE
+	if (!plot) {
+	  ans
+	} else {
+	  v1 <- switch(type,
+	               slope = "sen.slope",
+	               relative = "sen.slope.rel")
+	  if (order) ans <- ans[order(ans[, v1]), ]
+	  pch <- ifelse(ans[, "miss"] >= mval, NA, 
+	                ifelse(ans[, "p.value"] < pval, pchs[1], pchs[2]))
+	  dotchart(ans[, v1], pch = pch, ...)
 	}
-	
-	## calculate sen slope
-	sen.slope <- median(slopes, na.rm=TRUE)
-	sen.slope.pct <- 100 * sen.slope/abs(mean(x, na.rm = TRUE))
-
-	## calculate sen slope significance
-	Z <- (S - sign(S))/sqrt(varS)
-	p.value <- 2 * pnorm(-abs(Z))
-	
-	## return results
-	names(miss) <- as.character(1:m)
-	list(sen.slope = sen.slope, sen.slope.pct = sen.slope.pct, p.value =
-		p.value, miss = round(miss, 3))
-
 }
-

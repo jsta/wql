@@ -1,61 +1,45 @@
-seaRoll <- function(x, w = 5, rule = 2, plot = FALSE, 
-    ylab = NULL, legend = FALSE) {
-
-	# Variables that otherwise have no visible binding
-	sen.slope <- p.value <- NULL
-
-    ## Validate args
-    if (!is(x, "ts")) 
-        stop("x must be a 'ts'")
-    if (w < 5) 
-        stop("A minimum window of 5 years is required")
-
-    fr <- frequency(x)
-    sx <- start(x)[1]
-    ex <- end(x)[1]
-
-    ans <- NULL
-    for (yr in sx:(ex - w + 1)) {
-        ## Set current window and get slope
-        if (fr > 1) 
-            x1 <- window(x, s = yr, end = c(yr + w - 1, fr), 
-                extend = TRUE)
-        else x1 <- window(x, s = yr, end = yr + w - 1, extend = TRUE)
-        sk <- seaKen(x1)
-
-        ## Make sure enough data are present
-        rule.ok <- switch(rule, TRUE, sum(sk$miss >= 0.5)/fr < 
-            0.5, )
-        N <- sum(!is.na(x1))
-        if (N < 3 * fr || N < 10 || !rule.ok) 
-            ans1 <- c(NA, NA, NA)
-        else ans1 <- c(sk$sen.slope, sk$sen.slope.pct, sk$p.value)
-        ans <- rbind(ans, ans1)
+seaRoll <- 
+function(x, w = 10, plot = FALSE, pval = .05, mval = .5, 
+         pchs = c(19, 21), xlab = NULL, ylab = NULL, ...) {
+         
+  # validate args
+  if (!is.ts(x) || is.matrix(x))
+    stop("'x' must be a vector of class 'ts'")
+  if (w < 5)
+    stop("window must be at least 5 years")
+  
+  # result for each window
+  sr <- function(y, x1=x, w1=w, mval1=mval) {
+    # set current window and get slope
+    fr <- frequency(x1)
+    x2 <- window(x1, start = y, end = c(y + w1 - 1, fr), extend = TRUE)
+    sk <- seaKen(x2)
+    
+    # make sure enough data are present
+    miss.ok <- sum(sk$miss >= 0.5) / fr < mval1
+    N <- sum(!is.na(x2))
+    if (N < 3 * fr || N < 10 || !miss.ok) {
+      c(NA, NA, NA)
+    } else {
+      c(sk$sen.slope, sk$sen.slope.rel, sk$p.value)
     }
+  }
+  
+  # combine windows
+  sx <- start(x)[1]
+  ex <- end(x)[1]
+  ans <- t(sapply(sx:(ex - w + 1), function(i) sr(i)))
+  rownames(ans) <- sx:(ex - w + 1)
+  colnames(ans) <- c("sen.slope", "sen.slope.rel", "p.value")
 
-    ## Plot or list
-    colnames(ans) <- c("sen.slope", "sen.slope.pct", "p.value")
-    rownames(ans) <- (sx + w - 1):ex
-    ans[, 1:2] <- signif(ans[, 1:2], 3)
-    ans[, 3] <- round(ans[, 3], 3)
-    if (plot) {
-        ans <- within(as.data.frame(ans), yr <- (sx + w - 1):ex)
-        ans <- na.omit(ans)
-        if (is.null(ylab)) 
-            ylab <- expression(paste("Trend (units ", year^{-1}, ")"))
-        p1 <- ggplot(ans, aes(x = yr, y = sen.slope, shape = p.value < 
-            0.05)) + 
-            geom_point(colour = "blue") + 
-            scale_shape_manual(expression(paste(italic(p), 
-            "-value")), values = c(`FALSE` = 1, `TRUE` = 16), 
-            breaks = c(FALSE, TRUE), labels = c("> 0.05", 
-                "< 0.05")) + 
-            labs(x = "", y = ylab)
-        if (!legend) 
-            p1 <- p1 + theme(legend.position = "none")
-        p1
-    }
-    else {
-        ans
-    }
-} 
+  # plot if TRUE
+  if (!plot) {
+    ans
+  } else {
+    xlab <- if (is.null(xlab)) "" else xlab
+    ylab <- if (is.null(ylab)) "" else ylab
+    pch <- ifelse(ans[, "p.value"] < pval, pchs[1], pchs[2])
+    plot(ans[, "sen.slope"] ~ rownames(ans), pch = pch, 
+         xlab = xlab, ylab = ylab, ...)
+  }
+}

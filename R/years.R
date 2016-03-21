@@ -1,2 +1,2 @@
 years <-
-  function(y) as.numeric(format(y, "%Y"))
+function(y) as.numeric(format(y, "%Y"))

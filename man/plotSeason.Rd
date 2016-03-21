@@ -41,8 +41,6 @@ If \code{num.era} is an integer, the time range is divided into that many equal 
 A plot (and the corresponding object of class \code{"ggplot"}).
 }
 
-\author{A. Jassby and A. Malkassian}
-
 \seealso{
 \code{\link{decompTs}}, \code{\link{seasonTrend}}
 }

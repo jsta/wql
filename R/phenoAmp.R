@@ -11,12 +11,6 @@ setMethod(
   signature = "ts",
   definition = function(x, mon.range = c(1, 12)) {
 
-### Calculates range, range/mean, CV, by year
-### Args
-###   x: time series
-###   mon.range: range of months to use for calculations
-### Returns numeric matrix
-
     d1 <- data.frame(yr = floor(time(x)), mon = cycle(x), val =
     	as.numeric(x))
     mons <- mon.range[1]:mon.range[2]
@@ -24,7 +18,7 @@ setMethod(
     yrs <- unique(d2$yr)
     yrs.ok <- table(d2$yr, is.na(d2$val))[, 1] == length(mons)
     
-    ## range
+    # range
     diff.range <- function(x) {
       if (sum(!is.na(x)) == 0) {
         return(NA)
@@ -35,11 +29,11 @@ setMethod(
     a1 <- aggregate(d2$val, list(d2$yr), diff.range)
     range <- ifelse(yrs.ok, a1$x, NA)
     
-    ## range/mean
+    # range/mean
     a2 <- aggregate(d2$val, list(d2$yr), mean, na.rm=TRUE)
     range.mean <- ifelse(yrs.ok, a1$x/a2$x, NA)
   
-    ## cv
+    # cv
     a3 <- aggregate(d2$val, list(d2$yr), sd, na.rm=TRUE)
     cv <- ifelse(yrs.ok, a3$x/a2$x, NA)
     
@@ -54,13 +48,7 @@ setMethod(
   signature = "zoo",
   definition = function(x, mon.range = c(1, 12)) {
 
-### Calculates range, range/mean, CV, by year
-### Args
-###   x: zoo object with index in class 'DateTime'
-###   mon.range: range of months to use for calculations
-### Returns numeric matrix
-
-    ## validate args
+    # validate args
     if (!is(index(x), "DateTime"))
       stop('time index must be a DateTime object')
     indexx <- as.Date(index(x))  
@@ -72,7 +60,7 @@ setMethod(
     yrs <- unique(d2$yr)
     n <- table(d2$yr, is.na(d2$val))[, 1]
     
-    ## range
+    # range
     diff.range <- function(x) {
       if (sum(!is.na(x)) == 0) {
         return(NA)
@@ -83,11 +71,11 @@ setMethod(
     a1 <- aggregate(d2$val, list(d2$yr), diff.range)
     range <- a1$x
     
-    ## range/mean
+    # range/mean
     a2 <- aggregate(d2$val, list(d2$yr), mean, na.rm=TRUE)
     range.mean <- a1$x/a2$x
   
-    ## cv
+    # cv
     a3 <- aggregate(d2$val, list(d2$yr), sd, na.rm=TRUE)
     cv <- a3$x/a2$x
     

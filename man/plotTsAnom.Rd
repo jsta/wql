@@ -10,8 +10,8 @@ Series are illustrated by vertical lines extending from individual data values t
 }
 
 \usage{
-plotTsAnom(x, xlab, ylab, plot.order = colnames(x), 
-  strip.labels = colnames(x), ...)
+plotTsAnom(x, xlab = NULL, ylab = NULL,
+           strip.labels = colnames(x), ...)
 }
 
 \arguments{
@@ -24,13 +24,10 @@ optional x-axis label
   \item{ylab}{
 optional y-axis label
 }
-  \item{plot.order}{
-column names of matrix time series, possibly in a different order
-}
   \item{strip.labels}{
 labels for individual time series plots
 }
-  \item{\dots}{
+  \item{...}{
 additional options
 }
 }
@@ -48,9 +45,10 @@ A plot and corresponding object of class \dQuote{ggplot}.
 }
 
 \examples{
-### Spring bloom size for 6 stations in SF Bay
+# Spring bloom size for 6 stations in SF Bay
 bloom <- aggregate(sfbayChla[, 1:6], 1, meanSub, sub=3:5)
-plotTsAnom(bloom, ylab = 'Chl-a')
+plotTsAnom(bloom, ylab = 'Chl-a', strip.labels = paste('Station',
+  substring(colnames(bloom), 2, 3)), ncol = 2, scales = "free_y")
 }
 
 \keyword{Graphics}

@@ -4,70 +4,56 @@
 Determine seasonal trends
 }
 \description{
-Finds the trend for each season of a time series (matrix or vector) and indicates statistical significance.
+Finds the trend for each season and each variable in a time series.
 }
 \usage{
-seasonTrend(x, first, last, type = c("slope", "slope.pct"),
-    method = c("mk", "lin"), plot = FALSE, xlab = NULL,
-    ylab = NULL, miss = FALSE, legend = FALSE, ...)
+seasonTrend(x, plot = FALSE, type = c("slope", "relative"), pval = .05, ...) 
 }
 \arguments{
-  \item{x}{
-Time series vector, or time series matrix with column names.
+\item{x}{
+Time series vector, or time series matrix with column names
 }
-  \item{first}{
-First year of desired time interval. Will be adjusted if less than start of series.
+\item{plot}{
+Should the results be plotted?
 }
-  \item{last}{
-Last year of desired time interval. Will be adjusted if more than end of series.
+\item{type}{
+Type of trend to be plotted, actual or relative to series median
 }
-  \item{type}{
-Type of trend, either in original units per year, or percent per year.
+\item{pval}{
+p-value for significance
 }
-  \item{method}{
-'mk' for Mann-Kendall (Theil-Sen slope), and 'lin' for linear regression (linear slope).
-}
-  \item{plot}{
-If \code{TRUE}, a plot is generated; otherwise the results are listed.
-}
-   \item{xlab}{
-Optional x-axis label.
-}
-   \item{ylab}{
-Optional y-axis label.
-}
-  \item{miss}{
-If \code{TRUE}, trends with insufficient data.
-}
-  \item{legend}{
-If \code{TRUE}, a legend is included.
-}
-  \item{\dots}{
-Further parameters to pass to the plotting function.
+\item{...}{
+Further options to pass to plotting function
 }
 }
+
 \details{
-The slope estimate and its significance are calculated for each season and time series. If \code{type = "slope.pct"}, the slopes are multiplied by 100 and divided by the overall mean (not the median, which can be zero even in cases where a trend estimate is useful). If \code{method = 'mk'}. the Theil-Sen slope is calculated with the Mann-Kendall test of significance. Otherwise, linear regression is used to determine the slope and significance.
+The Mann-Kendall test is applied for each season and series (in the case of a matrix). The actual and relative Sen slope (actual divided by median for that specific season and series); the p-value for the trend; and the fraction of missing slopes involving the first and last fifths of the data are calculated (see \code{\link{mannKen}}).
 
-If \code{plot = TRUE}, each time series is represented by a box plot showing the trend for each season. The fill colour of the box indicates whether the trend is significant or not (the legend is optional). When \code{method = 'mk'}, the proportion of slopes joining the first and last fifths of the data is calculated. If this value is 0.5 or more, the corresponding trends can be omitted by setting \code{miss = TRUE}; the trend results may not be a good representation of the entire period and a different time window should be considered.
+If \code{plot = TRUE}, each season for each series is represented by a bar showing the trend. The fill colour indicates whether \eqn{p < 0.05} or not. If the fraction of missing slopes is 0.5 or more, the corresponding trends are omitted.
 
-Parameters can be passed to the plotting function, in particular, to   \code{facet_wrap} in \pkg{ggplot2}. The most useful parameters here are \code{ncol} (or \code{nrow}), which determines the number of columns (or rows) of plots, and \code{scales}, which can be set to \code{"free_x"} to allow the x-axis to change for each time series.
+Parameters can be passed to the plotting function, in particular, to \code{facet_wrap} in \pkg{ggplot2}. The most useful parameters here are \code{ncol} (or \code{nrow}), which determines the number of columns (or rows) of plots, and \code{scales}, which can be set to \code{"free_y"} to allow the y-axis to change for each time series. Like all \pkg{ggplot2} objects, the plot output can also be customized extensively by modifying and adding layers.
 }
+
 \value{
 A data frame with the following fields:
-\item{trend}{Theil-Sen slope in original units per year, or percent per year.}
+\item{series}{series names}
+\item{season}{season number}
+\item{sen.slope}{Sen slope in original units per year}
+\item{sen.slope.rel}{Sen slope divided by median for that specific season and series}
 \item{p}{p-value for the trend according to the Mann-Kendall test.}
-\item{missing}{Proportion of slopes joining first and last fifths of the data that are missing.}
-\item{season}{Season number.}
-\item{tsname}{Name of time series.}
+\item{missing}{Proportion of slopes joining first and last fifths of the data that are missing}
 }
+
 \seealso{
 \code{\link{mannKen}}, \code{\link{plotSeason}}, \code{\link[ggplot2]{facet_wrap}}
 }
+
 \examples{
 x <- sfbayChla
-seasonTrend(x, first=1978, last=2009, ncol = 4, plot = TRUE, legend = TRUE)
-seasonTrend(x, type = 'slope.pct')
+seasonTrend(x)
+seasonTrend(x, plot = TRUE, ncol = 4)
 }
+
 \keyword{Graphics}
 \keyword{ts}

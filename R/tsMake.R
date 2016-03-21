@@ -11,7 +11,7 @@ setMethod(
     qprob = NULL)
   {
 
-    ## Validate args
+    # Validate args
     d <- data.frame(object)
     if ( missing(focus) || length(focus) > 1 )
       stop("'focus' must be the name of a single site or variable.")
@@ -30,7 +30,7 @@ setMethod(
     }
     type <- match.arg(type)
 
-    ## Assemble all depths
+    # Assemble all depths
     depths <- NULL
     if (missing(layer))
       layer <- list(c(-Inf, Inf))
@@ -56,21 +56,21 @@ setMethod(
     if (nrow(d) == 0) 
       stop("No data for this layer.")
 
-    ## Define aggregation function
+    # Define aggregation function
     if (is.null(qprob)) {
       f = mean
     } else {
       f = function(x, ...) quantile(x, probs = qprob, ...)
     }
 
-    ## Reshape data
+    # Reshape data
     if (match(focus, d$site, nomatch = 0) > 0) {
       c1 <- dcast(d, time ~ variable, fun.aggregate = f, na.rm = TRUE)
     } else {
       c1 <- dcast(d, time ~ site, fun.aggregate = f, na.rm = TRUE)
     } 
 
-    ## Create zoo or ts object
+    # Create zoo or ts object
     z1 <- zoo(c1[, -1], c1[, 1])
     if (type == 'ts.mon') {
       z1 <- aggregate(z1, as.yearmon, f, na.rm = TRUE)

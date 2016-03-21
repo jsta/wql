@@ -1,4 +1,5 @@
-decyear2date <- function(x) {
+decyear2date <- 
+function(x) {
 	yr <- floor(x)
 	len <- ifelse(leapYear(yr), 366, 365)
 	julday <- floor((x - yr) * len)

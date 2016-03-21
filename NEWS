@@ -1,3 +1,15 @@
+wq 0.4.6
+========
+* decompTs: Remove startyr and endyr. Add median as default centering method.
+* mannKen: Remove "tau" argument. Add exact p-values.
+Allow matrix and data.frame. Change plot.
+* pett.R: Add new function with plot for Pettitt test.
+* plotTs: Remove plot.order argument. Improve legend.
+* plotTsAnom: Remove plot.order argument.
+* seaKen: Allow matrix and data.frame. Add plot.
+* seaRoll: Change arguments and plot.
+* seasonTrend: Change arguments. Improve legend.
+
 wq 0.4.5
 ========
 * eofPlot.R: Fix argument to geom_hline.
@@ -76,7 +88,7 @@ wq 0.3-3
 
 wq 0.3-1
 ========
-* plot method for class "WqData": Boxplots instead of stripcharts. Also fixed 
+* plot method for class "WqData": Boxplots instead of stripcharts. Also fixed
   behaviour when less than 10 unique variables.
 * plotSeason: Changed "by.month" option to standardized anomalies.
 * tsMake: Added option to create series for "bottom" of water column.
@@ -124,12 +136,12 @@ wq 0.2-5
 * interpTs: Option to fill with long-term mean or median.
 * plotSeas: Option to choose number of intervals.
 * WqData plot method: Option to choose variables.
-* phenoPhase: Fixed problem where max.time month number given relative to 
+* phenoPhase: Fixed problem where max.time month number given relative to
   subset rather than whole year
 * plotTsTile: More useful error message when not enough data.
 * seaRoll: Fixed problem with frequencies other than 12.
 * tsMake: Remove need to specify layer if no depth info.
-* WqData subset method: Removed because of strategy that WqData objects	should 
+* WqData subset method: Removed because of strategy that WqData objects	should
   not be changed.
 * wqData: Argument value "narrow" changed to more conventional "long".
 * wqData: Now requires time.format to be specified.

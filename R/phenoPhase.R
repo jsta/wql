@@ -11,12 +11,6 @@ setMethod(
   signature = "ts",
   definition = function(x, mon.range = c(1, 12), ...) {
 
-### Calculates months of max, center of gravity, weighted mean
-### Args
-###   x: time series
-###   mon.range: range of months to use for calculations
-### Returns numeric matrix
-
     d1 <- data.frame(yr = floor(time(x)), mon = cycle(x), val =
     	as.numeric(x))
     mons <- mon.range[1]:mon.range[2]
@@ -24,12 +18,12 @@ setMethod(
     yrs <- unique(d2$yr)
     yrs.ok <- table(d2$yr, is.na(d2$val))[, 1] == length(mons)
 
-    ## max month
+    # max month
     a1 <- aggregate(d2$val, list(d2$yr), which.max)
     max.time <- ifelse(yrs.ok, a1$x, NA)
     max.time <- unlist(max.time) + mons[1] - 1
 
-    ## fulcrum
+    # fulcrum
     fulc <- function(d) {
       if (sum(!is.na(d[,2])) < 2) {
         return(NA)
@@ -47,7 +41,7 @@ setMethod(
     b1 <- by(d2[, c('mon', 'val')], as.factor(d2$yr), fulc)
     fulcrum <- round(ifelse(yrs.ok, as.numeric(b1), NA), 2)
 
-    ## weighted mean month
+    # weighted mean month
     weighted.mean.df <- function(d) {
       d <- na.omit(d)
       if (nrow(d) == 0) {
@@ -64,20 +58,13 @@ setMethod(
   }
 )
 
-
 setMethod(
   f = "phenoPhase",
   signature = "zoo",
   definition = function(x, mon.range = c(1, 12), out = c('date', 'doy',
   	'julian'), ...) {
 
-### Calculates day of max, center of gravity, weighted mean
-### Args
-###   x: zoo object with index in class 'DateTime'
-###   mon.range: range of months to use for calculations
-### Returns data.frame
-
-    ## validate args
+    # validate args
     if (!is(index(x), "DateTime"))
       stop('time index must be a DateTime object')
     indexx <- as.Date(index(x))
@@ -91,13 +78,13 @@ setMethod(
     yrs <- unique(d2$yr)
     n <- table(d2$yr, is.na(d2$val))[, 1]
 
-    ## max day
+    # max day
     maxDay <- function(d)
       d[, 1][which.max(d[, 2])]
     b1 <- by(d2[, c('julday', 'val')], as.factor(d2$yr), maxDay)
     max.time <- as.numeric(b1)
 
-    ## fulcrum
+    # fulcrum
     fulc <- function(d, m1 = mon.range[1], m2 = mon.range[2]) {
       if (sum(!is.na(d[,2])) < 2) {
         return(NA)
@@ -120,7 +107,7 @@ setMethod(
     b2 <- by(d2[, c('julday', 'val', 'yr')], as.factor(d2$yr), fulc)
     fulcrum <- ceiling(as.numeric(b2))
 
-    ## weighted mean
+    # weighted mean
     weighted.mean.df <- function(d) {
       d <- na.omit(d)
       if (nrow(d) == 0) {

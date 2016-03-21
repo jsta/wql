@@ -2,44 +2,35 @@ eofNum <-
 function (x, distr = c("normal", "lognormal"), n = nrow(x), reps =
 	10000) {
 
-### Scree plot enabling scree test, North's rule-of-thumb, rule N
-### Args:
-###   x: data.frame or matrix
-###   distr: distribution type for rule N
-###   n: effective sample size (<= nrow(x))
-###   reps: repetitions for rule N
-### Returns:
-###   ggplot object
-		
-  ## Validate args
+  # Validate args
   distr <- match.arg(distr)
   
-  ## Eigenvectors
+  # Eigenvectors
   eigs <- svd(cor(x))$d
   p <- ncol(x)
-  eigsPer <- 100 * eigs/p
+  eigs.per <- 100 * eigs/p
   
-  ## 0.95 confidence limits
-  eigsLo <- eigs * (1 - sqrt(2/n))
-  eigsHi <- eigs * (1 + sqrt(2/n))
+  # 0.95 confidence limits
+  eigs.lo <- eigs * (1 - sqrt(2/n))
+  eigs.hi <- eigs * (1 + sqrt(2/n))
   
-  ## rule N
-  ruleNeigs <- ruleN(n, p, type = distr, reps = reps)
-  ruleNok <- eigs > ruleNeigs
+  # rule N
+  rulen.eigs <- ruleN(n, p, type = distr, reps = reps)
+  rulen.ok <- eigs > rulen.eigs
   
-  ## cum. variance
-  cumVar <- round(cumsum(eigsPer), 1)
+  # cum. variance
+  cumvar <- round(cumsum(eigs.per), 1)
   
-  ## Plot
-  d <- data.frame(rank = 1:p, eigs, eigsLo, eigsHi, ruleNok, 
-      cumVar)
-  d <- within(d, cumVarLine <- eigsHi + 0.02 * max(eigsHi))
+  # Plot
+  d <- data.frame(rank = 1:p, eigs, eigs.lo, eigs.hi, rulen.ok, 
+    cumvar)
+  d <- within(d, cumvar.line <- eigs.hi + 0.02 * max(eigs.hi))
   d <- d[1:min(p, 10), ]
-  ggplot(data = d, aes(x = rank, y = eigs, colour = ruleNok)) + 
-    geom_errorbar(aes(x = rank, ymin = eigsLo, ymax = eigsHi), width =
+  ggplot(data = d, aes(x = rank, y = eigs, colour = rulen.ok)) + 
+    geom_errorbar(aes(x = rank, ymin = eigs.lo, ymax = eigs.hi), width =
     	0.5) +
     geom_point(size = 4) + 
-    geom_text(aes(x = rank, y = cumVarLine, label = cumVar), size = 3,
+    geom_text(aes(x = rank, y = cumvar.line, label = cumvar), size = 3,
     	vjust = 0) +
     scale_colour_discrete("rule N", breaks = c(TRUE, FALSE), labels =
       c(expression(p < 0.05), expression(p >= 0.05))) +

@@ -1,4 +1,5 @@
-date2decyear <- function(w) {
+date2decyear <- 
+function(w) {
   old_ops <- options(digits = 8)
   on.exit(options(old_ops))
   posx <- as.POSIXlt(w)

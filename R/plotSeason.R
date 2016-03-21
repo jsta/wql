@@ -2,22 +2,20 @@ plotSeason <-
 function(x, type = c('by.era', 'by.month'), num.era = 4,
   same.plot = TRUE, ylab = NULL, num.col = 3) {
 
-  ## Variables with no visible bindings
-  yr <- value <- too.few <- NULL
-  
-  ## Validate args
+  # Validate args
   if (!is(x, 'ts') || is(x, 'mts'))
     stop("x must be a single 'ts'")
   type <- match.arg(type)
-    
-  ## Turn time series into data.frame
+  too.few <- value <- yr <- NULL # "global" variables
+
+  # Turn time series into data.frame
   sx <- start(x)[1]
   ex <- end(x)[1]
   x <- window(x, start = sx, end = c(ex, 12), extend = TRUE)
   d <- data.frame(x = as.numeric(x), mon = ordered(month.abb[cycle(x)], 
       levels = month.abb), yr = as.numeric(floor(time(x))))
 
-  ## Take care of case where num.era is a scalar
+  # Take care of case where num.era is a scalar
   if (length(num.era)==1) {
     if (num.era<1 || round(num.era)!=num.era) {
       stop("num.era must be a whole number > 0")
@@ -27,7 +25,7 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
   }
   
   if (type == 'by.era') {    
-    ## Break data into eras
+    # Break data into eras
     d <- within(d, {
       era <- cut(yr, breaks = num.era, include.lowest = TRUE, dig.lab = 4, ordered_result = TRUE)
       }
@@ -35,7 +33,7 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
     colnames(d)[1] <- 'value'
     d <- na.omit(d)
 
-    ## Find missing fraction by month and era
+    # Find missing fraction by month and era
     t0 <- table(d$mon, d$era)
     t1 <- sweep(t0, 2, diff(num.era), '/')
     t2 <- t1 < 0.5
@@ -50,12 +48,12 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
     d1 <- merge(d, t4)
 
     if (same.plot) {
-       ## Nest eras within months
+       # Nest eras within months
        ggplot(d1, aes(x=mon, y=value, fill=era)) +
           geom_boxplot(size=.2, position='dodge') +
           labs(x="", y=ylab, fill="Era")
     } else {
-       ## Nest months within eras
+       # Nest months within eras
        cols <- c(`TRUE` = "red", `FALSE` = "blue")
        p1 <- ggplot(d1, aes(x = mon, y = value, colour = too.few)) +
           geom_boxplot(size = .2) +
@@ -70,7 +68,7 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
     }
 
     } else {
-      ## Plot standardized anomalies for each month
+      # Plot standardized anomalies for each month
       x1 <- ts2df(x)
       x2 <- ts(x1, start = start(x))
       plotTsAnom(x2, ylab = ylab, scales = "free_y")

@@ -3,80 +3,52 @@
 \alias{wq}
 \docType{package}
 \title{
-Exploring water quality monitoring data
+\packageTitle{wq}
 }
 \description{
-Functions to assist in the processing and exploration of data from
-    environmental monitoring programs. The name "wq" stands for "water quality" 
-    and reflects the original focus on time series data for physical and 
-    chemical properties of water, as well as the plankton. The package is 
-    intended for programs that sample approximately monthly at discrete 
-    stations, a feature of many legacy data sets. Most of the functions should 
-    be useful for analysis of similar-frequency time series regardless of the 
-    subject matter.
+\packageDescription{wq}
 }
 \details{
-\tabular{ll}{
-Package: \tab wq\cr
-Type: \tab Package\cr
-Version: \tab 0.4.5\cr
-Date: \tab 2015-12-21\cr
-Depends: \tab 
-methods,
-R (>= 3.0.0),
-zoo\cr
-Suggests: \tab 
-graphics,
-grDevices,
-stats,
-ggplot2 (>= 1.0)
-reshape2\cr
-License: \tab GPL-2\cr
-LazyData: \tab yes\cr
+The main purpose of wq is to explore seasonal time series through plots and nonparametric trend tests. It was created originally to examine water quality data sets (hence, \dQuote{wq}) but is suitable as a more general purpose set of tools for looking at annual or seasonal time series.
+
+One of the more tedious tasks in exploring environmental data sets is creating usable time series from the original complex data sets, especially when you want many series at will that group data in different ways. So wq also provides a way of transforming data sets to a common format that then allows a diversity of time series to be created quickly. A few functions are specific to the fields of limnology and oceanography.
+
+The plots are designed for easy use, not for publication-quality graphs. Nonetheless, extensive customization is possible by passing options through \dQuote{\ldots}, adding annotations in the case of base graphics, and adding layers in the case of \pkg{ggplot2} objects.
+
+Two functions are used mainly for preparing the times series:
+
+\itemize{
+\item a function that transforms incoming data to a common data structure in the form of the \code{WqData} class
+\item a function that easily prepares time series objects from this class
 }
 
-Index:
-\preformatted{
-DateTime-class          Class "DateTime"
-WqData-class            Class "WqData"
-date2decyear            Miscellaneous utility functions
-decompTs                Decompose a time series
-ec2pss                  Convert conductivity to salinity
-eof                     Empirical orthogonal functions
-eofNum                  Assess significance of eigenvalues
-eofPlot                 Plot results of an EOF analysis
-interpTs                Interpolate or substitute missing time series values
-mannKen                 Mann-Kendall test and the Sen slope
-mts2ts                  Converts matrix to vector time series
-oxySol                  Dissolved oxygen at saturation
-phenoAmp                Phenological amplitude
-phenoAmp-methods        Methods for Function phenoAmp
-phenoPhase              Phenological phase
-phenoPhase-methods      Methods for Function phenoPhase
-plotSeason              Plots seasonal patterns for a time series
-plotTs                  Time series plot
-plotTsAnom              Anomaly plot of time series
-plotTsTile              Image plot of monthly time series
-seaKen                  Seasonal and Regional Kendall test
-seasonTrend             Determine seasonal trends
-sfbay                   San Francisco Bay water quality data
-trendHomog              Trend homogeneity test
-ts2df                   Convert time series to data frame
-tsMake                  Create time series from water quality data
-tsMake-methods          Methods for Function tsMake
-wq-package              Exploring water quality monitoring data
-wqData                  Construct an object of class "WqData"
-zoo-class               Class "zoo"
+The \code{WqData} class can be easily adapted to non-aquatic data. Obviously, the \dQuote{depth} field can be used for elevation in atmospheric studies. But more generally, the \dQuote{site} and \dQuote{depth} fields can be used for many two-way classifications and don't need to refer to spatial location.
+
+Some of the time series functions include:
+
+\itemize{
+\item a variety of plots to examine changes in seasonal patterns
+\item nonparametric trend tests
+\item time series interpolation and related manipulations
+\item a simple decomposition of a series into different time scales
+\item phenological analyses
+\item the use of empirical orthogonal functions to detect multiple independent
+mechanisms underlying temporal change
 }
 
-Further information is available in the following vignettes:
-\tabular{ll}{
-\code{wq-package} \tab wq: exploring water quality monitoring data (source, pdf)\cr
+A few functions are specialized for the aquatic sciences:
+
+\itemize{
+\item converting between oxygen concentrations and percent saturation
+\item converting between salinity and conductivity
 }
+
+The capabilities of wq are more fully explained in the accompanying vignette:
+\dQuote{wq: Exploring environmental monitoring data}.
 }
 \author{
-Alan D. Jassby and James E. Cloern
+\packageAuthor{wq}
 
-Maintainer: Alan Jassby <wq@fastmail.net>
+Maintainer: \packageMaintainer{wq}
 }
 \keyword{ package }
