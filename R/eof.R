@@ -1,33 +1,44 @@
 eof <-
-function (x, n) {
+function (x, n, scale. = TRUE) {
 
   # Validate args
   if (!is.matrix(x) && !is.data.frame(x))
     stop("x must be a 'matrix' or 'data.frame'")
-  if (identical(colnames(x), NULL) || anyDuplicated(colnames(x)) > 0)
-    stop("x must have distinct colnames defined")
-  if (is.mts(x)) 
-    rownames(x) <- time(x) 
-  if (identical(rownames(x), NULL) || anyDuplicated(rownames(x)) > 0)
-    stop("x must have distinct rownames defined")
-  
-  # Calculate eigenvalues and total percent variance for first n
-  eigs <- svd(cor(x))$d
-  eigen.pct <- round(100 * eigs/ncol(x), 1)
-  totvar.pct <- round(sum(eigen.pct[1:n]), 1)
-  
-  # calculate REOFs
-  pr1 <- prcomp(x, scale. = TRUE)
-  if (n > 1) {
-    pr2 <- promax(pr1$rotation[, 1:n], m=2)
-    reof <- unclass(loadings(pr2))
+  if (identical(colnames(x), NULL))
+    colnames(x) <- paste("v", 1:ncol(x), sep="")
+  if (anyDuplicated(colnames(x)) > 0)
+    stop("x must have distinct column names")
+  if (is.mts(x))
+    rownames(x) <- time(x)
+  if (identical(rownames(x), NULL))
+    rownames(x) <- 1:nrow(x)
+  if (anyDuplicated(rownames(x)) > 0)
+    stop("x must have distinct row names")
+
+  # get EOFs (as scaled eigenvectors)
+  pr1 <- prcomp(x, scale.=TRUE)
+  eigenval1 <- pr1[["sdev"]][1:n]^2
+  eigenvec1 <- pr1[["rotation"]][, 1:n]
+  eof1 <- eigenvec1 %*% diag(sqrt(eigenval1), n, n)
+  scores1 <- pr1[["x"]][, 1:n]
+  amp1 <- scale(scores1)
+
+  # get REOFs by orthogonally rotating EOFs
+  if (identical(n, 1)) {
+    reof <- as.matrix(eof1)
+    amp <- amp1
   } else {
-    reof <- as.matrix(pr1$rotation[, 1])
+    pr2 <- varimax(eof1)
+    reof <- unclass(pr2[["loadings"]])
+    rotater <- pr2[["rotmat"]]
+    amp <- amp1 %*% rotater
   }
-  
-  # calculate REOF amplitudes (scores)
-  amp <- scale(x) %*% reof
-  
+
+  # Eigenvalues and total percent variance for first n
+  eigs <- pr1[["sdev"]]^2
+  eigen.pct <- round(100 * eigs/sum(eigs), 1)
+  totvar.pct <- round(100 * cumsum(eigs/sum(eigs)), 1)
+
   # return results
   colnames(reof) <- colnames(amp) <- paste('EOF', 1:n, sep='')
   reof <- cbind(id=ordered(colnames(x), levels=colnames(x)),

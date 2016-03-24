@@ -6,13 +6,12 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
   if (!is(x, 'ts') || is(x, 'mts'))
     stop("x must be a single 'ts'")
   type <- match.arg(type)
-  too.few <- value <- yr <- NULL # "global" variables
 
   # Turn time series into data.frame
   sx <- start(x)[1]
   ex <- end(x)[1]
   x <- window(x, start = sx, end = c(ex, 12), extend = TRUE)
-  d <- data.frame(x = as.numeric(x), mon = ordered(month.abb[cycle(x)], 
+  d <- data.frame(x = as.numeric(x), mon = ordered(month.abb[cycle(x)],
       levels = month.abb), yr = as.numeric(floor(time(x))))
 
   # Take care of case where num.era is a scalar
@@ -23,13 +22,11 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
       num.era <- round((0:num.era) * (ex-sx)/num.era + sx, 0)
     }
   }
-  
-  if (type == 'by.era') {    
+
+  if (type == 'by.era') {
     # Break data into eras
-    d <- within(d, {
-      era <- cut(yr, breaks = num.era, include.lowest = TRUE, dig.lab = 4, ordered_result = TRUE)
-      }
-    )
+    d$era <- cut(d$yr, breaks = num.era, include.lowest = TRUE, dig.lab = 4,
+                 ordered_result = TRUE)
     colnames(d)[1] <- 'value'
     d <- na.omit(d)
 
@@ -49,19 +46,21 @@ function(x, type = c('by.era', 'by.month'), num.era = 4,
 
     if (same.plot) {
        # Nest eras within months
-       ggplot(d1, aes(x=mon, y=value, fill=era)) +
+       ggplot(d1, aes_string(x="mon", y="value", fill="era")) +
           geom_boxplot(size=.2, position='dodge') +
           labs(x="", y=ylab, fill="Era")
     } else {
        # Nest months within eras
        cols <- c(`TRUE` = "red", `FALSE` = "blue")
-       p1 <- ggplot(d1, aes(x = mon, y = value, colour = too.few)) +
+       p1 <- ggplot(d1, aes_string(x="mon", y="value", colour="too.few")) +
           geom_boxplot(size = .2) +
-          scale_x_discrete('', breaks = month.abb, labels = c('Jan',
-            ' ', ' ', 'Apr', ' ', ' ', 'Jul', ' ', ' ', 'Oct', ' ', ' ')) +
+          scale_x_discrete('', breaks = month.abb,
+                           labels = c('Jan', ' ', ' ', 'Apr', ' ', ' ', 'Jul',
+                                      ' ', ' ', 'Oct', ' ', ' ')) +
           scale_y_continuous(ylab) +
-          scale_colour_manual("", values = cols, guide="none") +
-          theme(panel.grid.minor = element_blank(), axis.text.x = element_text(angle=45, colour="grey50"))
+          scale_colour_manual("", values=cols, guide="none") +
+          theme(panel.grid.minor = element_blank(),
+                axis.text.x = element_text(angle=45, colour="grey50"))
        if (length(num.era) > 2)
           p1 <- p1 + facet_wrap(~ era, nrow = 1)
        p1

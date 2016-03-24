@@ -1,7 +1,7 @@
 Package: wq
 Type: Package
 Title: Exploring Water Quality Monitoring Data
-Version: 0.4.6
+Version: 0.4.7
 Author: Alan D. Jassby and James E. Cloern
 Maintainer: Alan Jassby <wq@fastmail.net>
 Description: Functions to assist in the processing and
@@ -15,11 +15,12 @@ Description: Functions to assist in the processing and
     similar-frequency time series regardless of the subject
     matter.
 Depends: R (>= 3.0.0)
-Imports: graphics, grDevices, methods, stats, utils, ggplot2 (>= 1.0),
-        knitr, reshape2, zoo
-License: GPL-2
+Imports: graphics, grDevices, methods, stats, ggplot2 (>= 1.0), knitr
+        (>= 1.1), reshape2, zoo
 LazyData: yes
+License: GPL-2
+VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2016-03-20 21:33:17 UTC; alan
+Packaged: 2016-03-24 19:50:08 UTC; alan
 Repository: CRAN
-Date/Publication: 2016-03-21 00:13:42
+Date/Publication: 2016-03-24 23:25:10

@@ -3,7 +3,7 @@
 \alias{eofPlot}
 
 \title{
-Plot results of an EOF analysis
+Plot EOF analysis results
 }
 
 \description{
@@ -11,21 +11,21 @@ Plots the rotated empirical orthogonal functions or amplitude time series result
 }
 
 \usage{
-eofPlot(x, type = c('coef', 'amp'), rev = FALSE, ord = FALSE)
+eofPlot(x, type = c("coef", "amp"), rev = FALSE, ord = FALSE)
 }
 
 \arguments{
-  \item{x}{
-result of the function \code{\link{eof}} 
+\item{x}{
+result of the function \code{\link{eof}}
 }
-  \item{type}{
+\item{type}{
 whether the EOF coefficients or amplitudes should be plotted
 }
-  \item{rev}{
-if \code{TRUE}, coefficients and amplitudes are multiplied by \code{-1}
+\item{rev}{
+logical indicating whether coefficients and amplitudes should be multiplied by \code{-1}
 }
-  \item{ord}{
-if \code{TRUE}, coefficients are ordered by size
+\item{ord}{
+logical indicating whether coefficients should be ordered by size
 }
 }
 
@@ -33,16 +33,10 @@ if \code{TRUE}, coefficients are ordered by size
 When the columns of the original data have a natural order, such as stations along a transect or months of the year, there may be no need to reorder the EOF coefficients. But if there is no natural order, such as when columns represents disparate sites around the world, the plot can be more informative if coefficients are ordered by size (\code{ord = TRUE}).
 
 Coefficients and amplitudes for a given EOF may be more easily interpreted if \code{rev = TRUE}, because the sign of the first coefficient is arbitrarily determined and all the other signs follow from that choice.
-
-The vertical guide lines at 0.2 and 0.35 are meant to reflect the Monte Carlo studies of Richman and Gong (1999): \dQuote{For investigators who do not wish to reproduce a part of the Monte Carlo analysis for their research, the most general rule of thumb is that if there is a sufficient sample size, a correlation-based PC loading value of [plus or minus] 0.2-0.35 will likely suffice to separate the hyperplane out...} \sQuote{Sufficient sample size} in this case refers to \code{n > 50}. 
 }
 
 \value{
-A plot of the EOF coefficients or amplitudes (and corresponding object of class \dQuote{ggplot}).
-}
-
-\references{
-Richman, M. and Gong, X. (1999) Relationships between the definition of the hyperplane width to the fidelity of principal component loading patterns. \emph{Journal of Climate} \bold{12,} 1557--1576.
+A plot of the EOF coefficients or amplitudes.
 }
 
 \seealso{

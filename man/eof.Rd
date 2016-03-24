@@ -3,36 +3,43 @@
 \alias{eof}
 
 \title{
-Empirical orthogonal functions
+Empirical orthogonal function analysis
 }
 
 \description{
-Finds and rotates empirical orthogonal functions (\acronym{EOF}s, or principal components).
+Finds and rotates empirical orthogonal functions (EOFs).
 }
 
 \usage{
-eof(x, n)
+eof(x, n, scale. = TRUE)
 }
 
 \arguments{
-  \item{x}{
-a numeric object of class \code{"matrix"} or \code{"data.frame"}, with no \code{NA} values
+\item{x}{
+a data frame or matrix, with no missing values
 }
-  \item{n}{
-number of \acronym{EOF}s to retain for rotation
+\item{n}{
+number of EOFs to retain for rotation
+}
+\item{scale.}{
+logical indicating whether the (centered) variables should be scaled to have unit variance
 }
 }
 
 \details{
-This function is basically just a wrapper for \code{prcomp} followed by \code{promax} and is meant to facilitate routine examination of variability modes in collections of time series. For the usage intended in this package, each row of \code{x} usually will be an observation for a specific time or time period. Each column will be a specific location---the most common usage---but can also be seasons of the year (Jassby et al. 1999) or even a combination of seasons and depth layers (Jassby et al. 1990). First, eigenvalues are found by singular value decomposition of the \emph{correlation} matrix. \code{\link{eofNum}} can be used to help choose \code{n}. The first \code{n} \acronym{EOF}s are then rotated using the \code{\link{promax}} method with power \code{m = 2} (Richman 1986). Hannachi et al. (2007) give a detailed discussion of this exploratory approach with emphasis on meteorological data.
+EOF analysis is used to study patterns of variability (\dQuote{modes}) in a matrix time series and how these patterns change with time (\dQuote{amplitude time series}). Hannachi et al. (2007) give a detailed discussion of this exploratory approach with emphasis on meteorological data. In oceanography and climatology, the time series represent observations at different spatial locations (columns) over time (rows). But columns can also be seasons of the year (Jassby et al. 1999) or even a combination of seasons and depth layers (Jassby et al. 1990). EOF analysis uses the same techniques as principal component analysis, but the time series are observations of the same variable in the same units. Scaling the data is optional, but it is the default here.
+
+Eigenvectors (unscaled EOFs) and corresponding eigenvalues (amount of explained variance) are found by singular value decomposition of the centered and (optionally) scaled data matrix using \code{\link{prcomp}}. In order to facilitate a physical interpretation of the variability modes, a subset consisting of the \code{n} most important EOFs is rotated (Richman 1986). \code{\link{eofNum}} can be used to help choose \code{n}. Hannachi et al. (2007) recommend orthogonal rotation of EOFs scaled by the square root of the corresponding eigenvalues to avoid possible computation problems and reduce sensitivity to the choice of \code{n}. We follow this recommendation here, using the \code{\link{varimax}} method for the orthogonal rotation.
+
+Note that the signs of the EOFs are arbitrary.
 }
 
 \value{
 A list with the following members:
-\item{REOF}{a data frame with rotated \acronym{EOF}s}
+\item{REOF}{a data frame with rotated EOFs}
 \item{amplitude}{a data frame with amplitude time series of \acronym{REOF}s}
 \item{eigen.pct}{all eigenvalues of correlation matrix as percent of total variance}
-\item{variance}{variance explained by retained \acronym{EOF}s}
+\item{variance}{variance explained by retained EOFs}
 }
 
 \references{

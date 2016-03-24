@@ -1,54 +1,45 @@
 \name{eofNum}
 \Rdversion{1.1}
 \alias{eofNum}
-\alias{ruleN}
 
 \title{
-Assess significance of eigenvalues
+Plot EOF percent variance
 }
 
 \description{
-Plots the eigenvalue spectrum (scree plot) for the correlation matrix of a space-time field of observations. Useful for deciding how many empirical orthogonal functions (\acronym{EOF}s, or principal components) to retain for rotation.
+Plots the variances associated with empirical orthogonal functions (\acronym{EOF}). Useful for deciding how many \acronym{EOF}s to retain for rotation.
 }
 
 \usage{
-eofNum(x, distr = c("normal", "lognormal"), n = nrow(x), reps = 10000) 
-
-ruleN(n, p, type = c("normal", "lognormal"), reps = 10000)
+eofNum(x, n = nrow(x), scale. = TRUE)
 }
 
 \arguments{
-  \item{x}{
-an object of class \code{"data.frame"} or \code{"matrix"}, with no missing values
+\item{x}{
+a data frame or matrix, with no missing values
 }
-  \item{distr, type}{
-suspected distribution of data
+\item{n}{
+effective sample size
 }
-  \item{n}{
-number of independent observations in the sample, also known as effective sample size (\code{n <= nrow(x)})
-}
-  \item{reps}{
-number of repetitions to use for rule N
-}
- \item{p}{
-number of columns in data
+\item{scale.}{
+logical indicating whether the (centered) variables should be scaled to have unit variance
 }
 }
 
 \details{
-Computes singular values of the correlation matrix for a space-time field represented as a data frame or matrix of observations \code{x} locations. The eigenvalue variances are plotted against eigenvalue number, and the cumulative variance as \% of total is plotted over each eigenvalue. The approximate 0.95 confidence limits are depicted for each eigenvalue, using North et al.'s (1982) rule of thumb. The significance of each eigenvalue is also estimated using \emph{rule N} (Overland and Preisendorfer 1982), which repeatedly computes eigenvalues of the correlation matrix for an \code{n x p} matrix of a random variable and returns the 0.95 quantiles. The \code{dist} determines the distribution for the random variable. \code{ruleN} is not normally called directly.
+Calculates the eigenvalues from an \acronym{EOF} analysis, as described in \code{\link{eof}}. The eigenvalues are plotted against eigenvalue number (sometimes called a \dQuote{scree plot}), and the cumulative variance as \% of total is plotted over each eigenvalue. The approximate 0.95 confidence limits are depicted for each eigenvalue using North et al.'s (1982) rule-of-thumb, which ignores any autocorrelation in the data. If the autocorrelation structure is assessed separately and can be expressed in terms of effective sample size (e.g., Thiebaux and Zwiers 1984), then \code{n} can be set equal to this number.
 
-Both North's rule-of-thumb and rule N as calculated here by default ignore any autocorrelation in the data and are therefore lenient in accepting the significance of eigenvalues. Their findings should therefore be taken as upper limits to the number of significant eigenvalues. If the autocorrelation structure is assessed separately and can be expressed in terms of effective sample size (e.g., Thiebaux and Zwiers 1984), then \code{n} can be set equal to this number. The default is to assume that the effective and actual sample sizes are the same.
+There is no universal rule for deciding how many of the EOFs should be retained for rotation (Hannachi et al. 2007). In practice, the number is chosen by requiring a minimum cumulative variance, looking for a sharp break in the spectrum, requiring that confidence limits not overlap, various Monte Carlo methods, or many other techniques. The plot produced here enables the first three methods.
 }
 
 \value{
-A plot (and corresponding object of class \dQuote{ggplot}).
+A plot of the eigenvectors.
 }
 
 \references{
-North, G., Bell, T., Cahalan, R., and Moeng, F. (1982) Sampling errors in the estimation of empirical orthogonal functions. \emph{Monthly Weather Review} \bold{110,} 699--706.
+Hannachi, A., Jolliffe, I.T., and Stephenson, D.B. (2007) Empirical orthogonal functions and related techniques in atmospheric science: A review. \emph{International Journal of Climatology} \bold{27,} 1119--1152.
 
-Overland, J.E. and Preisendorfer, R.W. (1982). A significance test of principal components applied to a cyclone climatology. \emph{Monthly Weather Review} \bold{110,} 1--4.
+North, G., Bell, T., Cahalan, R., and Moeng, F. (1982) Sampling errors in the estimation of empirical orthogonal functions. \emph{Monthly Weather Review} \bold{110,} 699--706.
 
 Thiebaux H.J. and Zwiers F.W. (1984) The interpretation and estimation of effective sample sizes. \emph{Journal of Climate and Applied Meteorology} \bold{23,} 800--811.
 }
@@ -61,9 +52,9 @@ Thiebaux H.J. and Zwiers F.W. (1984) The interpretation and estimation of effect
 # Create an annual time series data matrix from sfbay chlorophyll data
 chla1 <- aggregate(sfbayChla, 1, mean, na.rm = TRUE)  # average over each year
 chla1 <- chla1[, 1:12]  # remove stations with missing years
-eofNum(chla1, distr = 'lognormal', reps = 2000)
-# These stations appear to act as one with respect to chlorophyll 
-# variability on the annual scale.
+eofNum(chla1)
+# These stations appear to act as one with respect to chlorophyll
+# variability on the annual scale because there's one dominant EOF.
 }
 
 \keyword{Graphics}

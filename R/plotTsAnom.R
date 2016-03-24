@@ -6,7 +6,6 @@ function(x, xlab = NULL, ylab = NULL,
   if (!is.ts(x)) stop("x must be of class 'ts'")
   if (missing(xlab)) xlab = ""
   if (missing(ylab)) ylab = ""
-  value <- NULL # "global" variables
 
   if (is.matrix(x)) {  # a matrix time series
 
@@ -23,12 +22,12 @@ function(x, xlab = NULL, ylab = NULL,
     d3 <- within(d2, variable <- factor(variable, levels = levels(variable),
                                         labels = strip.labels))
     d3 <- na.omit(d3)
-
+    d3$ymin. <- with(d3, ifelse(value >= x.mean, x.mean, value))
+    d3$ymax. <- with(d3, ifelse(value >= x.mean, value, x.mean))
+    d3$colour. <- with(d3, value >= x.mean)
     # Plot
-    ggplot(d3, aes(x = time, y = value,
-                   ymin = ifelse(value >= x.mean, x.mean, value),
-                   ymax = ifelse(value >= x.mean, value, x.mean),
-                   colour = value >= x.mean)) +
+    ggplot(d3, aes_string(x="time", y="value", ymin="ymin.", ymax="ymax.",
+                          colour="colour.")) +
       geom_linerange() +
       geom_hline(aes(yintercept = x.mean), size = 0.25) +
       labs(x = xlab, y = ylab) +
@@ -42,11 +41,12 @@ function(x, xlab = NULL, ylab = NULL,
     x.mean <- mean(x, na.rm = TRUE)
     d1 <- data.frame(time = as.Date(time(x)), x = as.numeric(x), x.mean)
     d1 <- na.omit(d1)
+    d1$ymin. <- with(d1, ifelse(x >= x.mean, x.mean, x))
+    d1$ymax. <- with(d1, ifelse(x >= x.mean, x, x.mean))
+    d1$colour. <- with(d1, x >= x.mean)
     # Plot
-    ggplot(d1, aes(x = time, y = x,
-                   ymin = ifelse(x >= x.mean, x.mean, x),
-                   ymax = ifelse(x >= x.mean, x, x.mean),
-                   colour = x >= x.mean)) +
+    ggplot(d1, aes_string(x="time", y="x", ymin="ymin.", ymax="ymax.",
+                          colour="colour.")) +
       geom_linerange() +
       geom_hline(aes(yintercept = x.mean), size = 0.25) +
       labs(x = xlab, y = ylab) +

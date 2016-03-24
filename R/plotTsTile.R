@@ -1,7 +1,7 @@
 plotTsTile <-
 function(x, plot.title = NULL, legend.title = NULL, four = TRUE,
          loganom = TRUE, square = TRUE, legend = TRUE,
-         trim = TRUE, overall = TRUE, stat = c("mean", "median")) {
+         trim = TRUE, overall = TRUE, stat = c("median", "mean")) {
 
   # Validate args
   if (!is(x, "ts") || is(x, "mts") || !identical(frequency(x), 12))
@@ -25,7 +25,7 @@ function(x, plot.title = NULL, legend.title = NULL, four = TRUE,
 
   # Complete partial years by padding with NAs
   sx <- start(x)[1]
-  ex = end(x)[1]
+  ex <- end(x)[1]
   x1 <- window(x, start = c(sx, 1), end = c(ex, 12), extend = TRUE)
 
   # Transform to log-anomalies

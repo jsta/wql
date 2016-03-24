@@ -1,14 +1,23 @@
+wq 0.4.7
+========
+* Add back html vignette.
+* Fix global variable notes.
+* eof: Calculation method changed.
+* eofNum: Remove ruleN-based colouring.
+* eofPlot: Remove Monte Carlo lines.
+* plotTsTile: Default to median instead of mean.
+* ruleN: Remove.
+
 wq 0.4.6
 ========
 * decompTs: Remove startyr and endyr. Add median as default centering method.
-* mannKen: Remove "tau" argument. Add exact p-values.
-Allow matrix and data.frame. Change plot.
+* mannKen: Remove "tau" argument. Use median instead of mean for relative. Add exact p-values. Allow matrix and data.frame. Change plot.
 * pett.R: Add new function with plot for Pettitt test.
 * plotTs: Remove plot.order argument. Improve legend.
 * plotTsAnom: Remove plot.order argument.
 * seaKen: Allow matrix and data.frame. Add plot.
 * seaRoll: Change arguments and plot.
-* seasonTrend: Change arguments. Improve legend.
+* seasonTrend: Change arguments. Remove ls trend method. Improve legend.
 
 wq 0.4.5
 ========
@@ -88,8 +97,7 @@ wq 0.3-3
 
 wq 0.3-1
 ========
-* plot method for class "WqData": Boxplots instead of stripcharts. Also fixed
-  behaviour when less than 10 unique variables.
+* plot method for class "WqData": Boxplots instead of stripcharts. Also fixed behaviour when less than 10 unique variables.
 * plotSeason: Changed "by.month" option to standardized anomalies.
 * tsMake: Added option to create series for "bottom" of water column.
 * Version requirement is R 10.0.
@@ -141,8 +149,7 @@ wq 0.2-5
 * plotTsTile: More useful error message when not enough data.
 * seaRoll: Fixed problem with frequencies other than 12.
 * tsMake: Remove need to specify layer if no depth info.
-* WqData subset method: Removed because of strategy that WqData objects	should
-  not be changed.
+* WqData subset method: Removed because of strategy that WqData objects	should not be changed.
 * wqData: Argument value "narrow" changed to more conventional "long".
 * wqData: Now requires time.format to be specified.
 * wqData: Now ensures variable is a factor when type = "long".
