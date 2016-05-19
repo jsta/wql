@@ -21,7 +21,7 @@ A numeric vector, matrix or data frame
 Should the trends be plotted when x is a matrix or data frame?
 }
 \item{type}{
-Type of trend to be plotted, actual or relative to series median
+Type of trend to be plotted, actual or relative
 }
 \item{order}{
 Should the plotted trends be ordered by size?
@@ -38,15 +38,17 @@ Other arguments to pass to plotting function
 }
 
 \details{
-The Sen slope (alternately, Theil or Theil-Sen slope)---the median slope joining all pairs of observations---is expressed  by quantity per unit time and by the same value divided by the series median. The fraction of missing slopes involving the first and last fifths of the data are provided so that the appropriateness of the slope estimate can be assessed and results flagged. Schertz et al. [1991] discuss this and related decisions about missing data. Other results are used for further analysis by other functions. The relative slope makes sense only as long as the measurement scale is strictly non-negative and the median is not zero (not, e.g., temperature on the Celsius scale). Serial correlation is ignored, so the interval between points should be long enough to avoid strong serial correlation.
+The Sen slope (alternately, Theil or Theil-Sen slope)---the median slope joining all pairs of observations---is expressed  by quantity per unit time. The fraction of missing slopes involving the first and last fifths of the data are provided so that the appropriateness of the slope estimate can be assessed and results flagged. Schertz et al. [1991] discuss this and related decisions about missing data. Other results are used for further analysis by other functions. Serial correlation is ignored, so the interval between points should be long enough to avoid strong serial correlation.
 
-If \code{plot = TRUE}, then either the Sen slope (\code{type = "slope"}) or the relative Sen slope (\code{type = "relative"}) are plotted. Plotting the relative slope is useful when the variables in \code{x} have different units. The plot symbols indicate, respectively, that the trend is significant or not significant. The plot can be customized by passing any arguments used by \code{\link{dotchart}} such as \code{xlab} or \code{xlim}, as well as graphical parameters described in \code{\link{par}}.
+For the relative slope, the slope joining each pair of observations is divided by the first of the pair before the overall median is taken. The relative slope makes sense only as long as the measurement scale is non-negative (not, e.g., temperature on the Celsius scale). Comparing relative slopes is useful when the variables in \code{x} have different units.
+
+If \code{plot = TRUE}, then either the Sen slope (\code{type = "slope"}) or the relative Sen slope (\code{type = "relative"}) are plotted. The plot symbols indicate, respectively, that the trend is significant or not significant. The plot can be customized by passing any arguments used by \code{\link{dotchart}} such as \code{xlab} or \code{xlim}, as well as graphical parameters described in \code{\link{par}}.
 }
 
 \value{
 A list of the following if \code{x} is a vector:
 \item{sen.slope}{Sen slope}
-\item{sen.slope.rel}{Sen slope divided by median}
+\item{sen.slope.rel}{Relative Sen slope}
 \item{p.value}{Significance of slope}
 \item{S}{Kendall's S}
 \item{varS}{Variance of S}
@@ -76,10 +78,11 @@ y <- sfbayChla
 y1 <- interpTs(y, gap=1)  # interpolate single-month gaps only
 y2 <- aggregate(y1, 1, mean, na.rm=FALSE)
 mannKen(y2)
-mannKen(y2, plot=TRUE)
+mannKen(y2, plot=TRUE) # missing data means missing trend estimates
+mannKen(y2, plot=TRUE, xlim = c(0.1, 0.25))
 mannKen(y2, plot=TRUE, type='relative', order = TRUE, pval = .001,
   xlab = "Relative trend")
-legend("topleft", legend = "p < 0.05", pch = 19, bty="n")
+legend("topleft", legend = "p < 0.001", pch = 19, bty="n")
 }
 
 \keyword{ts}

@@ -9,11 +9,11 @@
 \packageDescription{wq}
 }
 \details{
-The main purpose of wq is to explore seasonal time series through plots and nonparametric trend tests. It was created originally to examine water quality data sets (hence, \dQuote{wq}) but is suitable as a more general purpose set of tools for looking at annual or seasonal time series.
+The main purpose of \pkg{wq} is to explore seasonal time series through plots and nonparametric trend tests. It was created originally to examine water quality data sets (hence, \dQuote{wq}) but is suitable as a more general purpose set of tools for looking at annual or seasonal time series.
 
-One of the more tedious tasks in exploring environmental data sets is creating usable time series from the original complex data sets, especially when you want many series at will that group data in different ways. So wq also provides a way of transforming data sets to a common format that then allows a diversity of time series to be created quickly. A few functions are specific to the fields of limnology and oceanography.
+One of the more tedious tasks in exploring environmental data sets is creating usable time series from the original complex data sets, especially when you want many series at will that group data in different ways. So \pkg{wq} also provides a way of transforming data sets to a common format that then allows a diversity of time series to be created quickly. A few functions are specific to the fields of limnology and oceanography.
 
-The plots are designed for easy use, not for publication-quality graphs. Nonetheless, extensive customization is possible by passing options through \dQuote{\ldots}, adding annotations in the case of base graphics, and adding layers in the case of \pkg{ggplot2} objects.
+The plots are designed for easy use, not for publication-quality graphs. Nonetheless, extensive customization is possible by passing options through \code{\ldots}, adding annotations in the case of base graphics, and adding layers in the case of \pkg{ggplot2} objects.
 
 Two functions are used mainly for preparing the times series:
 
@@ -22,7 +22,7 @@ Two functions are used mainly for preparing the times series:
 \item a function that easily prepares time series objects from this class
 }
 
-The \code{WqData} class can be easily adapted to non-aquatic data. Obviously, the \dQuote{depth} field can be used for elevation in atmospheric studies. But more generally, the \dQuote{site} and \dQuote{depth} fields can be used for many two-way classifications and don't need to refer to spatial location.
+The \code{WqData} class can be easily adapted to non-aquatic data. Obviously, the \code{depth} field can be used for elevation in atmospheric studies. But more generally, the \code{site} and \code{depth} fields can be used for many two-way classifications and don't need to refer to spatial location.
 
 Some of the time series functions include:
 
@@ -43,7 +43,7 @@ A few functions are specialized for the aquatic sciences:
 \item converting between salinity and conductivity
 }
 
-The capabilities of wq are more fully explained in the accompanying vignette:
+The capabilities of \pkg{wq} are more fully explained in the accompanying vignette:
 \dQuote{wq: Exploring environmental monitoring data}.
 }
 \author{

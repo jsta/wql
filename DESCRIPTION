@@ -1,7 +1,7 @@
 Package: wq
 Type: Package
 Title: Exploring Water Quality Monitoring Data
-Version: 0.4.7
+Version: 0.4.8
 Author: Alan D. Jassby and James E. Cloern
 Maintainer: Alan Jassby <wq@fastmail.net>
 Description: Functions to assist in the processing and
@@ -21,6 +21,6 @@ LazyData: yes
 License: GPL-2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2016-03-24 19:50:08 UTC; alan
+Packaged: 2016-05-18 18:53:17 UTC; alan
 Repository: CRAN
-Date/Publication: 2016-03-24 23:25:10
+Date/Publication: 2016-05-19 05:46:51

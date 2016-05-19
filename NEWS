@@ -1,3 +1,14 @@
+wq 0.4.8
+========
+* eof: Shift id to row name in output.
+* eofPlot: Fix for non-numeric row names in original data.
+* mannKen: Use different definition of relative sen slope.
+* pett: Add change.size. Get actual change.time for zoo objects.
+* phenoAmp: Change to more versatile output statistics. Change argument name.
+* phenoPhase: Change argument name.
+* seaKen: Use different definition of relative sen slope.
+* trendHomog: Ignore seasons with insufficient data.
+
 wq 0.4.7
 ========
 * Add back html vignette.
@@ -25,19 +36,16 @@ wq 0.4.5
 
 wq 0.4.4
 ========
-* NAMESPACE: Changed (and DESCRIPTION, wq-package.Rd changed accordingly).
-* wq-internal.R, wq-internal.Rd: Removed.
+* wq-internal.R: Removed.
 * plot WqData-class: Added global variable definitions.
 
 wq 0.4.3
 ========
-* DESCRIPTION: Supporting packages changed.
-* NAMESPACE: Imports changed.
-* layOut, ammFrac: Removed as off-topic.
+* ammFrac: Remove.
+* layOut: Remove.
 
 wq 0.4-1
 ========
-* DESCRIPTION: Maintainer has changed.
 * mannKen: Preserve station order in data matrix.
 * mannKen: Modify examples to be more useful.
 * NAMESPACE: Add importFrom("methods").

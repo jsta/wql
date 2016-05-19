@@ -1,6 +1,9 @@
 ## ----setup, echo=FALSE---------------------------------------------------
 knitr::opts_chunk$set(fig.align="center", warning=FALSE)
 
+## ---- echo=FALSE, fig.width=6, fig.height=3.7----------------------------
+knitr::include_graphics("wqflow.png", auto_pdf = TRUE)
+
 ## ------------------------------------------------------------------------
 library(wq)
 

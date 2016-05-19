@@ -36,8 +36,8 @@ Note that the signs of the EOFs are arbitrary.
 
 \value{
 A list with the following members:
-\item{REOF}{a data frame with rotated EOFs}
-\item{amplitude}{a data frame with amplitude time series of \acronym{REOF}s}
+\item{REOF}{a matrix with rotated EOFs}
+\item{amplitude}{a matrix with amplitude time series of \acronym{REOF}s}
 \item{eigen.pct}{all eigenvalues of correlation matrix as percent of total variance}
 \item{variance}{variance explained by retained EOFs}
 }

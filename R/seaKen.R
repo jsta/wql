@@ -1,5 +1,5 @@
-seaKen <- 
-function(x, plot = FALSE, type = c("slope", "relative"), order = FALSE, 
+seaKen <-
+function(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
          pval = .05, mval = .5, pchs = c(19, 21), ...) {
 
   # validate args
@@ -11,13 +11,13 @@ function(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
 
   # test for single series
   sk <- function(x) {
-    
+
     # validate args
     if (!is.ts(x))
       stop("'x' must be of class 'ts'")
     if (identical(frequency(x), 1))
       stop("'x' must be a seasonal time series with frequency > 1")
-    
+
     # extend series to full years
     fr <- frequency(x)
     xmod <- length(x) %% fr
@@ -27,30 +27,46 @@ function(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
     # apply mannKen to matrix of months
     x1 <- matrix(x, ncol = fr, byrow = TRUE)
     mk1 <- mannKen(x1)
-  
+
     # calculate sen slope
-    sen.slope <- median(mk1[, "sen.slope"], na.rm = TRUE)
-    sen.slope.rel <- sen.slope / abs(median(x, na.rm = TRUE))
-    
+    slopes <- slopes.rel <- NULL
+    for (m in 1:fr) {
+
+      ## select data for current season
+      xm <- x[cycle(x) == m]
+      tm <- time(x)[cycle(x) == m]
+
+      ## calculate slopes for current season
+      outr <- outer(xm, xm, '-')/outer(tm, tm, '-')
+      slopes.m <- outr[lower.tri(outr)]
+      slopes <- c(slopes, slopes.m)
+      outr.rel <- sweep(outr, 2, xm, '/')
+      slopes.rel.m <- outr.rel[lower.tri(outr.rel)]
+      slopes.rel <- c(slopes.rel, slopes.rel.m)
+    }
+
+    sen.slope <- median(slopes, na.rm = TRUE)
+    sen.slope.rel <- median(slopes.rel, na.rm = TRUE)
+
     # calculate sen slope significance
     S <- sum(mk1[, "S"])
     varS <- sum(mk1[, "varS"])
     Z <- (S - sign(S)) / sqrt(varS)
     p.value <- 2 * pnorm(-abs(Z))
-    
+
     miss <- round(sum(mk1[, "miss"] >= .5) / fr, 3)
-    c(sen.slope = sen.slope, 
+    c(sen.slope = sen.slope,
       sen.slope.rel = sen.slope.rel,
-      p.value = p.value, 
+      p.value = p.value,
       miss = miss)
   }
-	
+
   # apply sk for each series
   if (is.null(dim(x))) return(as.list(sk(x)))
   if (ncol(x) == 1) return(as.list(sk(x[, 1])))
   ans <- t(sapply(1:ncol(x), function(i) sk(x[, i])))
   rownames(ans) <- colnames(x)
-  
+
 	# plot if TRUE
 	if (!plot) {
 	  ans
@@ -59,7 +75,7 @@ function(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
 	               slope = "sen.slope",
 	               relative = "sen.slope.rel")
 	  if (order) ans <- ans[order(ans[, v1]), ]
-	  pch <- ifelse(ans[, "miss"] >= mval, NA, 
+	  pch <- ifelse(ans[, "miss"] >= mval, NA,
 	                ifelse(ans[, "p.value"] < pval, pchs[1], pchs[2]))
 	  dotchart(ans[, v1], pch = pch, ...)
 	}

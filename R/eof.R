@@ -22,6 +22,7 @@ function (x, n, scale. = TRUE) {
   eof1 <- eigenvec1 %*% diag(sqrt(eigenval1), n, n)
   scores1 <- pr1[["x"]][, 1:n]
   amp1 <- scale(scores1)
+  attributes(amp1)$`scaled:center` <- attributes(amp1)$`scaled:scale` <- NULL
 
   # get REOFs by orthogonally rotating EOFs
   if (identical(n, 1)) {
@@ -34,18 +35,14 @@ function (x, n, scale. = TRUE) {
     amp <- amp1 %*% rotater
   }
 
-  # Eigenvalues and total percent variance for first n
+  # percent and cumulative percent of total variance
   eigs <- pr1[["sdev"]]^2
   eigen.pct <- round(100 * eigs/sum(eigs), 1)
   totvar.pct <- round(100 * cumsum(eigs/sum(eigs)), 1)
 
   # return results
   colnames(reof) <- colnames(amp) <- paste('EOF', 1:n, sep='')
-  reof <- cbind(id=ordered(colnames(x), levels=colnames(x)),
-  	as.data.frame(reof))
-  amp <- cbind(id=ordered(rownames(x), levels=rownames(x)),
-  	as.data.frame(amp))
-  rownames(reof) <- rownames(amp) <- NULL
+  rownames(reof) <- colnames(x)
   list(REOF=reof, amplitude=amp, eigen.pct=eigen.pct,
   	variance=totvar.pct)
 }

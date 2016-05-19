@@ -9,77 +9,47 @@ setGeneric(
 setMethod(
   f = "phenoAmp",
   signature = "ts",
-  definition = function(x, mon.range = c(1, 12)) {
+  definition = function(x, season.range = c(1, 12)) {
 
-    d1 <- data.frame(yr = floor(time(x)), mon = cycle(x), val =
-    	as.numeric(x))
-    mons <- mon.range[1]:mon.range[2]
-    d2 <- d1[d1$mon %in% mons, ]
-    yrs <- unique(d2$yr)
-    yrs.ok <- table(d2$yr, is.na(d2$val))[, 1] == length(mons)
-    
-    # range
-    diff.range <- function(x) {
-      if (sum(!is.na(x)) == 0) {
-        return(NA)
-      } else {
-        diff(range(x, na.rm=TRUE))
-      }
-    }  
-    a1 <- aggregate(d2$val, list(d2$yr), diff.range)
-    range <- ifelse(yrs.ok, a1$x, NA)
-    
-    # range/mean
-    a2 <- aggregate(d2$val, list(d2$yr), mean, na.rm=TRUE)
-    range.mean <- ifelse(yrs.ok, a1$x/a2$x, NA)
-  
-    # cv
-    a3 <- aggregate(d2$val, list(d2$yr), sd, na.rm=TRUE)
-    cv <- ifelse(yrs.ok, a3$x/a2$x, NA)
-    
-    as.data.frame(cbind(year=yrs, range, range.mean, cv), row.names =
-    	length(yrs))
+    # get series subset
+    seasons <- season.range[1]:season.range[2]
+    x1 <- tsSub(x, seas = seasons)
+
+    # get statistics for each year
+    range1 <- aggregate(x1, 1, max) - aggregate(x1, 1, min)
+    var1 <- aggregate(x1, 1, var)
+    mad1 <- aggregate(x1, 1, mad)
+    mean1 <- aggregate(x1, 1, mean)
+    median1 <- aggregate(x1, 1, median)
+
+    # result
+    cbind(range = range1, var = var1, mad = mad1, mean = mean1, median = median1)
   }
 )
-
 
 setMethod(
   f = "phenoAmp",
   signature = "zoo",
-  definition = function(x, mon.range = c(1, 12)) {
+  definition = function(x, month.range = c(1, 12)) {
 
     # validate args
-    if (!is(index(x), "DateTime"))
-      stop('time index must be a DateTime object')
-    indexx <- as.Date(index(x))  
-      
-    d1 <- data.frame(time = indexx, yr = years(indexx), mon =
-    	monthNum(indexx), val = as.numeric(x))
-    mons <- mon.range[1]:mon.range[2]
-    d2 <- d1[d1$mon %in% mons, ]
-    yrs <- unique(d2$yr)
-    n <- table(d2$yr, is.na(d2$val))[, 1]
-    
-    # range
-    diff.range <- function(x) {
-      if (sum(!is.na(x)) == 0) {
-        return(NA)
-      } else {
-        diff(range(x, na.rm=TRUE))
-      }
-    }  
-    a1 <- aggregate(d2$val, list(d2$yr), diff.range)
-    range <- a1$x
-    
-    # range/mean
-    a2 <- aggregate(d2$val, list(d2$yr), mean, na.rm=TRUE)
-    range.mean <- a1$x/a2$x
-  
-    # cv
-    a3 <- aggregate(d2$val, list(d2$yr), sd, na.rm=TRUE)
-    cv <- a3$x/a2$x
-    
-    as.data.frame(cbind(year=yrs, range, range.mean, cv, n), row.names =
-    	length(yrs))
+    if (match(class(index(x)), c("Date", "POSIXct"), nomatch=0) == 0)
+      stop('time index must be a Date or POSIXct object')
+
+    # get series subset
+    months1 <- month.range[1]:month.range[2]
+    x1 <- x[as.numeric(format(index(x), "%m")) %in% months1]
+
+    # get statistics for each year
+    range1 <- aggregate(x1, years, max) - aggregate(x1, years, min)
+    var1 <- aggregate(x1, years, var)
+    mad1 <- aggregate(x1, years, mad)
+    mean1 <- aggregate(x1, years, mean)
+    median1 <- aggregate(x1, years, median)
+    n <- aggregate(x1, years, length)
+
+    #
+    cbind(range = range1, var = var1, mad = mad1, mean = mean1,
+          median = median1, n)
   }
 )

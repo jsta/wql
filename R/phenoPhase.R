@@ -9,19 +9,19 @@ setGeneric(
 setMethod(
   f = "phenoPhase",
   signature = "ts",
-  definition = function(x, mon.range = c(1, 12), ...) {
+  definition = function(x, season.range = c(1, 12), ...) {
 
-    d1 <- data.frame(yr = floor(time(x)), mon = cycle(x), val =
+    d1 <- data.frame(yr = floor(time(x)), season = cycle(x), val =
     	as.numeric(x))
-    mons <- mon.range[1]:mon.range[2]
-    d2 <- d1[d1$mon %in% mons, ]
+    seasons <- season.range[1]:season.range[2]
+    d2 <- d1[d1$season %in% seasons, ]
     yrs <- unique(d2$yr)
-    yrs.ok <- table(d2$yr, is.na(d2$val))[, 1] == length(mons)
+    yrs.ok <- table(d2$yr, is.na(d2$val))[, 1] == length(seasons)
 
-    # max month
+    # max season
     a1 <- aggregate(d2$val, list(d2$yr), which.max)
     max.time <- ifelse(yrs.ok, a1$x, NA)
-    max.time <- unlist(max.time) + mons[1] - 1
+    max.time <- unlist(max.time) + seasons[1] - 1
 
     # fulcrum
     fulc <- function(d) {
@@ -38,10 +38,10 @@ setMethod(
         optimize(fopt, lower = low, upper = up)$minimum
       }
     }
-    b1 <- by(d2[, c('mon', 'val')], as.factor(d2$yr), fulc)
+    b1 <- by(d2[, c('season', 'val')], as.factor(d2$yr), fulc)
     fulcrum <- round(ifelse(yrs.ok, as.numeric(b1), NA), 2)
 
-    # weighted mean month
+    # weighted mean season
     weighted.mean.df <- function(d) {
       d <- na.omit(d)
       if (nrow(d) == 0) {
@@ -50,7 +50,7 @@ setMethod(
         weighted.mean(d[,1], d[,2])
       }
     }
-    b2 <- by(d2[, c('mon', 'val')], as.factor(d2$yr), weighted.mean.df)
+    b2 <- by(d2[, c('season', 'val')], as.factor(d2$yr), weighted.mean.df)
     mean.wt <- round(ifelse(yrs.ok, as.numeric(b2), NA), 2)
 
     as.data.frame(cbind(year = yrs, max.time, fulcrum, mean.wt),
@@ -61,7 +61,7 @@ setMethod(
 setMethod(
   f = "phenoPhase",
   signature = "zoo",
-  definition = function(x, mon.range = c(1, 12), out = c('date', 'doy',
+  definition = function(x, season.range = c(1, 12), out = c('date', 'doy',
   	'julian'), ...) {
 
     # validate args
@@ -71,10 +71,10 @@ setMethod(
     out <- match.arg(out)
 
     d1 <- data.frame(julday = julian(indexx, origin =
-    	as.Date("1970-01-01")), yr = years(indexx), mon =
+    	as.Date("1970-01-01")), yr = years(indexx), season =
     	monthNum(indexx), val = as.numeric(x))
-    mons <- mon.range[1]:mon.range[2]
-    d2 <- d1[d1$mon %in% mons, ]
+    seasons <- season.range[1]:season.range[2]
+    d2 <- d1[d1$season %in% seasons, ]
     yrs <- unique(d2$yr)
     n <- table(d2$yr, is.na(d2$val))[, 1]
 
@@ -85,18 +85,18 @@ setMethod(
     max.time <- as.numeric(b1)
 
     # fulcrum
-    fulc <- function(d, m1 = mon.range[1], m2 = mon.range[2]) {
+    fulc <- function(d, m1 = season.range[1], m2 = season.range[2]) {
       if (sum(!is.na(d[,2])) < 2) {
         return(NA)
       } else {
         x <- d[, 1]
         y <- d[, 2]
         yr <- d[1, 3]
-        mon.length <- c(31, ifelse(leapYear(yr), 29, 28), 31, 30, 31,
+        season.length <- c(31, ifelse(leapYear(yr), 29, 28), 31, 30, 31,
         	30, 31, 31, 30, 31, 30, 31)
         lo <- julian(as.Date(paste(yr, m1, 1, sep = '-')), origin =
         	as.Date("1970-01-01"))
-        up <- julian(as.Date(paste(yr, m2, mon.length[m2], sep = '-')),
+        up <- julian(as.Date(paste(yr, m2, season.length[m2], sep = '-')),
         	origin = as.Date("1970-01-01"))
         fun1 <- approxfun(x, y, rule = 2)
         fopt <- function(z) abs(integrate(fun1, lo, z, ...)$value -
@@ -107,7 +107,7 @@ setMethod(
     b2 <- by(d2[, c('julday', 'val', 'yr')], as.factor(d2$yr), fulc)
     fulcrum <- ceiling(as.numeric(b2))
 
-    # weighted mean
+    # weighted mean day
     weighted.mean.df <- function(d) {
       d <- na.omit(d)
       if (nrow(d) == 0) {

@@ -7,7 +7,7 @@ Plot EOF percent variance
 }
 
 \description{
-Plots the variances associated with empirical orthogonal functions (\acronym{EOF}). Useful for deciding how many \acronym{EOF}s to retain for rotation.
+Plots the variances associated with empirical orthogonal functions (EOF). Useful for deciding how many EOFs to retain for rotation.
 }
 
 \usage{
@@ -27,7 +27,7 @@ logical indicating whether the (centered) variables should be scaled to have uni
 }
 
 \details{
-Calculates the eigenvalues from an \acronym{EOF} analysis, as described in \code{\link{eof}}. The eigenvalues are plotted against eigenvalue number (sometimes called a \dQuote{scree plot}), and the cumulative variance as \% of total is plotted over each eigenvalue. The approximate 0.95 confidence limits are depicted for each eigenvalue using North et al.'s (1982) rule-of-thumb, which ignores any autocorrelation in the data. If the autocorrelation structure is assessed separately and can be expressed in terms of effective sample size (e.g., Thiebaux and Zwiers 1984), then \code{n} can be set equal to this number.
+Calculates the eigenvalues from an EOF analysis, as described in \code{\link{eof}}. The eigenvalues are plotted against eigenvalue number (sometimes called a \dQuote{scree plot}), and the cumulative variance as \% of total is plotted over each eigenvalue. The approximate 0.95 confidence limits are depicted for each eigenvalue using North et al.'s (1982) rule-of-thumb, which ignores any autocorrelation in the data. If the autocorrelation structure is assessed separately and can be expressed in terms of effective sample size (e.g., Thiebaux and Zwiers 1984), then \code{n} can be set equal to this number.
 
 There is no universal rule for deciding how many of the EOFs should be retained for rotation (Hannachi et al. 2007). In practice, the number is chosen by requiring a minimum cumulative variance, looking for a sharp break in the spectrum, requiring that confidence limits not overlap, various Monte Carlo methods, or many other techniques. The plot produced here enables the first three methods.
 }

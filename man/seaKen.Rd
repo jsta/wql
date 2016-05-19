@@ -7,11 +7,11 @@ Seasonal and Regional Kendall trend test
 }
 
 \description{
-Calculates the Seasonal or Regional Kendall test of significance, including an estimate of the Sen slope.
+Calculates the Seasonal or Regional Kendall test of trend significance, including an estimate of the Sen slope.
 }
 
 \usage{
-seaKen(x, plot = FALSE, type = c("slope", "relative"), order = FALSE, 
+seaKen(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
          pval = .05, mval = .5, pchs = c(19, 21), ...)
 }
 
@@ -43,9 +43,11 @@ Other arguments to pass to plotting function
 }
 
 \details{
-The Seasonal Kendall test (Hirsch et al. 1982) is based on the Mann-Kendall tests for the individual seasons (see \code{\link{mannKen}}). \emph{p}-values provided here are not corrected for serial correlation among seasons.
+The Seasonal Kendall test (Hirsch et al. 1982) is based on the Mann-Kendall tests for the individual seasons (see \code{\link{mannKen}} for additional details). \emph{p}-values provided here are not corrected for serial correlation among seasons.
 
-If \code{plot = TRUE}, then either the Sen slope (\code{type = "slope"}) or the relative Sen slope (\code{type = "relative"}) are plotted. Plotting the relative slope is useful when the variables in \code{x} have different units. The plot symbols indicate, respectively, that the trend is significant or not significant. The plot can be customized by passing any arguments used by \code{\link{dotchart}} such as \code{xlab}, as well as graphical parameters described in \code{\link{par}}.
+If \code{plot = TRUE}, then either the Sen slope in units per year (\code{type = "slope"}) or the relative slope in fraction per year (\code{type = "relative"}) is plotted. The relative slope is defined identically to the Sen slope except that each slope is divided by the first of the two values that describe the slope. Plotting the relative slope is useful when the variables in \code{x} are always positive and have different units.
+
+The plot symbols indicate, respectively, that the trend is statistically significant or not. The plot can be customized by passing any arguments used by \code{\link{dotchart}} such as \code{xlab}, as well as graphical parameters described in \code{\link{par}}.
 
 If \code{mval} or more of the seasonal slope estimates are missing, then that trend is considered to be missing. The seasonal slope estimate (\code{\link{mannKen}}), in turn, is missing if half or more of the possible comparisons between the first and last 20\% of the years are missing.
 

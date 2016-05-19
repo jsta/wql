@@ -33,7 +33,7 @@ if \code{TRUE}, then rows with any \code{NA} will be removed.
 }
 
 \details{
-Our main use of \code{ts2df} is to convert a single monthly time series into a year \code{x} month data frame for \acronym{EOF} analysis of interannual variability. 
+Our main use of \code{ts2df} is to convert a single monthly time series into a year \code{x} month data frame for EOF analysis of interannual variability. 
 
 \code{monthCor} finds the month-to-month correlations in a monthly time series \code{x}. It is useful for deciding where to start the 12-month period for an \code{EOF} analysis (\code{mon1} in \code{ts2df}), namely, at a time of low serial correlation in \code{x}.
 }

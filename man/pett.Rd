@@ -34,7 +34,7 @@ Other arguments to pass to plotting function
 }
 
 \details{
-Pettitt's (1979) method is a rank-based nonparametric test for abrupt changes in a time series. It uses the Mann-Whitney statistic for testing that two samples (before and after the change-point) come from the same distribution, choosing the change-point that maximizes the statistic. The \emph{p}-value is approximate but accurate to 0.01 for \eqn{p \le} 0.5. Serial correlation is ignored, so the interval between points should be long enough to avoid strong serial correlation.
+Pettitt's (1979) method is a rank-based nonparametric test for abrupt changes in a time series. It uses the Mann-Whitney statistic for testing that two samples (before and after the change-point) come from the same distribution, choosing the change-point that maximizes the statistic. The \emph{p}-value is approximate but accurate to 0.01 for \eqn{p \le} 0.5. Serial correlation is ignored, so the interval between points should be long enough to avoid strong serial correlation. The size of the change is estimated as the median difference between all pairs of observations in which the first one is after the change-point and the second is up to the change-point.
 
 Missing values are allowed at the beginning or end of each variable but interior missing values will produce an NA. Otherwise the change-point might not be meaningful.
 
@@ -46,6 +46,7 @@ A list of the following if \code{x} is a vector:
   \item{p.value}{significance probability for statistic}
   \item{change.point}{last position preceding change to new level}
   \item{change.time}{if available, time of change.point position}
+  \item{change.size}{median of all differences between points after and up to change.point}
 or a matrix with corresponding columns if \code{x} is a matrix or data frame.
 }
 \references{
