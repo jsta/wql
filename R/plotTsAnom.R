@@ -17,6 +17,7 @@
 #' @return A plot and corresponding object of class \dQuote{ggplot}.
 #' @seealso \code{\link{plotTs}}
 #' @keywords Graphics ts
+#' @export
 #' @examples
 #' 
 #' # Spring bloom size for 6 stations in SF Bay

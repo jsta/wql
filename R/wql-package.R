@@ -67,7 +67,8 @@ NULL
 #' \code{\link{tsMake}} can be used to produce \code{ts} and \code{zoo} objects
 #' suitable as arguments to this function.
 #' 
-#' @aliases phenoAmp phenoAmp,ts-method phenoAmp,zoo-method
+#' @name phenoAmp 
+#' @aliases phenoAmp,ts-method phenoAmp,zoo-method
 #' @param x A seasonal time series, or a class \code{zoo} object.
 #' @param season.range A vector of two numbers specifying the season range to
 #' be considered.
@@ -150,7 +151,8 @@ NULL
 #' of subdivisions above its default of 100 by adding, for example,
 #' \code{subdivisions = 1000} to the arguments of \code{phenoPhase}.
 #' 
-#' @aliases phenoPhase phenoPhase,ts-method phenoPhase,zoo-method
+#' @name phenoPhase
+#' @aliases phenoPhase,ts-method phenoPhase,zoo-method
 #' @param x A seasonal time series, or a class \code{zoo} object.
 #' @param season.range A vector of two numbers specifying the season range to
 #' be considered.
@@ -298,8 +300,12 @@ NULL
 #' within the specified layer. So to get the maximum, for example, use qprob =
 #' 1. If \code{type = "ts.mon"}, the same quantile is used to aggregate all the
 #' available daily values.
-#' 
-#' @aliases tsMake tsMake,WqData-method
+#' @name tsMake
+#' @aliases tsMake,WqData-method
+#' @export
+#' @importFrom reshape2 dcast
+#' @importFrom zoo zoo as.yearmon
+#' @importFrom stats as.ts
 #' @param object Object of class \code{"WqData"}.
 #' @param focus Name of a site or water quality variable.
 #' @param layer Number specifying a single depth; a numeric vector of length 2
@@ -382,8 +388,8 @@ NULL
 #' \code{years}: Converts dates to the corresponding numeric years.
 #' 
 #' 
-#' @aliases date2decyear decyear2date layerMean leapYear meanSub monthNum tsSub
-#' years
+#' @aliases date2decyear decyear2date layerMean leapYear monthNum
+#' @name years
 #' @param d A numeric matrix or data frame with depth in the first column and
 #' observations for some variable in each of the remaining columns.
 #' @param na.rm Should missing data be removed?
@@ -468,20 +474,20 @@ NULL
 
 
 #' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_title(\"#1\")}",
-#' "wq")\Sexpr{tools:::Rd_package_title("wq")}
+#' "wql")\Sexpr{tools:::Rd_package_title("wql")}
 #' 
 #' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_description(\"#1\")}",
-#' "wq")\Sexpr{tools:::Rd_package_description("wq")}
+#' "wql")\Sexpr{tools:::Rd_package_description("wql")}
 #' 
-#' The main purpose of \pkg{wq} is to explore seasonal time series through
+#' The main purpose of \pkg{wql} is to explore seasonal time series through
 #' plots and nonparametric trend tests. It was created originally to examine
-#' water quality data sets (hence, \dQuote{wq}) but is suitable as a more
+#' water quality data sets (hence, \dQuote{wql}) but is suitable as a more
 #' general purpose set of tools for looking at annual or seasonal time series.
 #' 
 #' One of the more tedious tasks in exploring environmental data sets is
 #' creating usable time series from the original complex data sets, especially
 #' when you want many series at will that group data in different ways. So
-#' \pkg{wq} also provides a way of transforming data sets to a common format
+#' \pkg{wql} also provides a way of transforming data sets to a common format
 #' that then allows a diversity of time series to be created quickly. A few
 #' functions are specific to the fields of limnology and oceanography.
 #' 
@@ -516,19 +522,19 @@ NULL
 #' \itemize{ \item converting between oxygen concentrations and percent
 #' saturation \item converting between salinity and conductivity }
 #' 
-#' The capabilities of \pkg{wq} are more fully explained in the accompanying
-#' vignette: \dQuote{wq: Exploring environmental monitoring data}.
+#' The capabilities of \pkg{wql} are more fully explained in the accompanying
+#' vignette: \dQuote{wql: Exploring environmental monitoring data}.
 #' 
-#' @name wq-package
-#' @aliases wq-package wq
+#' @name wql-package
+#' @aliases wql-package wql
 #' @docType package
 #' @author
 #' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_author(\"#1\")}",
-#' "wq")\Sexpr{tools:::Rd_package_author("wq")}
+#' "wql")\Sexpr{tools:::Rd_package_author("wql")}
 #' 
 #' Maintainer:
 #' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer(\"#1\")}",
-#' "wq")\Sexpr{tools:::Rd_package_maintainer("wq")}
+#' "wql")\Sexpr{tools:::Rd_package_maintainer("wql")}
 #' @keywords package
 NULL
 

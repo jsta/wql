@@ -6,6 +6,7 @@ setGeneric(
     standardGeneric("phenoAmp")
 )
 
+#' @export
 setMethod(
   f = "phenoAmp",
   signature = "ts",

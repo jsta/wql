@@ -4,14 +4,6 @@ setGeneric(
     standardGeneric("tsMake")
 )
 
-#' @name tsMake
-#' @description tsMake class
-#' @export
-#' @title tsMake-class
-#' @importFrom reshape2 dcast
-#' @importFrom zoo zoo as.yearmon
-#' @importFrom stats as.ts
-#' @rdname tsMake-class
 setMethod(
   f = "tsMake",
   signature = "WqData",
