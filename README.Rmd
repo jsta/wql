@@ -1,6 +1,22 @@
-The main purpose of wq is to explore seasonal time series through plots and nonparametric trend tests.  It was created originally to examine water quality data sets (hence, wq) but is suitable as a more general purpose set of tools for looking at annual or seasonal time series.
+---
+output: github_document
+---
 
-One of the more tedious tasks in exploring environmental data sets is creating usable time series from the original complex data sets, especially when you want many series at will that group data in different ways.  So wq also provides a way of transforming data sets to a common format that then allows a diversity of time series to be created quickly.  A few functions are specific to the fields of limnology and oceanography.
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# wql
+
+The main purpose of wql is to explore seasonal time series through plots and nonparametric trend tests.  It was created originally to examine water quality data sets (hence, wql) but is suitable as a more general purpose set of tools for looking at annual or seasonal time series.
+
+One of the more tedious tasks in exploring environmental data sets is creating usable time series from the original complex data sets, especially when you want many series at will that group data in different ways.  So wql also provides a way of transforming data sets to a common format that then allows a diversity of time series to be created quickly.  A few functions are specific to the fields of limnology and oceanography.
 
 The plots are designed for easy use, not for publication-quality graphs.  Nonetheless, extensive customization is possible by passing options through ..., adding annotations in the case of base graphics, and adding layers in the case of ggplot2 objects.
 
@@ -26,5 +42,14 @@ A few functions are specialized for the aquatic sciences:
 * converting between oxygen concentrations and percent saturation
 * converting between salinity and conductivity
 
-The capabilities of wq are more fully explained in the accompanying vignette:
-wq: Exploring environmental monitoring data.
+The capabilities of wql are more fully explained in the accompanying vignette:
+wql: Exploring environmental monitoring data.
+
+## Installation
+
+You can install wql from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("jsta/wql")
+```
