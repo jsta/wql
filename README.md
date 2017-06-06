@@ -1,7 +1,31 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 wql
 ===
+
+<!-- rmarkdown v1 -->
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+
+------------------------------------------------------------------------
+
+[![minimal R version](https://img.shields.io/badge/R%3E%3D-3.0.0-6666ff.svg)](https://cran.r-project.org/) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/wql)](https://cran.r-project.org/package=wql) [![packageversion](https://img.shields.io/badge/Package%20version-0.4.9-orange.svg?style=flat-square)](commits/master)
+
+------------------------------------------------------------------------
+
+[![Last-changedate](https://img.shields.io/badge/last%20change-2017--06--06-yellowgreen.svg)](/commits/master)
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+Installation
+------------
+
+You can install wql from github with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("jsta/wql")
+```
+
+Motivation
+----------
 
 The main purpose of wql is to explore seasonal time series through plots and nonparametric trend tests. It was created originally to examine water quality data sets (hence, wql) but is suitable as a more general purpose set of tools for looking at annual or seasonal time series.
 
@@ -30,14 +54,28 @@ A few functions are specialized for the aquatic sciences:
 -   converting between oxygen concentrations and percent saturation
 -   converting between salinity and conductivity
 
+Usage
+-----
+
 The capabilities of wql are more fully explained in the accompanying vignette: wql: Exploring environmental monitoring data.
 
-Installation
-------------
+References
+----------
 
-You can install wql from github with:
+This package is a fork of the archived CRAN package `wq`. To date, improvements have been focused on improving the documentation and code readability.
 
-``` r
-# install.packages("devtools")
-devtools::install_github("jsta/wql")
-```
+    #> 
+    #> To cite wq in publications use:
+    #> 
+    #>   Alan D. Jassby and James E. Cloern (). wq: Some tools for
+    #>   exploring water quality monitoring data. R package version
+    #>   0.4.9. http://cran.r-project.org/package=wq
+    #> 
+    #> A BibTeX entry for LaTeX users is
+    #> 
+    #>   @Manual{jassbywq,
+    #>     title = {wq: Exploring water quality monitoring data},
+    #>     author = {Alan D. Jassby and James E. Cloern},
+    #>     note = {R package version 0.4.9},
+    #>     url = {http://CRAN.R-project.org/package=wq},
+    #>   }
