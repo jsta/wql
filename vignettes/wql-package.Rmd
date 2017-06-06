@@ -1,0 +1,352 @@
+---
+title: "wq: Exploring water quality monitoring data"
+author: Alan D. Jassby and James E. Cloern
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    highlight: textmate
+    keep_md: no
+    number_sections: yes
+    theme: united
+    toc: yes
+    toc_float: yes
+bibliography: wq.bib
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{wql: Exploring water quality monitoring data}
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(fig.align="center", warning=FALSE)
+```
+
+# Introduction
+
+This package contains functions to assist in the processing and exploration of data from monitoring programs for aquatic ecosystems. The name *wq* stands for *w*ater *q*uality. Although our own interest is in aquatic ecology, almost all of the functions should be useful for time series analysis regardless of the subject matter. The package is intended for programs that sample approximately monthly at discrete stations, a feature of many legacy data sets.
+
+```{r, echo=FALSE, fig.width=6, fig.height=3.7 }
+knitr::include_graphics("wqflow.png", auto_pdf = TRUE)
+```
+
+The functions are summarized in the diagram above, which illustrates a typical sequence of analysis that could be facilitated by the package when the data are in a data frame or time series. The functions associated with each step of the sequence are listed below their corresponding step. First, we might want to **derive** additional variables of interest.  A few functions are provided here for variables common to water monitoring data. Next, we **generate** time series from the data in a two-stage process: the `data.frame` is first converted into a standardized form (with `wqData`) and then another function (`tsMake`) is applied to this new data object to generate the series. This two-stage process is not necessary, and -- as implied in the diagram -- you can skip it by using time series that already exist or that you construct in another way. But it has advantages when you're constructing many different kinds of series from a data set, especially one that is unbalanced with respect to place and time. There are also a few special methods available to **summarize** this new data object. Next, we may need to **reshape** the time series in various ways for further analysis, perhaps also imputing missing values. Finally, we **analyze** the data to extract patterns using special plots, trend tests, and other approaches.
+
+We illustrate some of the steps in the diagram using the accompanying data set `sfbay`.
+
+```{r}
+library(wql)
+```
+
+# Preparing data from an external file
+
+Our starting point is a comma-delimited file downloaded on 2009-11-17 from the U.S. Geological Survey's water quality data set for [San Francisco Bay](http://sfbay.wr.usgs.gov/access/wqdata "USGS: Water Quality of San Francisco Bay"). The downloaded file, `sfbay.csv`, starts with a row of variable names followed by a row of units, so the first two lines are skipped during import and simpler variable names are substituted for the originals. Also, only a subset of stations and years is used in order to keep `sfbay.csv` small:
+
+```{r eval=FALSE}
+sfbay <- read.csv("sfbay.csv", header = FALSE, as.is = TRUE,
+                  skip = 2)
+names(sfbay) <- c('date', 'time', 'stn', 'depth', 'chl', 'dox',
+                  'spm', 'ext', 'sal', 'temp', 'nox', 'nhx')
+sfbay <- subset(sfbay, stn %in% c(21, 24, 27, 30, 32, 36) &
+                substring(date, 7, 10) %in% 1985:2004)
+```
+
+The resulting data frame `sfbay` is provided as part of the package, and its contents are explained in the accompanying help file.
+
+```{r}
+head(sfbay)
+```
+
+The next step is to add any necessary derived variables to the data frame. An initial data set will sometimes contain conductivity rather than salinity data, and we might want to use `ec2pss` to derive the latter. That's not the case here, but let's assume that we want dissolved oxygen as percent saturation rather than in concentration units. Using `oxySol` and the convention of expressing percent saturation with respect to surface pressure:
+
+```{r}
+x <- sample(1:nrow(sfbay), 10)
+sfbay[x, "dox"]
+sfbay1 <- transform(sfbay,
+                    dox = round(100 * dox/oxySol(sal, temp), 1))
+sfbay1[x, "dox"]
+```
+
+# The `WqData` class
+
+We define a standardized format for water quality data by creating a formal (`S4`) class, the `WqData` class, that enforces the standards, and an accompanying generating function `wqData` (note lower-case w). This generating function constructs a `WqData` object from a data frame. The `WqData` object is just a restricted version of a `data.frame` that requires specific column names and classes.
+
+We decided to accommodate two types of sampling time, namely, the date either with or without the time of day. The former are converted to the `POSIXct` class and the latter to the `Date` class. A special class `DateTime` is created, which is the union of these two time classes. Classes that combine date and time of day require an additional level of care with respect to time zone [@grothendieck2004].
+
+Surface location is specified by a `site` code, as the intention is to handle discrete monitoring programs as opposed to continuous transects. Latitude-longitude and distances from a fixed point are implicit in the `site` code and can be recorded in a separate table (see `sfbayVars`). The `depth` is specified separately as a number. Other information that may not be depth-specific, such as the mean vertical extinction coefficient in the near-surface layer, can be coded by a negative depth number. The last two fields in the data portion of a `WqData` object are the `variable` code and the `value`. The variables are given as character strings and the values as numbers. As in the case of the sampling site, additional information related to the variable code can be maintained in a separate table (see `sfbayVars`).
+
+Like all `S4` classes, `WqData` has a generating function called `new` automatically created along with the class. This function, however, requires that its data frame argument already have a fairly restricted form of structure. In order to decrease the manipulation required of the imported data, a separate, less restrictive generating function called `wqData` is available. This function is more forgiving of field names and classes and does a few other cleanup tasks with the data before calling `new`. Perhaps most useful, it converts data from a *wide* format with one field per variable into the *long* format used by the `WqData` class. For example, `sfbay` can be converted to a `WqData` object with a single command:
+
+```{r}
+sfb <- wqData(sfbay, c(1, 3:4), 5:12, site.order = TRUE,
+              type = "wide", time.format = "%m/%d/%Y")
+head(sfb)
+```
+
+There is a `summary` method for this class that tabulates the number of observations by site and variable, as well as the mean and quartiles for individual variables:
+
+```{r}
+summary(sfb)
+```
+
+Plotting a `WqData` object produces a plot for each variable specified, each plot containing a boxplot of the values for each site. If no variables are specified, then the first 10 will be plotted.
+
+```{r, fig.width=5, fig.height=3.1}
+plot(sfb, vars = c('dox', 'temp'), num.col = 2)
+```
+
+Apart from `summary` and `plot`, one can subset a `WqData` object with the `[` operator. All other existing methods for data frames will produce an object of class `data.frame` rather than one of class `WqData`.
+
+# Generating time series
+
+Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. `tsMake` is a function for `WqData` objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option `type = "ts.mon"`. If the quantile probability `qprob = NULL`, all replicates are first averaged and then the mean is found for the depth layers of interest. Otherwise the respective quantile will be used both to aggregate depths for each day and to aggregate days for each month. If no layers are specified, all depths will be used. If `layer = "max.depths"`, the time series will be values of the deepest sample for each time, site and variable. The `layer` argument allows for flexibility in specifying depths, including a list of layers and negative depths used as codes for, say, *near botton* or *entire water column*.
+
+```{r}
+y <- tsMake(sfb, focus = "chl", layer = c(0, 5))
+y[1:4, ]
+tsp(y)
+```
+
+The function `plotTs` is convenient for a quick look at the series. Lines join only adjacent data; otherwise, data are isolated dots.
+
+```{r, width=5, height=8}
+plotTs(y[, 1:4], dot.size = 1.3, ylab = "Chlorophyll in San Francisco Bay",
+      strip.labels = paste("Station", 21:24), ncol = 1, scales = "free_y")
+```
+
+If the option `type = "zoo"`, then `tsMake` produces an object of class `zoo` containing values by date of observation, rather than a monthly time series.
+
+```{r}
+head(tsMake(sfb, focus = "chl", layer = c(0, 5), type = 'zoo'))
+```
+
+# Reshaping {#reshape}
+
+There are several functions for further reshaping of time series, preparing them for use in specific analyses. `ts2df` converts a monthly time series vector to a year $\times$ month data frame. Leading and trailing empty rows are removed, additional rows with missing data are optionally removed, and the data frame can be reconfigured to represent a local *water year*:
+
+```{r}
+chl27 <- sfbayChla[, 's27']
+tsp(chl27)
+chl27 <- round(chl27, 1)
+head(ts2df(chl27))
+```
+
+Another example of its use is shown in [Empirical Orthogonal Functions](#eof) below. A similar reshaping function is `mts2ts`, which converts a matrix time series to a vector time series for various analyses. It first aggregates the multivariate matrix time series by year, then converts it to a vector time series in which the *seasons* correspond to these annnualized values for the original variables. The `seas` parameter enables focusing the subsequent analysis on seasons of special interest, or to ignore seasons where there are too many missing data. The function can be used in conjunction with `seaKen` to conduct a Regional Kendall trend analysis, as described in [Trends](#trends) below:
+
+```{r}
+y <- window(sfbayChla, start = 2005,
+            end = c(2009, 12))  # 5 years, 16 sites
+round(mts2ts(y, seas = 2:4), 1)  # focus on Feb-Apr spring bloom
+```
+
+Some functions (e.g., `eof`) do not permit `NA`s and some kind of data imputation or omission will usually be required. The function `interpTs` is handy for interpolating small data gaps. It can also be used for filling in larger gaps with long-term or seasonal means or medians. Here, we use it to bridge gaps of up to three months.
+
+```{r}
+chl27 <- sfbayChla[, "s27"]
+chl27a <- interpTs(chl27, gap = 3)
+```
+
+The interpolated series is then plotted in red and the original series overplotted below.
+
+```{r fig.height=3.7, fig.width=6}
+plot(chl27a, col = "red", lwd = .5, xlab = "")
+lines(chl27, col = "blue", lwd = 1.5)
+```
+
+# Analyzing
+
+## Trends {#trends}
+
+The function `mannKen` does a Mann-Kendall test of trend on a time series and provides the corresponding nonparametric slope estimate. Because of serial correlation for most monthly time series, the significance of such a trend is often overstated and `mannKen` is better suited for annual series, such as this one for Nile River flow:
+
+```{r}
+mannKen(Nile)
+```
+
+The negative trend in Nile River flow identified by `mannKen` is due largely to a shift in the late 19th century. The Pettitt test, which has a similar basis to the Mann-Kendall test [@pettitt1979], provides a nonparametric estimate of the change-point. The shift happened in 1898--99 and coincides with the beginning of construction of the Lower Aswan Dam.
+
+<<fig=TRUE, echo=FALSE, width=6.5, height=4>>=
+plot(Nile, ylab = "Flow", xlab = "")
+abline(v=1898, col='blue')
+@
+\caption{Nile River flow at Aswan, 1871--1970.}
+\label{fig:nile}
+\end{center}
+\end{figure}
+
+```{r, fig.height=3.7, fig.width=6}
+plot(Nile, ylab = "Flow", xlab = "")
+abline(v=1898, col='blue')
+pett(Nile)
+```
+
+`pett` can also be used with a matrix:
+
+```{r}
+y <- ts.intersect(Nile, LakeHuron)
+pett(y)
+```
+
+Both `mannKen` and `pett` can also handle matrices or data frames, with options for plotting trends in the original units per year or divided by the median for the series. The first option is suitable when time series are all in the same units, such as chlorophyll-*a* measurements from different stations. The second makes sense with variables of different units but is not suitable for variables that can span zero (e.g., sea level, or temperature in $^\circ$C) or that have a zero median. Plotted variables can be ordered by the size of their trends, statistical significance is mapped to point shape, and trends based on excessive missing data are omitted. When aggregating monthly series to produce an annual series for trend testing, there is a utility function `tsSub` that allows subsetting the months beforehand (`meanSub` is actually more efficient when aggregation is the goal). It can be useful for avoiding months with many missing data, or to focus attention on a particular time of year:
+
+```{r}
+y <- sfbayChla
+y1 <- tsSub(y, seas = 2:4)  # focus on Feb-Apr spring bloom
+y2 <- aggregate(y1, 1, mean, na.rm = FALSE)
+signif(mannKen(y2), 3)
+```
+
+A main role for `mannKen` in this package is as a support function for the Seasonal Kendall test of trend [@hirsch1982]. The Seasonal Kendall test combines information about trends for individual months (or some other subdivision of the year such as quarters) and produces an overall test of trend for a series. `mannKen` collects certain information on the pattern of missing data that is then used to determine if a Seasonal Kendall test is warranted. In particular, there is an option to report a result only if more than half the seasons are each missing less than half the possible comparisons between the first and last 20\% of the years [@schertz1991]:
+
+```{r}
+chl27 <- sfbayChla[, "s27"]
+seaKen(chl27)
+```
+
+An important role, in turn, for `seaKen` in this package is as a support function for `seaRoll`, which applies the Seasonal Kendall test to a rolling window of years, such as a decadal window. There is an option to plot the results of `seaRoll`. `seaKen` is subject to distortion by correlation among months, but the relatively small number of years per window in typical use does not allow for an accurate correction:
+
+```{r}
+seaRoll(chl27, w = 10)
+```
+
+The Seasonal Kendall test is not informative when trends for different months differ in sign. The function `seasonTrend` enables visualization of individual monthly trends and can be helpful for, among other things, deciding on the appropriateness of the Seasonal Kendall test. The Sen slopes are shown along with an indication, using bar colour, of the Mann-Kendall test of significance. The bar is omitted if the proportion of missing values in the first and last fifths of the data is less than 0.5.
+
+```{r, fig.height=8, fig.width=7}
+x <- sfbayChla
+seasonTrend(x, plot = TRUE, ncol = 2, scales = 'free_y')
+```
+
+The function `trendHomog` can also be used to test directly for the homogeneity of seasonal trends [@belle1984]:
+
+```{r}
+x <- sfbayChla[, 's27']
+trendHomog(x)
+```
+
+A Regional Kendall test is similar to a Seasonal Kendall test, with annual data for multiple sites instead of annual data for multiple seasons [@helsel2006a]. The function `mts2ts` ([Reshaping](#reshape)) facilitates transforming an annual matrix time series into the required vector time series for `seaKen`, with stations playing the role of seasons. As with seasons, correlation among sites can inflate the apparent statistical significance, so the test is best used with stations from different subregions that are not too closely related, unlike the following example:
+
+```{r}
+chl <- sfbayChla[, 1:12]  # first 12 stns have good data coverage
+seaKen(mts2ts(chl, 2:4))  # regional trend in spring bloom
+```
+
+## Empirical Orthogonal Functions {#eof}
+
+Empirical Orthogonal Function (EOF) analysis is a term used primarily in the earth sciences for principal component analysis applied to simultaneous time series at different spatial locations. @hannachi2007 provide a comprehensive summary. The function `eof` in this package, based on `prcomp` and `varimax` in the `stats` package, optionally scales the time series and applies a rotation to the EOFs.
+
+`eof` requires an estimate of the number of EOFs to retain for rotation. `eofNum` provides a guide to this number by plotting the eigenvalues and their confidence intervals in a *scree* plot. Here, we apply `eofNum` to annualized San Francisco Bay chlorophyll data and retain the stations with no missing data, namely, the first 12 stations.
+
+```{r, fig.height=3.7, fig.width=6}
+chla1 <- aggregate(sfbayChla, 1, mean, na.rm = TRUE)
+chla1 <- chla1[, 1:12]
+eofNum(chla1)
+```
+
+These stations have similar coefficients for the first EOF and appear to act as one with respect to chlorophyll variability on the annual scale. It suggests that further exploration of the interannual variability of these stations can be simplified by using a single time series, namely, the first EOF.
+
+```{r}
+e1 <- eof(chla1, n = 1)
+e1
+```
+
+The function `eofPlot` produces a graph of either the EOFs or their accompanying time series. In this case, with `n = 1`, there is only one plot for each such graph.
+
+```{r, fig.height=3.1, fig.width=5}
+eofPlot(e1, type = "amp")
+```
+
+Principal component analysis can also be useful in studying the way different seasonal *modes* of variability contribute to overall year-to-year variability of a single time series \citep{jassby1999a}. The basic approach is to consider each month as determining a separate annual time series and then to calculate the eigenvalues for the resulting $12 \times n$ years time series matrix. The function `ts2df` is useful for expressing a monthly time series in the form needed by `eof`. For example, the following code converts the monthly chlorophyll time series for Station 27 in San Francisco Bay to the appropriate data frame with October, the first month of the local *water year*, in the first column, and years with missing data omitted:
+
+```{r}
+chl27b <- interpTs(sfbayChla[, "s27"], gap = 3)
+chl27b <- ts2df(chl27b, mon1 = 10, addYr = TRUE, omit = TRUE)
+head(round(chl27b, 1))
+```
+
+The following example plots the EOFs from an analysis of this month $\times$ year data frame for Station 27 chlorophyll after scaling the data. `eofNum` (not shown) suggested retaining up to two EOFs. The resulting rotated EOFs imply two separate modes of variability for further exploration, the first operating during May-Sep and the other during Nov-Jan:
+
+```{r, fig.height=3.1, fig.width=5}
+e2 <- eof(chl27b, n = 2, scale. = TRUE)
+eofPlot(e2, type = "coef")
+```
+
+## Time series decomposition
+
+An analysis of chlorophyll-*a* time series from many coastal and estuarine sites around the world demonstrates that the standard deviation of chlorophyll is approximately proportional to the mean, both among and within sites, as well as at different time scales [@cloern2010]. One consequence is that these monthly time series are well described by a multiplicative seasonal model: $c_{ij} = C y_i m_j \epsilon_{ij}$, where $c_{ij}$ is chlorophyll concentration in year $i$ and month $j$; $C$ is the long-term mean; $y_i$ is the annual effect; $m_j$ is the mean seasonal (in this case monthly) effect; and $\epsilon_{ij}$ is the residual series, which we sometimes refer to as the *events* component. The annual effect is simply the annual mean divided by the long-term mean: $y_{i} = Y_{i}/C$, where $Y_{i} = (1/12) \sum_{j=1}^{12}c_{ij}$. The mean monthly effect is given by $m_{j}=(1/N) \sum_{i=1}^{N} M_{ij}/(C y_{i})$, where $M_{ij}$ is the value for month $j$ in year $i$, and $N$ is the total number of years. The events component is then obtained by $\epsilon_{ij}=c_{ij}/C y_{i} m_{j}$. This simple approach is motivated partly by the observation that many important events for estuaries (e.g., persistent dry periods, species invasions) start or stop suddenly. Smoothing to extract the annualized term, which can disguise the timing of these events and make analysis of them unnecessarily difficult, is not used.
+
+The `decompTs` listed here accomplishes this multiplicative decomposition (an option allows additive decomposition as an alternative). The median rather than the mean can be used in the operations described above, and the median is, in fact, the default for the function. Large, isolated events are common in environmental time series, especially from the ocean or ocean-influenced habitats such as certain types of estuary. The median leads to a more informative decomposition in these cases. `decompTs` requires input of a time series matrix in which the columns are monthly time series. It allows missing data, but it is up to the user to decide how many data are sufficient and if the pattern of missing data will lead to bias in the results. If so, it would be advisable to eliminate problem years beforehand by setting all month values to `NA` for those years. There are two cases of interest here: one in which the seasonal effect is held constant from year to year, and another in which it is allowed to vary by not distinguishing a separate events component. The choice is made by setting `event = TRUE` or `event = FALSE`, respectively, in the input. The output of this function is a matrix time series containing the original time series and its multiplicative model components, except for the long-term median or mean.
+
+The average seasonal pattern may not resemble observed seasonality in a given year. Patterns that are highly variable from year to year will result in an average seasonal pattern of relatively low amplitude (i.e., low range of monthly values) compared to the amplitudes in individual years. An average seasonal pattern with high amplitude therefore indicates both high amplitude and a recurring pattern for individual years. The default time series `plot` again provides a quick illustration of the result.
+
+```{r, fig.height=6, fig.width=6}
+chl27 <- sfbayChla[, "s27"]
+d1 <- decompTs(chl27)
+plot(d1, nc = 1, main = "Station 27 Chl-a decomposition")
+```
+
+The average seasonal pattern does not provide any information about potential secular trends in the pattern. A solution is to apply the decomposition to a moving time window. The window should be big enough to yield a meaningful average of interannual variability but short enough to allow a trend to manifest. This may be different for different systems, but a decadal window can be used as a starting point. A more convenient way to examine changing seasonality is with the dedicated function `plotSeason`. It divides the time period into intervals and plots a composite of the seasonal pattern in each interval. The intervals can be specifed by a single number -- the number of equal-length intervals -- or by a vector listing the breaks between intervals. The function also warns of months that may not be represented by enough data by colouring them red. `plotSeason` is an easy way to decide on the value for the `event` option in `decompTs`.
+
+```{r, fig.height=4.3, fig.width=7}
+plotSeason(chl27, num.era = 3, same.plot = FALSE, ylab = 'Stn 27 Chl-a')
+```
+
+The same boxplots can also be combined in one plot, with boxplots for the same month grouped together.
+
+```{r, fig.height=4.3, fig.width=7}
+plotSeason(chl27, num.era = 3, same.plot = TRUE, ylab = 'Stn 27 Chl-a')
+```
+
+`plotSeason` also has an option to plot all individual months separately as standardized anomalies for the entire record.
+
+```{r, fig.height=4.3, fig.width=7}
+plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a')
+```
+
+With all types of seasonal plots, it is often helpful to adjust the device aspect ratio and size manually to get the clearest information.
+
+## Phenological parameters
+
+`phenoPhase` and `phenoAmp` act on monthly time series or dated observations (`zoo` objects) and produce measures of the phase and amplitude, respectively, for each year. `phenoPhase` finds the month containing the maximum value, the *fulcrum* or center of gravity, and the weighted mean month. `phenoAmp` finds the range, the range divided by mean, and the coefficient of variation. Both functions can be confined to only part of the year, for example, the months containing the spring phytoplankton bloom. This feature can also be used to avoid months with chronic missing-data problems.
+
+Illustrating once again with chlorophyll observations from Station 27 in San Francisco Bay:
+
+```{r}
+chl27 <- sfbayChla[, 's27']
+p1 <- phenoPhase(chl27)
+head(p1)
+p2 <- phenoPhase(chl27, c(1, 6))
+head(p2)
+p3 <- phenoAmp(chl27, c(1, 6))
+head(p3)
+```
+
+Using the actual dated observations:
+
+```{r}
+zchl <- tsMake(sfb, focus = "chl", layer = c(0, 5), type = 'zoo')
+head(zchl)
+zchl27 <- zchl[, 3]
+head(phenoPhase(zchl27))
+head(phenoPhase(zchl27, c(1, 6), out = 'doy'))
+head(phenoPhase(zchl27, c(1, 6), out = 'julian'))
+```
+
+## Miscellaneous plotting functions
+
+`plotTsAnom` plots (unstandardized) departures of vector or matrix time series from their long-term mean and can be a useful way of examining trends in annualized data.
+
+```{r, fig.height=3.7, fig.width=6}
+chl <- aggregate(sfbayChla[, 1:6], 1, meanSub, 2:4, na.rm = TRUE)
+plotTsAnom(chl, ylab = 'Chlorophyll-a',
+           strip.labels = paste('Station', substring(colnames(chl), 2, 3)))
+```
+
+`plotTsTile` plots a monthly time series as a month $\times$ year grid of tiles, with color representing magnitude. The data can be binned in either of two ways. The first is simply by deciles. The second, which is intended for log-anomaly data, is by four categories: Positive numbers higher or lower than the mean positive value, and negative numbers higher or lower than the mean negative value. In this version of `plotTsTile`, the anomalies are calculated with respect to the overall mean month.
+
+```{r, fig.height=4.3, fig.width=7}
+chl27 <- sfbayChla[, "s27"]
+plotTsTile(chl27)
+```
+
+This plot shows clearly the change in chlorophyll magnitude after 1999.
+
+# References

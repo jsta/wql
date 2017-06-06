@@ -28,6 +28,7 @@
 #' @seealso \code{\link{decompTs}}, \code{\link{seasonTrend}}
 #' @keywords Graphics ts
 #' @importFrom reshape2 melt
+#' @importFrom ggplot2 scale_x_discrete scale_y_continuous scale_colour_manual geom_linerange
 #' @examples
 #' 
 #' chl27 <- sfbayChla[, 's27']

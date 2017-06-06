@@ -25,6 +25,8 @@
 #' @param x object of class \code{"ts"} or \code{"mts"}
 #' @param type method of interpolation or substitution
 #' @param gap maximum gap to be replaced
+#' @export
+#' @importFrom zoo na.approx
 #' @return The time series with some or all missing values replaced.
 #' @seealso \code{\link{decompTs}}
 #' @keywords utilities manip

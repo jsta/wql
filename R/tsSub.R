@@ -1,3 +1,9 @@
+#' tsSub
+#'
+#' @param x1 ts
+#' @param seas numeric
+#'
+#' @export
 tsSub <- 
 function(x1, seas = 1:frequency(x1)) {
 

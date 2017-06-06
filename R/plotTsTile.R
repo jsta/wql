@@ -51,7 +51,8 @@
 #' @return An image plot of monthly values classified into either deciles or
 #' into four bins as described above (and corresponding object of class
 #' \dQuote{ggplot}).
-#' @importFrom zoo as.zoo
+#' @importFrom zoo as.zoo na.trim
+#' @importFrom ggplot2 geom_tile scale_x_continuous scale_y_discrete theme_bw coord_equal
 #' @references O'Brien T., Lopez-Urrutia A., Wiebe P.H., Hay S. (editors)
 #' (2008) \emph{ICES Zooplankton Status Report 2006/2007.} ICES Cooperative
 #' Research Report 292, International Council for the Exploration of the Sea,

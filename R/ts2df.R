@@ -24,6 +24,7 @@
 #' @references Craddock, J. (1965) A meteorological application of principal
 #' component analysis. \emph{Statistician} \bold{15,} 143--156.
 #' @keywords ts manip
+#' @export
 #' @examples
 #' 
 #' # San Francisco Bay station 27 chlorophyll has the lowest serial 

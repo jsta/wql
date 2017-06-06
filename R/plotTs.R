@@ -21,6 +21,9 @@
 #' @param ylab optional y-axis label
 #' @param strip.labels labels for individual time series plots
 #' @param ...  additional options
+#' @importFrom zoo as.Date
+#' @importFrom ggplot2 theme element_text geom_line labs geom_point aes
+#' @export
 #' @return A plot or plots and corresponding object of class \dQuote{ggplot}.
 #' @seealso \code{\link{plotTsAnom}}
 #' @keywords Graphics ts
@@ -46,7 +49,7 @@ function(x, dot.size = 1, xlab = NULL, ylab = NULL,
     x.forward <- rbind(rep(NA, ncol(x)), x[1:(nrow(x)-1), ])
     x.back <- rbind(x[2:nrow(x), ], rep(NA, ncol(x)))
     iso.pts <- is.na(x.forward) & is.na(x.back) & !is.na(x)
-    iso <- data.frame(time = as.Date(x), ifelse(iso.pts & !is.na(x), x, NA))
+    iso <- data.frame(time = zoo::as.Date(x), ifelse(iso.pts & !is.na(x), x, NA))
     iso1 <- melt(iso, id = 'time')
 
     # Create data frame

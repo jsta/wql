@@ -60,6 +60,7 @@
 #' water-quality data.} Water-Resources Investigations Report 91-4040, U.S.
 #' Geological Survey.
 #' @keywords ts
+#' @export
 #' @examples
 #' 
 #' tsp(Nile)  # an annual time series

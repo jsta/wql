@@ -61,6 +61,7 @@ setMethod(
   }
 )
 
+#' @importFrom ggplot2 ggplot aes_string facet_wrap geom_boxplot
 setMethod(
   f = "plot",
   signature = "WqData",

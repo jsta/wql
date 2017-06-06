@@ -13,6 +13,7 @@
 #' @references van Belle, G. and Hughes, J.P. (1984) Nonparametric tests for
 #' trend in water quality. \emph{Water Resources Research} \bold{20,} 127-136.
 #' @keywords ts
+#' @export
 #' @examples
 #' 
 #' ## Apply to a monthly vector time series to test homogeneity

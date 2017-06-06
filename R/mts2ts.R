@@ -13,6 +13,7 @@
 #' @param x An object of class "mts"
 #' @param seas Numeric vector of seasons to aggregate in original time series.
 #' @param na.rm Should missing data be ignored when aggregating?
+#' @export
 #' @return A vector time series
 #' @seealso \code{\link{seaKen}}
 #' @keywords ts manip

@@ -56,6 +56,7 @@
 #' analysis for monthly water quality data. \emph{Water Resources Research}
 #' \bold{18,} 107-121.
 #' @keywords ts
+#' @export
 #' @examples
 #' 
 #' # Seasonal Kendall test:

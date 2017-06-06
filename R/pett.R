@@ -51,6 +51,7 @@
 #' change-point problem. \emph{Journal of the Royal Statistical Society. Series
 #' C (Applied Statistics)} \bold{28(2),} 126--135.
 #' @keywords ts nonparametric
+#' @export
 #' @examples
 #' 
 #' # data from Pettitt (1979, Table 1):

@@ -24,6 +24,7 @@
 #' @param n effective sample size
 #' @param scale.  logical indicating whether the (centered) variables should be
 #' scaled to have unit variance
+#' @importFrom ggplot2 geom_errorbar geom_text
 #' @return A plot of the eigenvectors.
 #' @seealso \code{\link{eof}}, \code{\link{interpTs}}, \code{\link{monthCor}},
 #' \code{\link{eofPlot}}

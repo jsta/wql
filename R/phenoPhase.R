@@ -58,6 +58,7 @@ setMethod(
   }
 )
 
+#' @importFrom zoo index
 setMethod(
   f = "phenoPhase",
   signature = "zoo",
@@ -65,7 +66,7 @@ setMethod(
   	'julian'), ...) {
 
     # validate args
-    if (!is(index(x), "DateTime"))
+    if (!is(zoo::index(x), "DateTime"))
       stop('time index must be a DateTime object')
     indexx <- as.Date(index(x))
     out <- match.arg(out)

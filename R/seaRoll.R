@@ -32,6 +32,7 @@
 #' Rows are labelled with the leading year of the window.
 #' @seealso \code{\link{seaKen}}
 #' @keywords ts
+#' @export
 #' @examples
 #' 
 #' chl27 <- sfbayChla[, 's27']
