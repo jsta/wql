@@ -1,3 +1,4 @@
+#' @importFrom stats na.omit
 layerMean <-
 function(d) {
     

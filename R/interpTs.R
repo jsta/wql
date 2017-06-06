@@ -27,6 +27,7 @@
 #' @param gap maximum gap to be replaced
 #' @export
 #' @importFrom zoo na.approx
+#' @importFrom stats tsp
 #' @return The time series with some or all missing values replaced.
 #' @seealso \code{\link{decompTs}}
 #' @keywords utilities manip

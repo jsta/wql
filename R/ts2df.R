@@ -23,6 +23,7 @@
 #' @references Craddock, J. (1965) A meteorological application of principal
 #' component analysis. \emph{Statistician} \bold{15,} 143--156.
 #' @keywords ts manip
+#' @importFrom methods is
 #' @export
 #' @examples
 #' 

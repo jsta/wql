@@ -27,6 +27,7 @@
 #' @return A plot (and the corresponding object of class \code{"ggplot"}).
 #' @seealso \code{\link{decompTs}}, \code{\link{seasonTrend}}
 #' @keywords Graphics ts
+#' @export
 #' @importFrom stats cycle
 #' @importFrom reshape2 melt
 #' @importFrom ggplot2 scale_x_discrete scale_y_continuous scale_colour_manual geom_linerange

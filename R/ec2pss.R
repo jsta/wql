@@ -11,7 +11,6 @@
 #' \code{R2pss} is the same function, except that conductivity ratios rather
 #' than conductivities are used as input.
 #' 
-#' @aliases ec2pss R2pss
 #' @param ec conductivity, mS/cm
 #' @param t temperature, Celsius
 #' @param p gauge pressure, decibar

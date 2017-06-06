@@ -27,6 +27,7 @@ setMethod(
   }
 )
 
+#' @importFrom stats mad var
 setMethod(
   f = "phenoAmp",
   signature = "zoo",

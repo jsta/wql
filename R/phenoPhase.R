@@ -6,6 +6,7 @@ setGeneric(
     standardGeneric("phenoPhase")
 )
 
+#' @importFrom stats approxfun integrate optimize weighted.mean
 setMethod(
   f = "phenoPhase",
   signature = "ts",
@@ -59,6 +60,7 @@ setMethod(
 )
 
 #' @importFrom zoo index
+#' @export
 setMethod(
   f = "phenoPhase",
   signature = "zoo",
