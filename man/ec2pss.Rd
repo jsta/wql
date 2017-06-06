@@ -2,7 +2,6 @@
 % Please edit documentation in R/ec2pss.R
 \name{ec2pss}
 \alias{ec2pss}
-\alias{R2pss}
 \title{Convert conductivity to salinity}
 \usage{
 ec2pss(ec, t, p = 0)

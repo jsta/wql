@@ -8,3 +8,6 @@
 \S4method{tsMake}{WqData}(object, focus, layer, type = c("ts.mon", "zoo"),
   qprob = NULL)
 }
+\description{
+tsMake class
+}
