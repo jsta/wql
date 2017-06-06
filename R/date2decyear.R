@@ -1,3 +1,6 @@
+#' date2decyear
+#' @param w date
+#' @export
 date2decyear <- 
 function(w) {
   old_ops <- options(digits = 8)

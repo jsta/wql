@@ -2,11 +2,6 @@
 % Please edit documentation in R/wql-package.R
 \name{years}
 \alias{years}
-\alias{date2decyear}
-\alias{decyear2date}
-\alias{layerMean}
-\alias{leapYear}
-\alias{monthNum}
 \title{Miscellaneous utility functions}
 \arguments{
 \item{d}{A numeric matrix or data frame with depth in the first column and

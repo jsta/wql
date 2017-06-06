@@ -1,4 +1,16 @@
+#' layerMean
 #' @importFrom stats na.omit
+#' @description Acts on a matrix or data frame with depth in the first
+#' column and observations for different variables (or different sites, or
+#' different times) in each of the remaining columns. The trapezoidal mean over
+#' the given depths is calculated for each of the variables. Replicate depths
+#' are averaged, and missing values or data with only one unique depth are
+#' handled. Data are not extrapolated to cover missing values at the top or
+#' bottom of the layer. The result can differ markedly from the simple mean
+#' even for equal spacing of depths, because the top and bottom values are
+#' weighted by 0.5 in a trapezoidal mean.
+#' @param d data.frame
+#' @export
 layerMean <-
 function(d) {
     

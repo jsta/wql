@@ -1,3 +1,8 @@
+#' leapYear
+#' @description \code{TRUE} if \code{x} is a leap year, \code{FALSE}
+#' otherwise.
+#' @param x integer year
+#' @export
 leapYear <- 
 function(x) {
   if (!is.numeric(x))

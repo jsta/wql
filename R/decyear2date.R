@@ -1,3 +1,7 @@
+#' decyear2date
+#'
+#' @param x date
+#' @export
 decyear2date <- 
 function(x) {
 	yr <- floor(x)

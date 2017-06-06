@@ -387,8 +387,6 @@ NULL
 #' 
 #' \code{years}: Converts dates to the corresponding numeric years.
 #' 
-#' 
-#' @aliases date2decyear decyear2date layerMean leapYear monthNum
 #' @name years
 #' @param d A numeric matrix or data frame with depth in the first column and
 #' observations for some variable in each of the remaining columns.
@@ -400,6 +398,7 @@ NULL
 #' @param x1 A matrix or vector time series.
 #' @param y A vector of class \code{"Date"} or \code{"POSIX"} date-time.
 #' @keywords manip
+#' @export
 #' @examples
 #' 
 #' dates <- as.Date(c("1996-01-01", "1999-12-31", "2004-02-29", "2005-03-01"))
