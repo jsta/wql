@@ -1,3 +1,7 @@
+wql 0.4.9
+=========
+* Fork and rebrand wq to wql
+
 wq 0.4.8
 ========
 * eof: Shift id to row name in output.

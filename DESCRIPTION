@@ -1,9 +1,13 @@
-Package: wq
+Package: wql
 Type: Package
 Title: Exploring Water Quality Monitoring Data
-Version: 0.4.8
-Author: Alan D. Jassby and James E. Cloern
-Maintainer: Alan Jassby <wq@fastmail.net>
+Version: 0.4.9
+Authors@R: c(
+  person("Alan", "Jassby", role = c("aut"),
+  person("James", "Cloern", role = c("ctb"),
+  person("Joseph", "Stachelek", role = c("ctb", "cre"))
+  )
+Maintainer: Joseph Stachelek <stachel2@msu.edu>
 Description: Functions to assist in the processing and
     exploration of data from environmental monitoring programs.
     The package name stands for "water quality" and reflects the
@@ -21,6 +25,4 @@ LazyData: yes
 License: GPL-2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2016-05-18 18:53:17 UTC; alan
-Repository: CRAN
-Date/Publication: 2016-05-19 05:46:51
+RoxygenNote: 6.0.1
