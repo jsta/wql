@@ -5,7 +5,7 @@ knitr::opts_chunk$set(fig.align="center", warning=FALSE)
 knitr::include_graphics("wqflow.png", auto_pdf = TRUE)
 
 ## ------------------------------------------------------------------------
-library(wq)
+library(wql)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  sfbay <- read.csv("sfbay.csv", header = FALSE, as.is = TRUE,
