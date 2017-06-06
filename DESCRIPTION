@@ -8,6 +8,8 @@ Authors@R: c(
   person("Joseph", "Stachelek", role = c("ctb", "cre"), email = "stachel2@msu.edu")
   )
 Maintainer: Joseph Stachelek <stachel2@msu.edu>
+URL: https://github.com/jsta/wql
+BugReports: https://github.com/jsta/wql/issues
 Description: Functions to assist in the processing and
     exploration of data from environmental monitoring programs.
     The package name stands for "water quality" and reflects the
@@ -19,10 +21,11 @@ Description: Functions to assist in the processing and
     similar-frequency time series regardless of the subject
     matter.
 Depends: R (>= 3.0.0)
-Imports: graphics, grDevices, methods, stats, ggplot2 (>= 1.0), knitr
-        (>= 1.1), reshape2, zoo
+Imports: graphics, grDevices, methods, stats, ggplot2 (>= 1.0), reshape2, zoo
 LazyData: yes
 License: GPL-2
 VignetteBuilder: knitr
 NeedsCompilation: no
 RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown
