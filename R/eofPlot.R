@@ -19,6 +19,7 @@
 #' multiplied by \code{-1}
 #' @param ord logical indicating whether coefficients should be ordered by size
 #' @importFrom ggplot2 geom_hline geom_vline
+#' @export
 #' @return A plot of the EOF coefficients or amplitudes.
 #' @seealso \code{\link{eof}}
 #' @keywords Graphics

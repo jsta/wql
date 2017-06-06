@@ -15,7 +15,6 @@
 #' @param ec conductivity, mS/cm
 #' @param t temperature, Celsius
 #' @param p gauge pressure, decibar
-#' @param R conductivity ratio, dimensionless
 #' @return \code{ec2pss} and \code{R2pss} both return salinity values on the
 #' Practical Salinity Scale.
 #' @note Input pressures are not absolute pressures but rather gauge pressures.

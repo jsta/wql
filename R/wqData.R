@@ -36,6 +36,7 @@
 #' Data elements and interchange formats - Information interchange -
 #' Representation of dates and times.
 #' @keywords classes data
+#' @importFrom methods new
 #' @export
 #' @examples
 #' 

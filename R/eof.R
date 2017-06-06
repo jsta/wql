@@ -31,6 +31,7 @@
 #' @param n number of EOFs to retain for rotation
 #' @param scale.  logical indicating whether the (centered) variables should be
 #' scaled to have unit variance
+#' @importFrom stats is.mts time prcomp
 #' @export
 #' @return A list with the following members: \item{REOF}{a matrix with rotated
 #' EOFs} \item{amplitude}{a matrix with amplitude time series of

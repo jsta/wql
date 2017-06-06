@@ -13,8 +13,6 @@ ec2pss(ec, t, p = 0)
 \item{t}{temperature, Celsius}
 
 \item{p}{gauge pressure, decibar}
-
-\item{R}{conductivity ratio, dimensionless}
 }
 \value{
 \code{ec2pss} and \code{R2pss} both return salinity values on the

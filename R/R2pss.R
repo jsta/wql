@@ -1,3 +1,10 @@
+#' R2pss
+#'
+#' @param t temperature, Celsius
+#' @param p gauge pressure, decibar
+#' @param R conductivity ratio, dimensionless
+#'
+#' @export
 R2pss <-
 function (R, t, p = 0) 
 {

@@ -19,6 +19,7 @@ setClass(
   }
 )
 
+#' @importFrom methods getSlots slot
 setMethod(
   f = `[`,
   signature = "WqData",
