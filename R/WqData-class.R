@@ -1,4 +1,7 @@
-
+#' Class WqData
+#' @name WqData-class
+#' @rdname WqData-class
+#' @exportClass WqData
 setClass(
   Class = 'WqData',
   contains = 'data.frame',

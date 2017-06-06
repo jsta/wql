@@ -1,3 +1,25 @@
+#' Trend homogeneity test
+#' 
+#' Tests for homogeneity of seasonal trends using method proposed by van Belle
+#' and Hughes (1984). Seasons with insufficient data as defined in
+#' \code{\link{mannKen}} are ignored.
+#' 
+#' 
+#' @param x A vector time series with frequency > 1
+#' @return \item{chisq.trend}{"Trend" chi-square.}
+#' \item{chisq.homog}{"Homogeneous" chi-square.} \item{p.value}{For null
+#' hypothesis that trends are homogeneous.} \item{n}{Number of seasons used.}
+#' @seealso \code{\link{seaKen}}
+#' @references van Belle, G. and Hughes, J.P. (1984) Nonparametric tests for
+#' trend in water quality. \emph{Water Resources Research} \bold{20,} 127-136.
+#' @keywords ts
+#' @examples
+#' 
+#' ## Apply to a monthly vector time series to test homogeneity
+#' ## of seasonal trends.
+#' x <- sfbayChla[, 's27']
+#' trendHomog(x)
+#' 
 trendHomog <-
 function(x) {
 

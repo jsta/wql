@@ -1,3 +1,47 @@
+#' Convert conductivity to salinity
+#' 
+#' Electrical conductivity data are converted to salinity using the Practical
+#' Salinity Scale and an extension for salinities below 2.
+#' 
+#' \code{ec2pss} converts electrical conductivity data to salinity using the
+#' Practical Salinity Scale 1978 in the range of 2-42 (Fofonoff and Millard
+#' 1983). Salinities below 2 are calculated using the extension of the
+#' Practical Salinity Scale (Hill et al. 1986).
+#' 
+#' \code{R2pss} is the same function, except that conductivity ratios rather
+#' than conductivities are used as input.
+#' 
+#' @aliases ec2pss R2pss
+#' @param ec conductivity, mS/cm
+#' @param t temperature, Celsius
+#' @param p gauge pressure, decibar
+#' @param R conductivity ratio, dimensionless
+#' @return \code{ec2pss} and \code{R2pss} both return salinity values on the
+#' Practical Salinity Scale.
+#' @note Input pressures are not absolute pressures but rather gauge pressures.
+#' Gauge pressures are measured relative to 1 standard atmosphere, so the gauge
+#' pressure at the surface is 0.
+#' @references Fofonoff N.P. and Millard Jr R.C. (1983) \emph{Algorithms for
+#' Computation of Fundamental Properties of Seawater.} UNESCO Technical Papers
+#' in Marine Science 44. UNESCO, Paris, 53 p.
+#' 
+#' Hill K.D., Dauphinee T.M. and Woods D.J. (1986) The extension of the
+#' Practical Salinity Scale 1978 to low salinities. \emph{IEEE Journal of
+#' Oceanic Engineering} \bold{11,} 109-112.
+#' @keywords manip utilities
+#' @examples
+#' 
+#' # Check values from Fofonoff and Millard (1983):
+#' R = c(1, 1.2, 0.65) 
+#' t = c(15, 20, 5)
+#' p = c(0, 2000, 1500)
+#' R2pss(R, t, p)  # 35.000 37.246 27.995
+#' # Repeat calculation with equivalent conductivity values by setting 
+#' # ec <- R * C(35, 15, 0):
+#' ec = c(1, 1.2, 0.65) * 42.9140
+#' ec2pss(ec, t, p)  # same results
+#' 
+#' @export ec2pss
 ec2pss <-
 function (ec, t, p = 0) {
 	# Define conductivity ratio

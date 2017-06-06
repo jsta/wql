@@ -1,3 +1,29 @@
+#' Anomaly plot of time series
+#' 
+#' Series are illustrated by vertical lines extending from individual data
+#' values to the long-term mean. The axes are not scaled in any way. Anomaly
+#' plots are useful for visualizing shifts in time series levels.
+#' 
+#' Options are passed to the underlying \code{facet_wrap} function in
+#' \pkg{ggplot2}. The main ones of interest are \code{ncol} for setting the
+#' number of plotting columns and \code{scales = "free_y"} for allowing the y
+#' scales of the different plots to be independent.
+#' 
+#' @param x matrix or vector time series
+#' @param xlab optional x-axis label
+#' @param ylab optional y-axis label
+#' @param strip.labels labels for individual time series plots
+#' @param ...  additional options
+#' @return A plot and corresponding object of class \dQuote{ggplot}.
+#' @seealso \code{\link{plotTs}}
+#' @keywords Graphics ts
+#' @examples
+#' 
+#' # Spring bloom size for 6 stations in SF Bay
+#' bloom <- aggregate(sfbayChla[, 1:6], 1, meanSub, sub=3:5)
+#' plotTsAnom(bloom, ylab = 'Chl-a', strip.labels = paste('Station',
+#'   substring(colnames(bloom), 2, 3)), ncol = 2, scales = "free_y")
+#' 
 plotTsAnom <-
 function(x, xlab = NULL, ylab = NULL,
          strip.labels = colnames(x), ...) {
