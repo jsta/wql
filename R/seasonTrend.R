@@ -53,8 +53,8 @@ function(x, plot = FALSE, type = c("slope", "relative"), pval = .05, ...) {
   type <- match.arg(type)
 
   # extend to full years
-  first = start(x)[1]
-  last = end(x)[1]
+  first <- start(x)[1]
+  last <- end(x)[1]
   fr <- frequency(x)
   x <- window(x, start = first, end = c(last, fr), extend = TRUE)
 

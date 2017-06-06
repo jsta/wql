@@ -58,7 +58,7 @@ function(x, mon1 = 1, addYr = FALSE, omit = FALSE) {
 		addYr)
 	
 	# trim leading and trailing NA rows, and optionally, rows with any NAs
-	d1 = d1[apply(d1, 1, function(x) !all(is.na(x))),]
-	if (omit) d1 = na.omit(d1)
+	d1 <- d1[apply(d1, 1, function(x) !all(is.na(x))),]
+	if (omit) d1 <- na.omit(d1)
 	d1
 }

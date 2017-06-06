@@ -24,7 +24,8 @@ setMethod(
     median1 <- aggregate(x1, 1, median)
 
     # result
-    cbind(range = range1, var = var1, mad = mad1, mean = mean1, median = median1)
+    cbind(range = range1, var = var1, mad = mad1, 
+          mean = mean1, median = median1)
   }
 )
 

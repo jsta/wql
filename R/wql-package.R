@@ -84,13 +84,10 @@ NULL
 #' 
 #' y <- sfbayChla[, 's27']
 #' phenoAmp(y) # entire year
-#' phenoAmp(y, c(1, 6)) # i.e., Jan-Jun only, which yields results for more years
+#' # i.e., Jan-Jun only, which yields results for more years
+#' phenoAmp(y, c(1, 6)) 
 #' 
 NULL
-
-
-
-
 
 #' Methods for Function phenoPhase
 #' 

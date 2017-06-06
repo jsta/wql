@@ -52,7 +52,8 @@
 #' into four bins as described above (and corresponding object of class
 #' \dQuote{ggplot}).
 #' @importFrom zoo as.zoo na.trim
-#' @importFrom ggplot2 geom_tile scale_x_continuous scale_y_discrete theme_bw coord_equal
+#' @importFrom ggplot2 geom_tile scale_x_continuous scale_y_discrete 
+#'     theme_bw coord_equal
 #' @importFrom grDevices colorRampPalette
 #' @importFrom stats quantile
 #' @export

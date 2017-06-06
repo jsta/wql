@@ -68,8 +68,9 @@
 #' # Regional Kendall test:
 #' # Use mts2ts to change 16 series into a single series with 16 "seasons"
 #' seaKen(mts2ts(chl))  # too many missing data
-#' seaKen(mts2ts(chl, seas = 2:4)) # better when just Feb-Apr, spring bloom period,
-#'                                 # but last 4 stations still missing too much.
+#' # better when just Feb-Apr, spring bloom period,
+#' # but last 4 stations still missing too much.
+#' seaKen(mts2ts(chl, seas = 2:4)) 
 #' seaKen(mts2ts(chl[, 1:12], 2:4)) # more reliable result
 #' 
 seaKen <-

@@ -31,8 +31,8 @@ function(x, xlab = NULL, ylab = NULL,
 
   # Validate arguments
   if (!is.ts(x)) stop("x must be of class 'ts'")
-  if (missing(xlab)) xlab = ""
-  if (missing(ylab)) ylab = ""
+  if (missing(xlab)) xlab <- ""
+  if (missing(ylab)) ylab <- ""
 
   if (is.matrix(x)) {  # a matrix time series
 
@@ -41,7 +41,7 @@ function(x, xlab = NULL, ylab = NULL,
     colnames(x) <- gsub(' ', '.', colnames(x))
 
     # Create data frame
-    x.mean = apply(x, 2, mean, na.rm=TRUE)
+    x.mean <- apply(x, 2, mean, na.rm = TRUE)
     x.mean.df <- data.frame(variable = factor(names(x.mean)), x.mean)
     d <- data.frame(time=as.Date(time(x)), x)
     d1 <- melt(d, id = 'time')

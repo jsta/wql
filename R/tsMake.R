@@ -35,7 +35,8 @@ setMethod(
     if (missing(layer))
       layer <- list(c(-Inf, Inf))
     if (identical(layer, 'max.depths')) {
-      ans <- aggregate(depth ~ time + site + variable, data = d, max, na.rm = TRUE)
+      ans <- aggregate(depth ~ time + site + variable, 
+                       data = d, max, na.rm = TRUE)
       d <- merge(d, ans)
       d$depth <- depths <- max(d$depth, na.rm=TRUE) + 1
     } else {
@@ -58,9 +59,9 @@ setMethod(
 
     # Define aggregation function
     if (is.null(qprob)) {
-      f = mean
+      f <- mean
     } else {
-      f = function(x, ...) quantile(x, probs = qprob, ...)
+      f <- function(x, ...) quantile(x, probs = qprob, ...)
     }
 
     # Reshape data

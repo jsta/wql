@@ -56,7 +56,7 @@ function(x, type = c("linear", "series.median", "series.mean", "cycle.median",
     gap <- gap.max
 	if (is.na(as.numeric(gap)) || gap < 1 || gap > gap.max)
 		stop("gap must be a number between 1 and the length - 2")
-  type = match.arg(type)
+  type <- match.arg(type)
   if (!is.ts(x) && type %in% c("cycle.median", "cycle.mean"))
     stop("x must be a time series for these types")
  	

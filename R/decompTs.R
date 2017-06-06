@@ -56,8 +56,8 @@ function(x, event = TRUE, type = c("mult", "add"),
   if (!is.ts(x) || !identical(frequency(x), 12)) {
     stop("x must be a monthly 'ts' vector")
   }
-  type = match.arg(type)
-  center = match.arg(center)
+  type   <- match.arg(type)
+  center <- match.arg(center)
 
   # Set the time window
   startyr <- start(x)[1]

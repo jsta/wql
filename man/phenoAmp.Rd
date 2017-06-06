@@ -49,7 +49,8 @@ suitable as arguments to this function.
 
 y <- sfbayChla[, 's27']
 phenoAmp(y) # entire year
-phenoAmp(y, c(1, 6)) # i.e., Jan-Jun only, which yields results for more years
+# i.e., Jan-Jun only, which yields results for more years
+phenoAmp(y, c(1, 6)) 
 
 }
 \references{

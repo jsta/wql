@@ -40,8 +40,8 @@ function(x, dot.size = 1, xlab = NULL, ylab = NULL,
 
   # Validate arguments
   if (!is.ts(x)) stop("x must be of class 'ts'")
-  if (missing(xlab)) xlab = ""
-  if (missing(ylab)) ylab = ""
+  if (missing(xlab)) xlab <- ""
+  if (missing(ylab)) ylab <- ""
 
   if (is.matrix(x)) {  # a matrix time series
 
@@ -49,7 +49,8 @@ function(x, dot.size = 1, xlab = NULL, ylab = NULL,
     x.forward <- rbind(rep(NA, ncol(x)), x[1:(nrow(x)-1), ])
     x.back <- rbind(x[2:nrow(x), ], rep(NA, ncol(x)))
     iso.pts <- is.na(x.forward) & is.na(x.back) & !is.na(x)
-    iso <- data.frame(time = zoo::as.Date(x), ifelse(iso.pts & !is.na(x), x, NA))
+    iso <- data.frame(time = zoo::as.Date(x), 
+                      ifelse(iso.pts & !is.na(x), x, NA))
     iso1 <- melt(iso, id = 'time')
 
     # Create data frame
