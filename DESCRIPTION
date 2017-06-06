@@ -3,9 +3,9 @@ Type: Package
 Title: Exploring Water Quality Monitoring Data
 Version: 0.4.9
 Authors@R: c(
-  person("Alan", "Jassby", role = c("aut"),
-  person("James", "Cloern", role = c("ctb"),
-  person("Joseph", "Stachelek", role = c("ctb", "cre"))
+  person("Alan", "Jassby", role = c("aut")),
+  person("James", "Cloern", role = c("ctb")),
+  person("Joseph", "Stachelek", role = c("ctb", "cre"), email = "stachel2@msu.edu")
   )
 Maintainer: Joseph Stachelek <stachel2@msu.edu>
 Description: Functions to assist in the processing and

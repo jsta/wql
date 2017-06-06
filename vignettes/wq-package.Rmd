@@ -14,7 +14,7 @@ bibliography: wq.bib
 vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{wq: Exploring water quality monitoring data}
+  %\VignetteIndexEntry{wql: Exploring water quality monitoring data}
 ---
 
 ```{r setup, echo=FALSE}
@@ -34,7 +34,7 @@ The functions are summarized in the diagram above, which illustrates a typical s
 We illustrate some of the steps in the diagram using the accompanying data set `sfbay`.
 
 ```{r}
-library(wq)
+library(wql)
 ```
 
 # Preparing data from an external file
