@@ -61,8 +61,7 @@ A few functions are specialized for the aquatic sciences:
 
 ## Usage
 
-The capabilities of wql are more fully explained in the accompanying vignette:
-wql: Exploring environmental monitoring data.
+The capabilities of wql are more fully explained in the accompanying vignette: [wql: Exploring environmental monitoring data](https://jsta.github.io/wql/articles/wql-package.html)
 
 ## References
 
