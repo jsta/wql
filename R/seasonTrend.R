@@ -73,7 +73,7 @@ function(x, plot = FALSE, type = c("slope", "relative"), pval = .05, ...) {
     series <- factor(rep(colx, each = fr), levels = colx, ordered = TRUE)
     season <- as.factor(rep(1:fr, times = nc))
     ans0 <- do.call(rbind, lapply(1:nc, function(i) st(x[, i])))
-    ans <- data.frame(series, season, ans0, row.names = 1:nrow(ans0))
+    ans <- data.frame(series, season, ans0, row.names = seq_len(nrow(ans0)))
   }
 
   if (!plot) return(ans)

@@ -55,7 +55,7 @@ setMethod(
     mean.wt <- round(ifelse(yrs.ok, as.numeric(b2), NA), 2)
 
     as.data.frame(cbind(year = yrs, max.time, fulcrum, mean.wt),
-    	row.names = 1:length(yrs))
+    	row.names = seq_len(length(yrs)))
   }
 )
 
@@ -132,7 +132,7 @@ setMethod(
       	as.POSIXlt(as.Date(fulcrum))$yday + 1, mean.wt =
       	as.POSIXlt(as.Date(mean.wt))$yday + 1, n, row.names = NULL),
       as.data.frame(cbind(year = yrs, max.time, fulcrum, mean.wt, n),
-      	row.names = 1:length(yrs))
+      	row.names = seq_len(length(yrs)))
     )
   }
 )

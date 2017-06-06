@@ -81,7 +81,7 @@ function(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
   if (!is.numeric(x) && !is.matrix(x) && !is.data.frame(x))
     stop("'x' must be a vector, matrix, or data.frame")
   if (!is.null(ncol(x)) && is.null(colnames(x)))
-    colnames(x) <- paste("series_", 1:ncol(x), sep="")
+    colnames(x) <- paste("series_", seq_len(ncol(x)), sep="")
   type <- match.arg(type)
 
   # test for single series
@@ -139,7 +139,7 @@ function(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
   # apply sk for each series
   if (is.null(dim(x))) return(as.list(sk(x)))
   if (ncol(x) == 1) return(as.list(sk(x[, 1])))
-  ans <- t(sapply(1:ncol(x), function(i) sk(x[, i])))
+  ans <- t(sapply(seq_len(ncol(x)), function(i) sk(x[, i])))
   rownames(ans) <- colnames(x)
 
 	# plot if TRUE

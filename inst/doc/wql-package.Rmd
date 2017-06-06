@@ -59,7 +59,7 @@ head(sfbay)
 The next step is to add any necessary derived variables to the data frame. An initial data set will sometimes contain conductivity rather than salinity data, and we might want to use `ec2pss` to derive the latter. That's not the case here, but let's assume that we want dissolved oxygen as percent saturation rather than in concentration units. Using `oxySol` and the convention of expressing percent saturation with respect to surface pressure:
 
 ```{r}
-x <- sample(1:nrow(sfbay), 10)
+x <- sample(seq_len(nrow(sfbay)), 10)
 sfbay[x, "dox"]
 sfbay1 <- transform(sfbay,
                     dox = round(100 * dox/oxySol(sal, temp), 1))

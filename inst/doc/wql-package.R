@@ -19,7 +19,7 @@ library(wql)
 head(sfbay)
 
 ## ------------------------------------------------------------------------
-x <- sample(1:nrow(sfbay), 10)
+x <- sample(seq_len(nrow(sfbay)), 10)
 sfbay[x, "dox"]
 sfbay1 <- transform(sfbay,
                     dox = round(100 * dox/oxySol(sal, temp), 1))

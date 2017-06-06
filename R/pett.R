@@ -134,7 +134,7 @@ function(x, plot = FALSE, order = FALSE, pval = .05,
   # apply pet for each vector
   if (is.null(dim(x))) return(as.list(pet(x)))
   if (identical(ncol(x), 1)) return(as.list(pet(x[, 1])))
-  ans <- t(sapply(1:ncol(x), function(i) pet(x[, i])))
+  ans <- t(sapply(seq_len(ncol(x)), function(i) pet(x[, i])))
   rownames(ans) <- colnames(x)
 
   # plot if TRUE

@@ -101,7 +101,7 @@ function(data, locus, wqdata, site.order, time.format = "%Y-%m-%d",
           
   # Remove NAs
   data <- data[!is.na(data$value), ]
-  rownames(data) <- 1:nrow(data)
+  rownames(data) <- seq_len(nrow(data))
   
   # Remove unneeded factor levels
   data <- within(data, site <- factor(site, ordered = site.order))
