@@ -2,7 +2,6 @@
 % Please edit documentation in R/ts2df.R
 \name{ts2df}
 \alias{ts2df}
-\alias{monthCor}
 \title{Convert time series to data frame}
 \usage{
 ts2df(x, mon1 = 1, addYr = FALSE, omit = FALSE)

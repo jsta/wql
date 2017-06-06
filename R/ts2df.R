@@ -13,7 +13,6 @@
 #' period for an \code{EOF} analysis (\code{mon1} in \code{ts2df}), namely, at
 #' a time of low serial correlation in \code{x}.
 #' 
-#' @aliases ts2df monthCor
 #' @param x monthly time series vector
 #' @param mon1 starting month number, i.e., first column of the data frame
 #' @param addYr rows are normally labelled with the year of the starting month,

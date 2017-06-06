@@ -1,3 +1,9 @@
+#' monthCor
+#'
+#' @param x ts 
+#'
+#' @export
+#' @importFrom stats cor
 monthCor <- 
 function(x) {
 

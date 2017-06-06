@@ -39,6 +39,7 @@
 #' phytoplankton variability in estuarine-coastal ecosystems. \emph{Estuaries
 #' and Coasts} \bold{33,} 230--241.
 #' @keywords manip ts
+#' @export
 #' @examples
 #' 
 #' # Apply the function to a single series (Station 27) and plot it:

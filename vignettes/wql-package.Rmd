@@ -1,5 +1,5 @@
 ---
-title: "wq: Exploring water quality monitoring data"
+title: "wql: Exploring water quality monitoring data"
 author: Alan D. Jassby and James E. Cloern
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 

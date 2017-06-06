@@ -27,6 +27,7 @@
 #' @param pval p-value for significance
 #' @param ...  Further options to pass to plotting function
 #' @importFrom ggplot2 geom_bar scale_fill_manual element_blank
+#' @importFrom stats window
 #' @return A data frame with the following fields: \item{series}{series names}
 #' \item{season}{season number} \item{sen.slope}{Sen slope in original units
 #' per year} \item{sen.slope.rel}{Sen slope divided by median for that specific
