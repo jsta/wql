@@ -34,4 +34,7 @@ trend in water quality. \emph{Water Resources Research} \bold{20,} 127-136.
 \seealso{
 \code{\link{seaKen}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{ts}

@@ -9,7 +9,8 @@
 #' missing data. The function can be used in conjunction with \code{seaKen} to
 #' conduct a Regional Kendall trend analysis. Sometimes just plotting the
 #' resulting function can be useful for exploring a spatial transect over time.
-#' 
+#' @author 
+#' Alan Jassby, James Cloern
 #' @param x An object of class "mts"
 #' @param seas Numeric vector of seasons to aggregate in original time series.
 #' @param na.rm Should missing data be ignored when aggregating?

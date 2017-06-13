@@ -16,3 +16,6 @@ R2pss(R, t, p = 0)
 \description{
 R2pss
 }
+\author{
+Alan Jassby, James Cloern
+}

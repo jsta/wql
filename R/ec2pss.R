@@ -19,6 +19,8 @@
 #' @note Input pressures are not absolute pressures but rather gauge pressures.
 #' Gauge pressures are measured relative to 1 standard atmosphere, so the gauge
 #' pressure at the surface is 0.
+#' @author 
+#' Alan Jassby, James Cloern
 #' @references Fofonoff N.P. and Millard Jr R.C. (1983) \emph{Algorithms for
 #' Computation of Fundamental Properties of Seawater.} UNESCO Technical Papers
 #' in Marine Science 44. UNESCO, Paris, 53 p.

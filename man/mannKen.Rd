@@ -100,4 +100,7 @@ Geological Survey.
 \code{\link{seaKen}}, \code{\link{seasonTrend}},
 \code{\link{tsSub}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{ts}

@@ -60,5 +60,8 @@ seasonTrend(x, plot = TRUE, ncol = 4)
 \code{\link{mannKen}}, \code{\link{plotSeason}},
 \code{\link[ggplot2]{facet_wrap}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{Graphics}
 \keyword{ts}

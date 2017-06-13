@@ -42,5 +42,8 @@ plotTsAnom(bloom, ylab = 'Chl-a', strip.labels = paste('Station',
 \seealso{
 \code{\link{plotTs}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{Graphics}
 \keyword{ts}

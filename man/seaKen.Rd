@@ -96,4 +96,7 @@ analysis for monthly water quality data. \emph{Water Resources Research}
 \code{\link{mannKen}}, \code{\link{mts2ts}},
 \code{\link{trendHomog}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{ts}

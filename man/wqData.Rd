@@ -75,5 +75,8 @@ Representation of dates and times.
 \code{\link{as.Date}}, \code{\link{strptime}},
 \code{\link{WqData-class}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{classes}
 \keyword{data}

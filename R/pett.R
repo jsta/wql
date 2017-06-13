@@ -55,6 +55,8 @@
 #' @importFrom graphics dotchart
 #' @importFrom stats is.ts setNames frequency
 #' @export
+#' @author 
+#' Alan Jassby, James Cloern
 #' @examples
 #' 
 #' # data from Pettitt (1979, Table 1):

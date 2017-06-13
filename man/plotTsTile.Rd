@@ -91,5 +91,8 @@ O'Brien T., Lopez-Urrutia A., Wiebe P.H., Hay S. (editors)
 Research Report 292, International Council for the Exploration of the Sea,
 Copenhagen, 168 p.
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{hplot}
 \keyword{ts}

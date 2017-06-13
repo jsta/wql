@@ -26,7 +26,8 @@
 #' significant. The plot can be customized by passing any arguments used by
 #' \code{\link{dotchart}} such as \code{xlab} or \code{xlim}, as well as
 #' graphical parameters described in \code{\link{par}}.
-#' 
+#' @author 
+#' Alan Jassby, James Cloern
 #' @param x A numeric vector, matrix or data frame
 #' @param plot Should the trends be plotted when x is a matrix or data frame?
 #' @param type Type of trend to be plotted, actual or relative

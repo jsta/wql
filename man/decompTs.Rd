@@ -66,5 +66,8 @@ and Coasts} \bold{33,} 230--241.
 \seealso{
 \code{\link{plotSeason}}, \code{\link{seasonTrend}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{manip}
 \keyword{ts}

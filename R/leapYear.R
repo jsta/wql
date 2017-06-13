@@ -2,6 +2,8 @@
 #' @description \code{TRUE} if \code{x} is a leap year, \code{FALSE}
 #' otherwise.
 #' @param x integer year
+#' @author 
+#' Alan Jassby, James Cloern
 #' @export
 leapYear <- 
 function(x) {

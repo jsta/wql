@@ -14,3 +14,6 @@ tsSub(x1, seas = 1:frequency(x1))
 \description{
 tsSub
 }
+\author{
+Alan Jassby, James Cloern
+}

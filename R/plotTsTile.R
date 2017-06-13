@@ -32,7 +32,8 @@
 #' You may want to set \code{square = FALSE} and then adjust the plot window
 #' manually if you plan to use the plot in a subsequent layout or if there is
 #' too much white space.
-#' 
+#' @author 
+#' Alan Jassby, James Cloern
 #' @param x monthly time series.
 #' @param plot.title plot title.
 #' @param legend.title legend title.

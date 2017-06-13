@@ -12,3 +12,6 @@ decyear2date(x)
 \description{
 decyear2date
 }
+\author{
+Alan Jassby, James Cloern
+}

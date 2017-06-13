@@ -93,5 +93,8 @@ Pettitt, A. N. (1979) A non-parametric approach to the
 change-point problem. \emph{Journal of the Royal Statistical Society. Series
 C (Applied Statistics)} \bold{28(2),} 126--135.
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{nonparametric}
 \keyword{ts}

@@ -1,6 +1,8 @@
 #' decyear2date
 #'
 #' @param x date
+#' @author 
+#' Alan Jassby, James Cloern
 #' @export
 decyear2date <- 
 function(x) {

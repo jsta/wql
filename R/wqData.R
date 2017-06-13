@@ -36,6 +36,8 @@
 #' Data elements and interchange formats - Information interchange -
 #' Representation of dates and times.
 #' @keywords classes data
+#' @author 
+#' Alan Jassby, James Cloern
 #' @importFrom methods new
 #' @export
 #' @examples

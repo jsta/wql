@@ -56,5 +56,8 @@ component analysis. \emph{Statistician} \bold{15,} 143--156.
 \seealso{
 \code{\link{eof}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{manip}
 \keyword{ts}

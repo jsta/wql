@@ -51,5 +51,8 @@ plotTs(chl, dot.size = 1.5, ylab = 'Chl-a', strip.labels = paste('Station',
 \seealso{
 \code{\link{plotTsAnom}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{Graphics}
 \keyword{ts}

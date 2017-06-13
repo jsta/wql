@@ -16,7 +16,8 @@
 #' anomalies, i.e., by subtraction of long-term mean and division by standard
 #' deviation. As always, and especially with these plots, experiment with the
 #' device aspect ratio and size to get the clearest information.
-#' 
+#' @author 
+#' Alan Jassby, James Cloern
 #' @param x Monthly time series
 #' @param type Plot seasonal pattern by era, or each month for the entire
 #' record

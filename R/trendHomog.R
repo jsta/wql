@@ -14,6 +14,8 @@
 #' trend in water quality. \emph{Water Resources Research} \bold{20,} 127-136.
 #' @keywords ts
 #' @importFrom stats pchisq
+#' @author 
+#' Alan Jassby, James Cloern
 #' @export
 #' @examples
 #' 

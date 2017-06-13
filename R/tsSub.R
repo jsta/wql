@@ -2,6 +2,8 @@
 #'
 #' @param x1 ts
 #' @param seas numeric
+#' @author 
+#' Alan Jassby, James Cloern
 #'
 #' @export
 tsSub <- 

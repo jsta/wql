@@ -49,4 +49,7 @@ eofPlot(e1, type = 'amp')
 \seealso{
 \code{\link{eof}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{Graphics}

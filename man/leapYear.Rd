@@ -13,3 +13,6 @@ leapYear(x)
 \code{TRUE} if \code{x} is a leap year, \code{FALSE}
 otherwise.
 }
+\author{
+Alan Jassby, James Cloern
+}

@@ -27,6 +27,8 @@
 #' @param xlab Optional label for x-axis
 #' @param ylab Optional label for y-axis
 #' @param ...  Other arguments to pass to plotting function
+#' @author 
+#' Alan Jassby, James Cloern
 #' @return \code{seaRoll} returns a matrix with one row per time window
 #' containing the Sen slope, the relative Sen slope, and the \emph{p-}value.
 #' Rows are labelled with the leading year of the window.

@@ -54,5 +54,8 @@ plotSeason(chl27, "by.month", ylab = 'Stn 27 Chl-a')
 \seealso{
 \code{\link{decompTs}}, \code{\link{seasonTrend}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{Graphics}
 \keyword{ts}

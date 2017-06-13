@@ -33,6 +33,8 @@
 #' scaled to have unit variance
 #' @importFrom stats is.mts time prcomp varimax
 #' @export
+#' @author 
+#' Alan Jassby, James Cloern
 #' @return A list with the following members: \item{REOF}{a matrix with rotated
 #' EOFs} \item{amplitude}{a matrix with amplitude time series of
 #' \acronym{REOF}s} \item{eigen.pct}{all eigenvalues of correlation matrix as

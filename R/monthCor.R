@@ -4,6 +4,9 @@
 #'
 #' @export
 #' @importFrom stats cor
+#' @author 
+#' Alan Jassby, James Cloern
+
 monthCor <- 
 function(x) {
 

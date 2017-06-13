@@ -82,4 +82,7 @@ Climatology} \bold{6,} 293--335.
 \code{\link{eofNum}}, \code{\link{eofPlot}},
 \code{\link{monthCor}}, \code{\link{ts2df}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{ts}

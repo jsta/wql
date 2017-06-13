@@ -60,5 +60,8 @@ plot(x3[, 1:10], main = "SF Bay Chl-a\\n(gaps of 1 month replaced)")
 \seealso{
 \code{\link{decompTs}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{manip}
 \keyword{utilities}

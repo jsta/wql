@@ -1,6 +1,7 @@
 
 #' meanSub
-#'
+#' @author 
+#' Alan Jassby, James Cloern
 #' @param x numeric vector
 #' @param sub integer index
 #' @param na.rm logical

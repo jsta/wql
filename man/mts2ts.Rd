@@ -41,5 +41,8 @@ lines(y, type = 'h')
 \seealso{
 \code{\link{seaKen}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{manip}
 \keyword{ts}

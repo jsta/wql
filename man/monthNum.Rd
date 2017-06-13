@@ -12,3 +12,6 @@ monthNum(y)
 \description{
 Converts dates to the corresponding numeric month.
 }
+\author{
+Alan Jassby, James Cloern
+}

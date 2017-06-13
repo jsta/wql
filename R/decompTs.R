@@ -39,6 +39,8 @@
 #' phytoplankton variability in estuarine-coastal ecosystems. \emph{Estuaries
 #' and Coasts} \bold{33,} 230--241.
 #' @keywords manip ts
+#' @author 
+#' Alan Jassby, James Cloern
 #' @importFrom stats ts ts.union aggregate median start end
 #' @export
 #' @examples

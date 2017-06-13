@@ -57,5 +57,8 @@ Hill K.D., Dauphinee T.M. and Woods D.J. (1986) The extension of the
 Practical Salinity Scale 1978 to low salinities. \emph{IEEE Journal of
 Oceanic Engineering} \bold{11,} 109-112.
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{manip}
 \keyword{utilities}

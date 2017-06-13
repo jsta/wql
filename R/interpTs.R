@@ -21,7 +21,8 @@
 #' 
 #' Intended for time series but first three types will work with any vector or
 #' matrix. Matrices will be interpolated by column.
-#' 
+#' @author 
+#' Alan Jassby, James Cloern
 #' @param x object of class \code{"ts"} or \code{"mts"}
 #' @param type method of interpolation or substitution
 #' @param gap maximum gap to be replaced

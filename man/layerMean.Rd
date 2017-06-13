@@ -20,3 +20,6 @@ bottom of the layer. The result can differ markedly from the simple mean
 even for equal spacing of depths, because the top and bottom values are
 weighted by 0.5 in a trapezoidal mean.
 }
+\author{
+Alan Jassby, James Cloern
+}

@@ -8,7 +8,8 @@
 #' \pkg{ggplot2}. The main ones of interest are \code{ncol} for setting the
 #' number of plotting columns and \code{scales = "free_y"} for allowing the y
 #' scales of the different plots to be independent.
-#' 
+#' @author 
+#' Alan Jassby, James Cloern
 #' @param x matrix or vector time series
 #' @param xlab optional x-axis label
 #' @param ylab optional y-axis label

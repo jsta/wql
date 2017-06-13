@@ -68,5 +68,8 @@ effective sample sizes. \emph{Journal of Climate and Applied Meteorology}
 \code{\link{eof}}, \code{\link{interpTs}}, \code{\link{monthCor}},
 \code{\link{eofPlot}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{Graphics}
 \keyword{ts}

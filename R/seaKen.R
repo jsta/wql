@@ -41,6 +41,8 @@
 #' @param pchs Plot symbols for significant and not significant trend
 #' estimates, respectively
 #' @param ...  Other arguments to pass to plotting function
+#' @author 
+#' Alan Jassby, James Cloern
 #' @return A list of the following if \code{x} is a vector: \code{seaKen}
 #' returns a list with the following members: \item{sen.slope }{Sen slope}
 #' \item{sen.slope.pct}{Sen slope as percent of mean}

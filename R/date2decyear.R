@@ -1,5 +1,7 @@
 #' date2decyear
 #' @param w date
+#' @author 
+#' Alan Jassby, James Cloern
 #' @export
 date2decyear <- 
 function(w) {

@@ -10,6 +10,8 @@
 #' even for equal spacing of depths, because the top and bottom values are
 #' weighted by 0.5 in a trapezoidal mean.
 #' @param d data.frame
+#' @author 
+#' Alan Jassby, James Cloern
 #' @export
 layerMean <-
 function(d) {

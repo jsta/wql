@@ -61,4 +61,7 @@ seaRoll(chl27, plot = TRUE)
 \seealso{
 \code{\link{seaKen}}
 }
+\author{
+Alan Jassby, James Cloern
+}
 \keyword{ts}

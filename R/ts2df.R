@@ -18,6 +18,8 @@
 #' @param addYr rows are normally labelled with the year of the starting month,
 #' but \code{addYr = TRUE} will add 1 to this year number
 #' @param omit if \code{TRUE}, then rows with any \code{NA} will be removed.
+#' @author 
+#' Alan Jassby, James Cloern
 #' @return An \code{n x 12} data frame, where \code{n} is the number of years.
 #' @seealso \code{\link{eof}}
 #' @references Craddock, J. (1965) A meteorological application of principal

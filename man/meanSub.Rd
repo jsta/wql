@@ -16,3 +16,6 @@ meanSub(x, sub, na.rm = FALSE)
 \description{
 meanSub
 }
+\author{
+Alan Jassby, James Cloern
+}

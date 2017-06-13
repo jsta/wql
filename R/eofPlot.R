@@ -12,7 +12,8 @@
 #' Coefficients and amplitudes for a given EOF may be more easily interpreted
 #' if \code{rev = TRUE}, because the sign of the first coefficient is
 #' arbitrarily determined and all the other signs follow from that choice.
-#' 
+#' @author 
+#' Alan Jassby, James Cloern
 #' @param x result of the function \code{\link{eof}}
 #' @param type whether the EOF coefficients or amplitudes should be plotted
 #' @param rev logical indicating whether coefficients and amplitudes should be

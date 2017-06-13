@@ -12,3 +12,6 @@ monthCor(x)
 \description{
 monthCor
 }
+\author{
+Alan Jassby, James Cloern
+}
