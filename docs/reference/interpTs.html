@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,25 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/wql-package.html">wql: Exploring water quality monitoring data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -139,11 +155,11 @@ matrix. Matrices will be interpolated by column.</p>
 <span class='co'>### Interpolate a vector time series and highlight the imputed data</span>
 <span class='no'>chl27</span> <span class='kw'>&lt;-</span> <span class='no'>sfbayChla</span>[, <span class='st'>'s27'</span>]
 <span class='no'>x1</span> <span class='kw'>&lt;-</span> <span class='fu'>interpTs</span>(<span class='no'>chl27</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'>plot</span>(<span class='no'>x1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'red'</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>chl27</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'blue'</span>)</div><img src='interpTs-3.png' alt='' width='540' height='400' /><div class='input'><span class='no'>x2</span> <span class='kw'>&lt;-</span> <span class='fu'>interpTs</span>(<span class='no'>chl27</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"series.median"</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'>plot</span>(<span class='no'>x2</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'red'</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>chl27</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'blue'</span>)</div><img src='interpTs-6.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>x1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'red'</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>chl27</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'blue'</span>)</div><div class='img'><img src='interpTs-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>x2</span> <span class='kw'>&lt;-</span> <span class='fu'>interpTs</span>(<span class='no'>chl27</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"series.median"</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='fu'>plot</span>(<span class='no'>x2</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'red'</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>chl27</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'blue'</span>)</div><div class='img'><img src='interpTs-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>### Interpolate a matrix time series and plot results</span>
 <span class='no'>x3</span> <span class='kw'>&lt;-</span> <span class='fu'>interpTs</span>(<span class='no'>sfbayChla</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cycle.mean"</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'>plot</span>(<span class='no'>x3</span>[, <span class='fl'>1</span>:<span class='fl'>10</span>], <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"SF Bay Chl-a\n(gaps of 1 month replaced)"</span>)</div><img src='interpTs-8.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>x3</span>[, <span class='fl'>1</span>:<span class='fl'>10</span>], <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"SF Bay Chl-a\n(gaps of 1 month replaced)"</span>)</div><div class='img'><img src='interpTs-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

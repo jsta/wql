@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,25 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/wql-package.html">wql: Exploring water quality monitoring data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -136,7 +152,7 @@ scales of the different plots to be independent.</p>
 <span class='co'># Spring bloom size for 6 stations in SF Bay</span>
 <span class='no'>bloom</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate</span>(<span class='no'>sfbayChla</span>[, <span class='fl'>1</span>:<span class='fl'>6</span>], <span class='fl'>1</span>, <span class='no'>meanSub</span>, <span class='kw'>sub</span><span class='kw'>=</span><span class='fl'>3</span>:<span class='fl'>5</span>)
 <span class='fu'>plotTsAnom</span>(<span class='no'>bloom</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Chl-a'</span>, <span class='kw'>strip.labels</span> <span class='kw'>=</span> <span class='fu'>paste</span>(<span class='st'>'Station'</span>,
-  <span class='fu'>substring</span>(<span class='fu'>colnames</span>(<span class='no'>bloom</span>), <span class='fl'>2</span>, <span class='fl'>3</span>)), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free_y"</span>)</div><img src='plotTsAnom-2.png' alt='' width='540' height='400' /><div class='input'>
+  <span class='fu'>substring</span>(<span class='fu'>colnames</span>(<span class='no'>bloom</span>), <span class='fl'>2</span>, <span class='fl'>3</span>)), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free_y"</span>)</div><div class='img'><img src='plotTsAnom-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -152,6 +168,10 @@ scales of the different plots to be independent.</p>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    
+Alan Jassby, James Cloern
 
   </div>
 </div>

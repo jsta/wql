@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,25 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/wql-package.html">wql: Exploring water quality monitoring data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -211,7 +227,7 @@ analysis for monthly water quality data. <em>Water Resources Research</em>
 #&gt; s33 0.18761538    0.04847510 8.962505e-10 0.833
 #&gt; s34 0.18614815    0.05149382 1.285311e-12 0.833
 #&gt; s35 0.15965517    0.04040404 1.504345e-06 0.833
-#&gt; s36 0.18745098    0.05140187 1.231323e-11 0.833</div><div class='input'><span class='fu'>seaKen</span>(<span class='no'>sfbayChla</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"relative"</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><img src='seaKen-6.png' alt='' width='540' height='400' /><div class='input'>
+#&gt; s36 0.18745098    0.05140187 1.231323e-11 0.833</div><div class='input'><span class='fu'>seaKen</span>(<span class='no'>sfbayChla</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"relative"</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='seaKen-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Regional Kendall test:</span>
 <span class='co'># Use mts2ts to change 16 series into a single series with 16 "seasons"</span>
 <span class='fu'>seaKen</span>(<span class='fu'><a href='mts2ts.html'>mts2ts</a></span>(<span class='no'>chl</span>))  <span class='co'># too many missing data</span></div><div class='output co'>#&gt; $sen.slope
@@ -267,6 +283,10 @@ analysis for monthly water quality data. <em>Water Resources Research</em>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    
+Alan Jassby, James Cloern
 
   </div>
 </div>

@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,25 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/wql-package.html">wql: Exploring water quality monitoring data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -94,89 +110,88 @@ nutrient measurements.</p>
     <p><code>sfbay</code> is a data frame with 23207 observations (rows) of 12
 variables (columns):</p><table><tr><td> <code>[, 1]</code> </td>
 <td> <code>date</code> </td>
-</tr><tr><td> date</td>
-<td> <code>[, 2]</code> </td>
-</tr><tr><td>
+<td> date</td>
+</tr><tr><td> <code>[, 2]</code> </td>
+<td>
 <code>time</code> </td>
 <td> time</td>
 </tr><tr><td> <code>[, 3]</code> </td>
 <td> <code>stn</code> </td>
-</tr><tr><td> station code</td>
-<td>
+<td> station code</td>
+</tr><tr><td>
 <code>[, 4]</code> </td>
-</tr><tr><td> <code>depth</code> </td>
+<td> <code>depth</code> </td>
 <td> measurement depth</td>
 </tr><tr><td> <code>[, 5]</code> </td>
 <td>
 <code>chl</code> </td>
-</tr><tr><td> chlorophyll <em>a</em></td>
-<td> <code>[, 6]</code> </td>
-</tr><tr><td> <code>dox.pct</code>
+<td> chlorophyll <em>a</em></td>
+</tr><tr><td> <code>[, 6]</code> </td>
+<td> <code>dox.pct</code>
 </td>
 <td> dissolved oxygen</td>
 </tr><tr><td> <code>[, 7]</code> </td>
 <td> <code>spm</code> </td>
-</tr><tr><td> suspended
+<td> suspended
 particulate matter</td>
-<td> <code>[, 8]</code> </td>
-</tr><tr><td> <code>ext</code> </td>
+</tr><tr><td> <code>[, 8]</code> </td>
+<td> <code>ext</code> </td>
 <td> extinction
 coefficient</td>
 </tr><tr><td> <code>[, 9]</code> </td>
 <td> <code>sal</code> </td>
-</tr><tr><td> salinity</td>
-<td> <code>[, 10]</code>
+<td> salinity</td>
+</tr><tr><td> <code>[, 10]</code>
 </td>
-</tr><tr><td> <code>temp</code> </td>
+<td> <code>temp</code> </td>
 <td> water temperature</td>
 </tr><tr><td> <code>[, 11]</code> </td>
 <td> <code>nox</code>
 </td>
-</tr><tr><td> nitrate + nitrite</td>
-<td> <code>[, 12]</code> </td>
-</tr><tr><td> <code>nhx</code> </td>
+<td> nitrate + nitrite</td>
+</tr><tr><td> <code>[, 12]</code> </td>
+<td> <code>nhx</code> </td>
 <td> ammonium</td>
 </tr></table><p><code>sfbayStns</code> is a data frame with 16 observations of 6 variables:</p><table><tr><td> <code>[, 1]</code> </td>
 <td> <code>site</code> </td>
-</tr><tr><td> station code</td>
-<td> <code>[,
+<td> station code</td>
+</tr><tr><td> <code>[,
 2]</code> </td>
-</tr><tr><td> <code>description</code> </td>
+<td> <code>description</code> </td>
 <td> station description</td>
 </tr><tr><td> <code>[, 3]</code> </td>
 <td>
 <code>lat</code> </td>
-</tr><tr><td> latitude</td>
-<td> <code>[, 4]</code> </td>
-</tr><tr><td> <code>long</code> </td>
+<td> latitude</td>
+</tr><tr><td> <code>[, 4]</code> </td>
+<td> <code>long</code> </td>
 <td> longitude</td>
 </tr><tr><td>
 <code>[, 5]</code> </td>
 <td> <code>depthMax</code> </td>
-</tr><tr><td> maximum depth, in m</td>
-<td> <code>[, 6]</code>
+<td> maximum depth, in m</td>
+</tr><tr><td> <code>[, 6]</code>
 </td>
-</tr><tr><td> <code>distFrom36</code> </td>
+<td> <code>distFrom36</code> </td>
 <td> distance from station 36, in km</td>
 </tr></table><p><code>sfbayVars</code> is a data frame with 7 observations of 3 variables:</p><table><tr><td> <code>[, 1]</code> </td>
 <td> <code>variable</code> </td>
-</tr><tr><td> water quality variable
+<td> water quality variable
 code</td>
-<td> <code>[, 2]</code> </td>
-</tr><tr><td> <code>description</code> </td>
+</tr><tr><td> <code>[, 2]</code> </td>
+<td> <code>description</code> </td>
 <td> description</td>
 </tr><tr><td> <code>[,
 3]</code> </td>
 <td> <code>units</code> </td>
-</tr><tr><td> measurement units</td>
-<td> <code>[, 1]</code> </td>
+<td> measurement units</td>
 </tr></table><p><code>sfbayChla</code> is a time series matrix (380 months <code>x</code> 16 stations)
 of average 0-5 m chlorophyll <em>a</em> concentrations calculated from the
 data in <code>sfbay</code>.</p>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Downloaded from <a href = 'http://sfbay.wr.usgs.gov/access/wqdata'>http://sfbay.wr.usgs.gov/access/wqdata</a> on
+    <p>Downloaded from <a href='http://sfbay.wr.usgs.gov/access/wqdata'>http://sfbay.wr.usgs.gov/access/wqdata</a> on
 2009-11-17.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -218,7 +233,7 @@ downloaded sfbay dataset and encompasses the period 1969--2009.</p>
 #&gt;   ..$ distFrom36: chr "km"</div><div class='input'><span class='fu'>str</span>(<span class='no'>sfbayVars</span>)</div><div class='output co'>#&gt; 'data.frame':	8 obs. of  3 variables:
 #&gt;  $ variable   : Factor w/ 8 levels "chl","dox","ext",..: 1 2 7 3 6 8 5 4
 #&gt;  $ description: chr  "chlorophyll a" "dissolved oxygen" "suspended particulate matter" "extinction coefficient" ...
-#&gt;  $ units      : chr  "mg/m3" "mg/L" "mg/L" "1/m" ...</div><div class='input'><span class='fu'>plot</span>(<span class='no'>sfbayChla</span>[, <span class='fl'>1</span>:<span class='fl'>10</span>], <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"SF Bay Chl-a"</span>)</div><img src='sfbay-8.png' alt='' width='540' height='400' /><div class='input'>
+#&gt;  $ units      : chr  "mg/m3" "mg/L" "mg/L" "1/m" ...</div><div class='input'><span class='fu'>plot</span>(<span class='no'>sfbayChla</span>[, <span class='fl'>1</span>:<span class='fl'>10</span>], <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"SF Bay Chl-a"</span>)</div><div class='img'><img src='sfbay-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

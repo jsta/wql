@@ -29,10 +29,25 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/wql-package.html">wql: Exploring water quality monitoring data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -66,7 +81,7 @@
     
     
 <div class="contents">
-<p><em>Edited by Joseph Stachelek: 07 June, 2017</em></p>
+<p><em>Edited by Joseph Stachelek: 04 July, 2017</em></p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -84,8 +99,8 @@
                   <span class="dt">skip =</span> <span class="dv">2</span>)
 <span class="kw">names</span>(sfbay) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'date'</span>, <span class="st">'time'</span>, <span class="st">'stn'</span>, <span class="st">'depth'</span>, <span class="st">'chl'</span>, <span class="st">'dox'</span>,
                   <span class="st">'spm'</span>, <span class="st">'ext'</span>, <span class="st">'sal'</span>, <span class="st">'temp'</span>, <span class="st">'nox'</span>, <span class="st">'nhx'</span>)
-sfbay &lt;-<span class="st"> </span><span class="kw">subset</span>(sfbay, stn %in%<span class="st"> </span><span class="kw">c</span>(<span class="dv">21</span>, <span class="dv">24</span>, <span class="dv">27</span>, <span class="dv">30</span>, <span class="dv">32</span>, <span class="dv">36</span>) &amp;
-<span class="st">                </span><span class="kw">substring</span>(date, <span class="dv">7</span>, <span class="dv">10</span>) %in%<span class="st"> </span><span class="dv">1985</span>:<span class="dv">2004</span>)</code></pre></div>
+sfbay &lt;-<span class="st"> </span><span class="kw">subset</span>(sfbay, stn <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">21</span>, <span class="dv">24</span>, <span class="dv">27</span>, <span class="dv">30</span>, <span class="dv">32</span>, <span class="dv">36</span>) <span class="op">&amp;</span>
+<span class="st">                </span><span class="kw">substring</span>(date, <span class="dv">7</span>, <span class="dv">10</span>) <span class="op">%in%</span><span class="st"> </span><span class="dv">1985</span><span class="op">:</span><span class="dv">2004</span>)</code></pre></div>
 <p>The resulting data frame <code>sfbay</code> is provided as part of the package, and its contents are explained in the accompanying help file.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(sfbay)</code></pre></div>
 <pre><code>##            date time stn depth chl dox spm ext   sal temp nox nhx
@@ -98,11 +113,11 @@ sfbay &lt;-<span class="st"> </span><span class="kw">subset</span>(sfbay, stn %i
 <p>The next step is to add any necessary derived variables to the data frame. An initial data set will sometimes contain conductivity rather than salinity data, and we might want to use <code>ec2pss</code> to derive the latter. That’s not the case here, but let’s assume that we want dissolved oxygen as percent saturation rather than in concentration units. Using <code>oxySol</code> and the convention of expressing percent saturation with respect to surface pressure:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(sfbay)), <span class="dv">10</span>)
 sfbay[x, <span class="st">"dox"</span>]</code></pre></div>
-<pre><code>##  [1]  NA 7.2  NA 9.4 8.8  NA 8.4 7.6 6.9 7.1</code></pre>
+<pre><code>##  [1]  8.6  9.3  9.7  8.3  8.1   NA  7.5   NA 10.3  7.8</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sfbay1 &lt;-<span class="st"> </span><span class="kw">transform</span>(sfbay,
-                    <span class="dt">dox =</span> <span class="kw">round</span>(<span class="dv">100</span> *<span class="st"> </span>dox/<span class="kw"><a href="../reference/oxySol.html">oxySol</a></span>(sal, temp), <span class="dv">1</span>))
+                    <span class="dt">dox =</span> <span class="kw">round</span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span>dox<span class="op">/</span><span class="kw"><a href="../reference/oxySol.html">oxySol</a></span>(sal, temp), <span class="dv">1</span>))
 sfbay1[x, <span class="st">"dox"</span>]</code></pre></div>
-<pre><code>##  [1]    NA  87.8    NA 104.6 109.5    NA  95.7 101.1  84.4 104.7</code></pre>
+<pre><code>##  [1] 105.9 103.2 131.8 117.6 103.8    NA 108.5    NA 104.1 109.8</code></pre>
 </div>
 <div id="the-wqdata-class" class="section level1">
 <h1 class="hasAnchor">
@@ -111,7 +126,7 @@ sfbay1[x, <span class="st">"dox"</span>]</code></pre></div>
 <p>We decided to accommodate two types of sampling time, namely, the date either with or without the time of day. The former are converted to the <code>POSIXct</code> class and the latter to the <code>Date</code> class. A special class <code>DateTime</code> is created, which is the union of these two time classes. Classes that combine date and time of day require an additional level of care with respect to time zone <span class="citation">(Grothendieck and Petzoldt 2004)</span>.</p>
 <p>Surface location is specified by a <code>site</code> code, as the intention is to handle discrete monitoring programs as opposed to continuous transects. Latitude-longitude and distances from a fixed point are implicit in the <code>site</code> code and can be recorded in a separate table (see <code>sfbayVars</code>). The <code>depth</code> is specified separately as a number. Other information that may not be depth-specific, such as the mean vertical extinction coefficient in the near-surface layer, can be coded by a negative depth number. The last two fields in the data portion of a <code>WqData</code> object are the <code>variable</code> code and the <code>value</code>. The variables are given as character strings and the values as numbers. As in the case of the sampling site, additional information related to the variable code can be maintained in a separate table (see <code>sfbayVars</code>).</p>
 <p>Like all <code>S4</code> classes, <code>WqData</code> has a generating function called <code>new</code> automatically created along with the class. This function, however, requires that its data frame argument already have a fairly restricted form of structure. In order to decrease the manipulation required of the imported data, a separate, less restrictive generating function called <code>wqData</code> is available. This function is more forgiving of field names and classes and does a few other cleanup tasks with the data before calling <code>new</code>. Perhaps most useful, it converts data from a <em>wide</em> format with one field per variable into the <em>long</em> format used by the <code>WqData</code> class. For example, <code>sfbay</code> can be converted to a <code>WqData</code> object with a single command:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sfb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wqData.html">wqData</a></span>(sfbay, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>:<span class="dv">4</span>), <span class="dv">5</span>:<span class="dv">12</span>, <span class="dt">site.order =</span> <span class="ot">TRUE</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sfb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wqData.html">wqData</a></span>(sfbay, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), <span class="dv">5</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">site.order =</span> <span class="ot">TRUE</span>,
               <span class="dt">type =</span> <span class="st">"wide"</span>, <span class="dt">time.format =</span> <span class="st">"%m/%d/%Y"</span>)
 <span class="kw">head</span>(sfb)</code></pre></div>
 <pre><code>##         time site depth variable value
@@ -149,7 +164,7 @@ sfbay1[x, <span class="st">"dox"</span>]</code></pre></div>
 <a href="#generating-time-series" class="anchor"></a>Generating time series</h1>
 <p>Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. <code>tsMake</code> is a function for <code>WqData</code> objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option <code>type = "ts.mon"</code>. If the quantile probability <code>qprob = NULL</code>, all replicates are first averaged and then the mean is found for the depth layers of interest. Otherwise the respective quantile will be used both to aggregate depths for each day and to aggregate days for each month. If no layers are specified, all depths will be used. If <code>layer = "max.depths"</code>, the time series will be values of the deepest sample for each time, site and variable. The <code>layer</code> argument allows for flexibility in specifying depths, including a list of layers and negative depths used as codes for, say, <em>near botton</em> or <em>entire water column</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tsMake.html">tsMake</a></span>(sfb, <span class="dt">focus =</span> <span class="st">"chl"</span>, <span class="dt">layer =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>))
-y[<span class="dv">1</span>:<span class="dv">4</span>, ]</code></pre></div>
+y[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, ]</code></pre></div>
 <pre><code>##           s21       s24       s27       s30      s32    s36
 ## [1,] 4.500000  5.900000       NaN  1.300000  2.65000  6.250
 ## [2,]      NaN       NaN       NaN  1.600000  5.55000    NaN
@@ -158,8 +173,8 @@ y[<span class="dv">1</span>:<span class="dv">4</span>, ]</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tsp</span>(y)</code></pre></div>
 <pre><code>## [1] 1985.000 2004.917   12.000</code></pre>
 <p>The function <code>plotTs</code> is convenient for a quick look at the series. Lines join only adjacent data; otherwise, data are isolated dots.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plotTs.html">plotTs</a></span>(y[, <span class="dv">1</span>:<span class="dv">4</span>], <span class="dt">dot.size =</span> <span class="fl">1.3</span>, <span class="dt">ylab =</span> <span class="st">"Chlorophyll in San Francisco Bay"</span>,
-      <span class="dt">strip.labels =</span> <span class="kw">paste</span>(<span class="st">"Station"</span>, <span class="dv">21</span>:<span class="dv">24</span>), <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">scales =</span> <span class="st">"free_y"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plotTs.html">plotTs</a></span>(y[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">dot.size =</span> <span class="fl">1.3</span>, <span class="dt">ylab =</span> <span class="st">"Chlorophyll in San Francisco Bay"</span>,
+      <span class="dt">strip.labels =</span> <span class="kw">paste</span>(<span class="st">"Station"</span>, <span class="dv">21</span><span class="op">:</span><span class="dv">24</span>), <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">scales =</span> <span class="st">"free_y"</span>)</code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>If the option <code>type = "zoo"</code>, then <code>tsMake</code> produces an object of class <code>zoo</code> containing values by date of observation, rather than a monthly time series.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/tsMake.html">tsMake</a></span>(sfb, <span class="dt">focus =</span> <span class="st">"chl"</span>, <span class="dt">layer =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">type =</span> <span class="st">'zoo'</span>))</code></pre></div>
@@ -190,7 +205,7 @@ y[<span class="dv">1</span>:<span class="dv">4</span>, ]</code></pre></div>
 <p>Another example of its use is shown in <a href="#eof">Empirical Orthogonal Functions</a> below. A similar reshaping function is <code>mts2ts</code>, which converts a matrix time series to a vector time series for various analyses. It first aggregates the multivariate matrix time series by year, then converts it to a vector time series in which the <em>seasons</em> correspond to these annnualized values for the original variables. The <code>seas</code> parameter enables focusing the subsequent analysis on seasons of special interest, or to ignore seasons where there are too many missing data. The function can be used in conjunction with <code>seaKen</code> to conduct a Regional Kendall trend analysis, as described in <a href="#trends">Trends</a> below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">window</span>(sfbayChla, <span class="dt">start =</span> <span class="dv">2005</span>,
             <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2009</span>, <span class="dv">12</span>))  <span class="co"># 5 years, 16 sites</span>
-<span class="kw">round</span>(<span class="kw"><a href="../reference/mts2ts.html">mts2ts</a></span>(y, <span class="dt">seas =</span> <span class="dv">2</span>:<span class="dv">4</span>), <span class="dv">1</span>)  <span class="co"># focus on Feb-Apr spring bloom</span></code></pre></div>
+<span class="kw">round</span>(<span class="kw"><a href="../reference/mts2ts.html">mts2ts</a></span>(y, <span class="dt">seas =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>), <span class="dv">1</span>)  <span class="co"># focus on Feb-Apr spring bloom</span></code></pre></div>
 <pre><code>## Time Series:
 ## Start = c(2005, 1) 
 ## End = c(2009, 16) 
@@ -262,7 +277,7 @@ chl27a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/inte
 ## LakeHuron      1532 2.88e-07           46        1920       -1.54</code></pre>
 <p>Both <code>mannKen</code> and <code>pett</code> can also handle matrices or data frames, with options for plotting trends in the original units per year or divided by the median for the series. The first option is suitable when time series are all in the same units, such as chlorophyll-<em>a</em> measurements from different stations. The second makes sense with variables of different units but is not suitable for variables that can span zero (e.g., sea level, or temperature in <span class="math inline">\(^\circ\)</span>C) or that have a zero median. Plotted variables can be ordered by the size of their trends, statistical significance is mapped to point shape, and trends based on excessive missing data are omitted. When aggregating monthly series to produce an annual series for trend testing, there is a utility function <code>tsSub</code> that allows subsetting the months beforehand (<code>meanSub</code> is actually more efficient when aggregation is the goal). It can be useful for avoiding months with many missing data, or to focus attention on a particular time of year:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span>sfbayChla
-y1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tsSub.html">tsSub</a></span>(y, <span class="dt">seas =</span> <span class="dv">2</span>:<span class="dv">4</span>)  <span class="co"># focus on Feb-Apr spring bloom</span>
+y1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tsSub.html">tsSub</a></span>(y, <span class="dt">seas =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>)  <span class="co"># focus on Feb-Apr spring bloom</span>
 y2 &lt;-<span class="st"> </span><span class="kw">aggregate</span>(y1, <span class="dv">1</span>, mean, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)
 <span class="kw">signif</span>(<span class="kw"><a href="../reference/mannKen.html">mannKen</a></span>(y2), <span class="dv">3</span>)</code></pre></div>
 <pre><code>##     sen.slope sen.slope.rel  p.value   S varS  miss
@@ -341,8 +356,8 @@ y2 &lt;-<span class="st"> </span><span class="kw">aggregate</span>(y1, <span cla
 ## $n
 ## [1] 11</code></pre>
 <p>A Regional Kendall test is similar to a Seasonal Kendall test, with annual data for multiple sites instead of annual data for multiple seasons <span class="citation">(Helsel and Frans 2006)</span>. The function <code>mts2ts</code> (<a href="#reshape">Reshaping</a>) facilitates transforming an annual matrix time series into the required vector time series for <code>seaKen</code>, with stations playing the role of seasons. As with seasons, correlation among sites can inflate the apparent statistical significance, so the test is best used with stations from different subregions that are not too closely related, unlike the following example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chl &lt;-<span class="st"> </span>sfbayChla[, <span class="dv">1</span>:<span class="dv">12</span>]  <span class="co"># first 12 stns have good data coverage</span>
-<span class="kw"><a href="../reference/seaKen.html">seaKen</a></span>(<span class="kw"><a href="../reference/mts2ts.html">mts2ts</a></span>(chl, <span class="dv">2</span>:<span class="dv">4</span>))  <span class="co"># regional trend in spring bloom</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chl &lt;-<span class="st"> </span>sfbayChla[, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>]  <span class="co"># first 12 stns have good data coverage</span>
+<span class="kw"><a href="../reference/seaKen.html">seaKen</a></span>(<span class="kw"><a href="../reference/mts2ts.html">mts2ts</a></span>(chl, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>))  <span class="co"># regional trend in spring bloom</span></code></pre></div>
 <pre><code>## $sen.slope
 ## [1] 0.2155
 ## 
@@ -361,7 +376,7 @@ y2 &lt;-<span class="st"> </span><span class="kw">aggregate</span>(y1, <span cla
 <p>Empirical Orthogonal Function (EOF) analysis is a term used primarily in the earth sciences for principal component analysis applied to simultaneous time series at different spatial locations. <span class="citation">Hannachi, Jolliffe, and Stephenson (2007)</span> provide a comprehensive summary. The function <code>eof</code> in this package, based on <code>prcomp</code> and <code>varimax</code> in the <code>stats</code> package, optionally scales the time series and applies a rotation to the EOFs.</p>
 <p><code>eof</code> requires an estimate of the number of EOFs to retain for rotation. <code>eofNum</code> provides a guide to this number by plotting the eigenvalues and their confidence intervals in a <em>scree</em> plot. Here, we apply <code>eofNum</code> to annualized San Francisco Bay chlorophyll data and retain the stations with no missing data, namely, the first 12 stations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chla1 &lt;-<span class="st"> </span><span class="kw">aggregate</span>(sfbayChla, <span class="dv">1</span>, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
-chla1 &lt;-<span class="st"> </span>chla1[, <span class="dv">1</span>:<span class="dv">12</span>]
+chla1 &lt;-<span class="st"> </span>chla1[, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>]
 <span class="kw"><a href="../reference/eofNum.html">eofNum</a></span>(chla1)</code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>These stations have similar coefficients for the first EOF and appear to act as one with respect to chlorophyll variability on the annual scale. It suggests that further exploration of the interannual variability of these stations can be simplified by using a single time series, namely, the first EOF.</p>
@@ -535,7 +550,7 @@ p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phenoPha
 <h2 class="hasAnchor">
 <a href="#miscellaneous-plotting-functions" class="anchor"></a>Miscellaneous plotting functions</h2>
 <p><code>plotTsAnom</code> plots (unstandardized) departures of vector or matrix time series from their long-term mean and can be a useful way of examining trends in annualized data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chl &lt;-<span class="st"> </span><span class="kw">aggregate</span>(sfbayChla[, <span class="dv">1</span>:<span class="dv">6</span>], <span class="dv">1</span>, meanSub, <span class="dv">2</span>:<span class="dv">4</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chl &lt;-<span class="st"> </span><span class="kw">aggregate</span>(sfbayChla[, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>], <span class="dv">1</span>, meanSub, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 <span class="kw"><a href="../reference/plotTsAnom.html">plotTsAnom</a></span>(chl, <span class="dt">ylab =</span> <span class="st">'Chlorophyll-a'</span>,
            <span class="dt">strip.labels =</span> <span class="kw">paste</span>(<span class="st">'Station'</span>, <span class="kw">substring</span>(<span class="kw">colnames</span>(chl), <span class="dv">2</span>, <span class="dv">3</span>)))</code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;"></p>
@@ -581,7 +596,8 @@ p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phenoPha
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#preparing-data-from-an-external-file">Preparing data from an external file</a></li>

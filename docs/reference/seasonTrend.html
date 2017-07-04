@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,25 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/wql-package.html">wql: Exploring water quality monitoring data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -320,7 +336,7 @@ adding layers.</p>
 #&gt; 164    s34      8 0.24241379   0.052486188 6.904432e-02 0.714
 #&gt; 165    s34      9 0.20392857   0.057587310 3.399435e-03 0.633
 #&gt; 166    s34     10 0.16708333   0.045949360 9.455362e-03 0.633
-#&gt;  [ reached getOption("max.print") -- omitted 26 rows ]</div><div class='input'><span class='fu'>seasonTrend</span>(<span class='no'>x</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 58 rows containing missing values (position_stack).</span></div><img src='seasonTrend-5.png' alt='' width='540' height='400' /><div class='input'>
+#&gt;  [ reached getOption("max.print") -- omitted 26 rows ]</div><div class='input'><span class='fu'>seasonTrend</span>(<span class='no'>x</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 58 rows containing missing values (position_stack).</span></div><div class='img'><img src='seasonTrend-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -336,6 +352,10 @@ adding layers.</p>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    
+Alan Jassby, James Cloern
 
   </div>
 </div>
