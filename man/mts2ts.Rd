@@ -18,7 +18,7 @@ A vector time series
 }
 \description{
 First aggregates multivariate matrix time series by year. Then converts to a
-vector time series in which \dQuote{seasons} correspond to these annnualized
+vector time series in which \dQuote{seasons} correspond to these annualized
 values for the original variables.
 }
 \details{
