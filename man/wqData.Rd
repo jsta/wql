@@ -49,6 +49,7 @@ variable names, and converts \code{time} to class \code{"Date"} or
 \code{"POSIXct"} and ISO 8601 format, depending on \code{time.format}.
 }
 \examples{
+\dontrun{ 
 
 # Create new WqData object from sfbay data. First combine date and time
 # into a single string after making sure that all times have 4 digits.
@@ -60,7 +61,6 @@ sfb <- wqData(sfb, 2:4, 5:12, site.order = TRUE, type = "wide",
 head(sfb)
 tail(sfb)
 
-\dontrun{ 
 # If time of day were not required, then the following would suffice:
 sfb <- wqData(sfbay, c(1,3,4), 5:12, site.order = TRUE, type = "wide", 
   time.format = "\%m/\%d/\%Y")
