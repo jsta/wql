@@ -14,13 +14,13 @@ bibentry(key = paste0("jassby", year, "wq"),
   ),
   year = year,
   note = vers,
-  url = "http://CRAN.R-project.org/package=wq",
+  url = "https://CRAN.R-project.org/package=wq",
   textVersion = paste0(
     "Alan D. Jassby and James E. Cloern (", 
     year, 
     "). wq: Some tools for exploring water quality monitoring data. ", 
     vers, 
-    ". http://cran.r-project.org/package=wq"
+    ". https://cran.r-project.org/package=wq"
   ),
   header = "To cite wq in publications use:"
 )
