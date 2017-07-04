@@ -5,3 +5,4 @@
 saveNAMESPACE
 ^docs$
 README.html
+^cran-comments\.md$
