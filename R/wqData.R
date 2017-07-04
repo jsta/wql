@@ -51,11 +51,12 @@
 #' 
 #' head(sfb)
 #' tail(sfb)
-#' 
+#'
+#' \dontrun{ 
 #' # If time of day were not required, then the following would suffice:
 #' sfb <- wqData(sfbay, c(1,3,4), 5:12, site.order = TRUE, type = "wide", 
 #'   time.format = "%m/%d/%Y")
-#' 
+#' }
 #' 
 wqData <-
 function(data, locus, wqdata, site.order, time.format = "%Y-%m-%d",
