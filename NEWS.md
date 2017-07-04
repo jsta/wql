@@ -1,6 +1,7 @@
 wql 0.4.9
 =========
 * Fork and rebrand wq to wql
+* Added roxygen documentation
 
 wq 0.4.8
 ========
