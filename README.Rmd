@@ -1,10 +1,6 @@
 ---
 output: github_document
 ---
-# wql : Exploring Water Quality Monitoring Data
-<!-- rmarkdown v1 -->
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/wql)](https://cran.r-project.org/package=wql)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -15,6 +11,11 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
+
+# wql : Exploring Water Quality Monitoring Data
+
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/wql)](https://cran.r-project.org/package=wql)
 
 ## Installation
 
