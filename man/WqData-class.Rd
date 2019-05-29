@@ -3,14 +3,11 @@
 \docType{class}
 \name{WqData-class}
 \alias{WqData-class}
-\alias{WqData-class}
 \alias{[,WqData-method}
 \alias{summary,WqData-method}
 \alias{plot,WqData-method}
 \title{Class WqData}
 \description{
-Class WqData
-
 A simple extension or subclass of the \code{"data.frame"} class for typical
 \dQuote{discrete} water quality monitoring programs that examine phenomena
 on a time scale of days or longer. It requires water quality data to be in a

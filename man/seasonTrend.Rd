@@ -4,8 +4,8 @@
 \alias{seasonTrend}
 \title{Determine seasonal trends}
 \usage{
-seasonTrend(x, plot = FALSE, type = c("slope", "relative"), pval = 0.05,
-  ...)
+seasonTrend(x, plot = FALSE, type = c("slope", "relative"),
+  pval = 0.05, ...)
 }
 \arguments{
 \item{x}{Time series vector, or time series matrix with column names}

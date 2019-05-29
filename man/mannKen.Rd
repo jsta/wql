@@ -4,8 +4,8 @@
 \alias{mannKen}
 \title{Mann-Kendall trend test and the Sen slope}
 \usage{
-mannKen(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
-  pval = 0.05, pchs = c(19, 21), ...)
+mannKen(x, plot = FALSE, type = c("slope", "relative"),
+  order = FALSE, pval = 0.05, pchs = c(19, 21), ...)
 }
 \arguments{
 \item{x}{A numeric vector, matrix or data frame}

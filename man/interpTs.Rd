@@ -4,8 +4,8 @@
 \alias{interpTs}
 \title{Interpolate or substitute missing time series values}
 \usage{
-interpTs(x, type = c("linear", "series.median", "series.mean", "cycle.median",
-  "cycle.mean"), gap = NULL)
+interpTs(x, type = c("linear", "series.median", "series.mean",
+  "cycle.median", "cycle.mean"), gap = NULL)
 }
 \arguments{
 \item{x}{object of class \code{"ts"} or \code{"mts"}}
