@@ -4,8 +4,16 @@
 \alias{seaKen}
 \title{Seasonal and Regional Kendall trend test}
 \usage{
-seaKen(x, plot = FALSE, type = c("slope", "relative"), order = FALSE,
-  pval = 0.05, mval = 0.5, pchs = c(19, 21), ...)
+seaKen(
+  x,
+  plot = FALSE,
+  type = c("slope", "relative"),
+  order = FALSE,
+  pval = 0.05,
+  mval = 0.5,
+  pchs = c(19, 21),
+  ...
+)
 }
 \arguments{
 \item{x}{A numeric vector, matrix or data frame made up of seasonal time

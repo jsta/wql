@@ -4,8 +4,7 @@
 \alias{plotTsAnom}
 \title{Anomaly plot of time series}
 \usage{
-plotTsAnom(x, xlab = NULL, ylab = NULL, strip.labels = colnames(x),
-  ...)
+plotTsAnom(x, xlab = NULL, ylab = NULL, strip.labels = colnames(x), ...)
 }
 \arguments{
 \item{x}{matrix or vector time series}

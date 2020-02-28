@@ -4,8 +4,14 @@
 \alias{plotTs}
 \title{Time series plot}
 \usage{
-plotTs(x, dot.size = 1, xlab = NULL, ylab = NULL,
-  strip.labels = colnames(x), ...)
+plotTs(
+  x,
+  dot.size = 1,
+  xlab = NULL,
+  ylab = NULL,
+  strip.labels = colnames(x),
+  ...
+)
 }
 \arguments{
 \item{x}{matrix or vector time series}

@@ -4,8 +4,17 @@
 \alias{seaRoll}
 \title{Rolling Seasonal Kendall trend test}
 \usage{
-seaRoll(x, w = 10, plot = FALSE, pval = 0.05, mval = 0.5,
-  pchs = c(19, 21), xlab = NULL, ylab = NULL, ...)
+seaRoll(
+  x,
+  w = 10,
+  plot = FALSE,
+  pval = 0.05,
+  mval = 0.5,
+  pchs = c(19, 21),
+  xlab = NULL,
+  ylab = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A seasonal time series vector.}

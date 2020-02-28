@@ -4,9 +4,18 @@
 \alias{plotTsTile}
 \title{Image plot of monthly time series}
 \usage{
-plotTsTile(x, plot.title = NULL, legend.title = NULL, four = TRUE,
-  loganom = TRUE, square = TRUE, legend = TRUE, trim = TRUE,
-  overall = TRUE, stat = c("median", "mean"))
+plotTsTile(
+  x,
+  plot.title = NULL,
+  legend.title = NULL,
+  four = TRUE,
+  loganom = TRUE,
+  square = TRUE,
+  legend = TRUE,
+  trim = TRUE,
+  overall = TRUE,
+  stat = c("median", "mean")
+)
 }
 \arguments{
 \item{x}{monthly time series.}

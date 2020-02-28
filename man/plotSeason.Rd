@@ -4,8 +4,14 @@
 \alias{plotSeason}
 \title{Plots seasonal patterns for a time series}
 \usage{
-plotSeason(x, type = c("by.era", "by.month"), num.era = 4,
-  same.plot = TRUE, ylab = NULL, num.col = 3)
+plotSeason(
+  x,
+  type = c("by.era", "by.month"),
+  num.era = 4,
+  same.plot = TRUE,
+  ylab = NULL,
+  num.col = 3
+)
 }
 \arguments{
 \item{x}{Monthly time series}

@@ -4,8 +4,7 @@
 \alias{pett}
 \title{Nonparametric Change-Point Detection}
 \usage{
-pett(x, plot = FALSE, order = FALSE, pval = 0.05, pchs = c(19, 21),
-  ...)
+pett(x, plot = FALSE, order = FALSE, pval = 0.05, pchs = c(19, 21), ...)
 }
 \arguments{
 \item{x}{a numeric vector, matrix or data frame with no missing interior

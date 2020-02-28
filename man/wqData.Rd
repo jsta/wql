@@ -4,8 +4,14 @@
 \alias{wqData}
 \title{Construct an object of class "WqData"}
 \usage{
-wqData(data, locus, wqdata, site.order, time.format = "\%Y-\%m-\%d",
-  type = c("long", "wide"))
+wqData(
+  data,
+  locus,
+  wqdata,
+  site.order,
+  time.format = "\%Y-\%m-\%d",
+  type = c("long", "wide")
+)
 }
 \arguments{
 \item{data}{Data frame containing water quality data.}

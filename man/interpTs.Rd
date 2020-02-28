@@ -4,8 +4,11 @@
 \alias{interpTs}
 \title{Interpolate or substitute missing time series values}
 \usage{
-interpTs(x, type = c("linear", "series.median", "series.mean",
-  "cycle.median", "cycle.mean"), gap = NULL)
+interpTs(
+  x,
+  type = c("linear", "series.median", "series.mean", "cycle.median", "cycle.mean"),
+  gap = NULL
+)
 }
 \arguments{
 \item{x}{object of class \code{"ts"} or \code{"mts"}}
@@ -54,7 +57,7 @@ lines(chl27, col = 'blue')
 
 ### Interpolate a matrix time series and plot results
 x3 <- interpTs(sfbayChla, type = "cycle.mean", gap = 1)
-plot(x3[, 1:10], main = "SF Bay Chl-a\\n(gaps of 1 month replaced)")
+plot(x3[, 1:10], main = "SF Bay Chl-a\n(gaps of 1 month replaced)")
 
 }
 \seealso{
