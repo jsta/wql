@@ -10,10 +10,16 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 
 ## Installation
 
-You can install wql from github with:
+### Stable version from CRAN
 
 ``` r
-# install.packages("devtools")
+install.packages("wql")
+```
+
+### or development version from GitHub
+
+``` r
+install.packages('devtools')  # package devtools needed
 devtools::install_github("jsta/wql")
 ```
 
@@ -39,9 +45,9 @@ layers in the case of ggplot2 objects.
 
 Two functions are used mainly for preparing the times series:
 
-  - a function that transforms incoming data to a common data structure
+-   a function that transforms incoming data to a common data structure
     in the form of the WqData class
-  - a function that easily prepares time series objects from this class
+-   a function that easily prepares time series objects from this class
 
 The WqData class can be easily adapted to non-aquatic data. Obviously,
 the depth field can be used for elevation in atmospheric studies. But
@@ -50,18 +56,18 @@ classifications and don’t need to refer to spatial location.
 
 Some of the time series functions include:
 
-  - a variety of plots to examine changes in seasonal patterns
-  - nonparametric trend tests
-  - time series interpolation and related manipulations
-  - a simple decomposition of a series into different time scales
-  - phenological analyses
-  - the use of empirical orthogonal functions to detect multiple
+-   a variety of plots to examine changes in seasonal patterns
+-   nonparametric trend tests
+-   time series interpolation and related manipulations
+-   a simple decomposition of a series into different time scales
+-   phenological analyses
+-   the use of empirical orthogonal functions to detect multiple
     independent mechanisms underlying temporal change
 
 A few functions are specialized for the aquatic sciences:
 
-  - converting between oxygen concentrations and percent saturation
-  - converting between salinity and conductivity
+-   converting between oxygen concentrations and percent saturation
+-   converting between salinity and conductivity
 
 ## Usage
 
@@ -71,18 +77,16 @@ data](https://jsta.github.io/wql/articles/wql-package.html)
 
 ## References
 
-This package is am independent fork of the archived CRAN package `wq`.
+This package is an independent fork of the archived CRAN package `wq`.
 To date, improvements have been focused on improving the documentation
-and code
-    readability.
+and code readability.
 
-    #> Warning in meta$Date: partial match of 'Date' to 'Date/Publication'
     #> 
     #> To cite wq in publications use:
     #> 
     #>   Alan D. Jassby and James E. Cloern (2017). wq: Some tools for
-    #>   exploring water quality monitoring data. R package version
-    #>   0.4.9. https://cran.r-project.org/package=wq
+    #>   exploring water quality monitoring data. R package version 0.4.9.
+    #>   https://cran.r-project.org/package=wq
     #> 
     #> A BibTeX entry for LaTeX users is
     #> 
