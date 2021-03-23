@@ -7,7 +7,8 @@
 \alias{sfbayVars}
 \alias{sfbayChla}
 \title{San Francisco Bay water quality data}
-\format{\code{sfbay} is a data frame with 23207 observations (rows) of 12
+\format{
+\code{sfbay} is a data frame with 23207 observations (rows) of 12
 variables (columns):
 
 \tabular{rll}{ \code{[, 1]} \tab \code{date} \tab date\cr \code{[, 2]} \tab
@@ -36,7 +37,8 @@ code\cr \code{[, 2]} \tab \code{description} \tab description\cr \code{[,
 
 \code{sfbayChla} is a time series matrix (380 months \code{x} 16 stations)
 of average 0-5 m chlorophyll \emph{a} concentrations calculated from the
-data in \code{sfbay}.}
+data in \code{sfbay}.
+}
 \source{
 Downloaded from \url{http://sfbay.wr.usgs.gov/access/wqdata} on
 2009-11-17.
