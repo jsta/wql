@@ -134,17 +134,17 @@ of the Sen slope, for rolling windows over a time series." />
 of the Sen slope, for rolling windows over a time series.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seaRoll</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>w</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pval</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>mval</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>pchs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>19</span>, <span class='fl'>21</span>),
-  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>seaRoll</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  w <span class='op'>=</span> <span class='fl'>10</span>,
+  plot <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  pval <span class='op'>=</span> <span class='fl'>0.05</span>,
+  mval <span class='op'>=</span> <span class='fl'>0.5</span>,
+  pchs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>19</span>, <span class='fl'>21</span><span class='op'>)</span>,
+  xlab <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ylab <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,11 +210,15 @@ as well as graphical parameters described in <code><a href='https://rdrr.io/r/gr
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='seaKen.html'>seaKen</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alan Jassby, James Cloern</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>chl27</span> <span class='kw'>&lt;-</span> <span class='no'>sfbayChla</span>[, <span class='st'>'s27'</span>]
-<span class='fu'>seaRoll</span>(<span class='no'>chl27</span>)</div><div class='output co'>#&gt;        sen.slope sen.slope.rel      p.value
+<span class='va'>chl27</span> <span class='op'>&lt;-</span> <span class='va'>sfbayChla</span><span class='op'>[</span>, <span class='st'>'s27'</span><span class='op'>]</span>
+<span class='fu'>seaRoll</span><span class='op'>(</span><span class='va'>chl27</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        sen.slope sen.slope.rel      p.value
 #&gt; 1978  0.00000000   0.000000000 1.000000e+00
 #&gt; 1979  0.02583333   0.016666667 3.568946e-01
 #&gt; 1980  0.05555556   0.026240809 8.423384e-02
@@ -237,7 +241,8 @@ as well as graphical parameters described in <code><a href='https://rdrr.io/r/gr
 #&gt; 1997  0.26000000   0.078260870 3.069881e-04
 #&gt; 1998  0.31550000   0.089193677 9.162416e-05
 #&gt; 1999  0.30900000   0.078921416 2.609064e-05
-#&gt; 2000  0.17500000   0.043028611 1.807407e-02</div><div class='input'><span class='fu'>seaRoll</span>(<span class='no'>chl27</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='seaRoll-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 2000  0.17500000   0.043028611 1.807407e-02</div><div class='input'><span class='fu'>seaRoll</span><span class='op'>(</span><span class='va'>chl27</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='seaRoll-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -250,11 +255,11 @@ as well as graphical parameters described in <code><a href='https://rdrr.io/r/gr
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

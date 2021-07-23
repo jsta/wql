@@ -134,7 +134,7 @@ air." />
 air.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>oxySol</span>(<span class='no'>t</span>, <span class='no'>S</span>, <span class='kw'>P</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>oxySol</span><span class='op'>(</span><span class='va'>t</span>, <span class='va'>S</span>, P <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,14 +171,18 @@ equilibrium with the atmosphere. <em>Limnology and Oceanography</em>
 <b>29,</b> 620-632.</p>
 <p>Green, E.J. and Carritt, D.E. (1967) New tables for oxygen saturation of
 seawater. <em>Journal of Marine Research</em> <b>25,</b> 140-147.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alan Jassby, James Cloern</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Convert DO into % saturation for 1-m depth at Station 32.</span>
 <span class='co'># Use convention of expressing saturation at 1 atm.</span>
-<span class='no'>sfb1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>sfbay</span>, <span class='no'>depth</span> <span class='kw'>==</span> <span class='fl'>1</span> <span class='kw'>&amp;</span> <span class='no'>stn</span> <span class='kw'>==</span> <span class='fl'>32</span>)
-<span class='no'>dox.pct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>sfb1</span>, <span class='fl'>100</span> * <span class='no'>dox</span>/<span class='fu'>oxySol</span>(<span class='no'>temp</span>, <span class='no'>sal</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>dox.pct</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+<span class='va'>sfb1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>sfbay</span>, <span class='va'>depth</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>&amp;</span> <span class='va'>stn</span> <span class='op'>==</span> <span class='fl'>32</span><span class='op'>)</span>
+<span class='va'>dox.pct</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>sfb1</span>, <span class='fl'>100</span> <span class='op'>*</span> <span class='va'>dox</span><span class='op'>/</span><span class='fu'>oxySol</span><span class='op'>(</span><span class='va'>temp</span>, <span class='va'>sal</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>dox.pct</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 #&gt;   71.78   87.04   91.90   94.90   97.27  170.83     115 </div><div class='input'>
 </div></pre>
   </div>
@@ -192,11 +196,11 @@ seawater. <em>Journal of Marine Research</em> <b>25,</b> 140-147.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

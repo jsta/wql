@@ -134,16 +134,16 @@ including an estimate of the Sen slope." />
 including an estimate of the Sen slope.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seaKen</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"slope"</span>, <span class='st'>"relative"</span>),
-  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pval</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>mval</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>pchs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>19</span>, <span class='fl'>21</span>),
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>seaKen</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  plot <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"slope"</span>, <span class='st'>"relative"</span><span class='op'>)</span>,
+  order <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  pval <span class='op'>=</span> <span class='fl'>0.05</span>,
+  mval <span class='op'>=</span> <span class='fl'>0.5</span>,
+  pchs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>19</span>, <span class='fl'>21</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,12 +230,16 @@ analysis for monthly water quality data. <em>Water Resources Research</em>
 
     <div class='dont-index'><p><code><a href='mannKen.html'>mannKen</a></code>, <code><a href='mts2ts.html'>mts2ts</a></code>,
 <code><a href='trendHomog.html'>trendHomog</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alan Jassby, James Cloern</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Seasonal Kendall test:</span>
-<span class='no'>chl</span> <span class='kw'>&lt;-</span> <span class='no'>sfbayChla</span> <span class='co'># monthly chlorophyll at 16 stations in San Francisco Bay</span>
-<span class='fu'>seaKen</span>(<span class='no'>sfbayChla</span>[, <span class='st'>'s27'</span>]) <span class='co'># results for a single series at station 27</span></div><div class='output co'>#&gt; $sen.slope
+<span class='va'>chl</span> <span class='op'>&lt;-</span> <span class='va'>sfbayChla</span> <span class='co'># monthly chlorophyll at 16 stations in San Francisco Bay</span>
+<span class='fu'>seaKen</span><span class='op'>(</span><span class='va'>sfbayChla</span><span class='op'>[</span>, <span class='st'>'s27'</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># results for a single series at station 27</span>
+</div><div class='output co'>#&gt; $sen.slope
 #&gt; [1] 0.1083333
 #&gt; 
 #&gt; $sen.slope.rel
@@ -246,7 +250,8 @@ analysis for monthly water quality data. <em>Water Resources Research</em>
 #&gt; 
 #&gt; $miss
 #&gt; [1] 0.083
-#&gt; </div><div class='input'><span class='fu'>seaKen</span>(<span class='no'>sfbayChla</span>) <span class='co'># results for all stations</span></div><div class='output co'>#&gt;      sen.slope sen.slope.rel      p.value  miss
+#&gt; </div><div class='input'><span class='fu'>seaKen</span><span class='op'>(</span><span class='va'>sfbayChla</span><span class='op'>)</span> <span class='co'># results for all stations</span>
+</div><div class='output co'>#&gt;      sen.slope sen.slope.rel      p.value  miss
 #&gt; s21 0.09672840    0.04444444 9.258533e-25 0.167
 #&gt; s22 0.08700000    0.04147465 1.837197e-20 0.167
 #&gt; s23 0.09925824    0.04641062 2.285817e-22 0.083
@@ -262,10 +267,12 @@ analysis for monthly water quality data. <em>Water Resources Research</em>
 #&gt; s33 0.18761538    0.04847510 8.962505e-10 0.833
 #&gt; s34 0.18614815    0.05149382 1.285311e-12 0.833
 #&gt; s35 0.15965517    0.04040404 1.504345e-06 0.833
-#&gt; s36 0.18745098    0.05140187 1.231323e-11 0.833</div><div class='input'><span class='fu'>seaKen</span>(<span class='no'>sfbayChla</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"relative"</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='seaKen-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; s36 0.18745098    0.05140187 1.231323e-11 0.833</div><div class='input'><span class='fu'>seaKen</span><span class='op'>(</span><span class='va'>sfbayChla</span>, plot<span class='op'>=</span><span class='cn'>TRUE</span>, type<span class='op'>=</span><span class='st'>"relative"</span>, order<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='seaKen-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Regional Kendall test:</span>
 <span class='co'># Use mts2ts to change 16 series into a single series with 16 "seasons"</span>
-<span class='fu'>seaKen</span>(<span class='fu'><a href='mts2ts.html'>mts2ts</a></span>(<span class='no'>chl</span>))  <span class='co'># too many missing data</span></div><div class='output co'>#&gt; $sen.slope
+<span class='fu'>seaKen</span><span class='op'>(</span><span class='fu'><a href='mts2ts.html'>mts2ts</a></span><span class='op'>(</span><span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>  <span class='co'># too many missing data</span>
+</div><div class='output co'>#&gt; $sen.slope
 #&gt; [1] 0.2440196
 #&gt; 
 #&gt; $sen.slope.rel
@@ -278,7 +285,8 @@ analysis for monthly water quality data. <em>Water Resources Research</em>
 #&gt; [1] 1
 #&gt; </div><div class='input'><span class='co'># better when just Feb-Apr, spring bloom period,</span>
 <span class='co'># but last 4 stations still missing too much.</span>
-<span class='fu'>seaKen</span>(<span class='fu'><a href='mts2ts.html'>mts2ts</a></span>(<span class='no'>chl</span>, <span class='kw'>seas</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>4</span>))</div><div class='output co'>#&gt; $sen.slope
+<span class='fu'>seaKen</span><span class='op'>(</span><span class='fu'><a href='mts2ts.html'>mts2ts</a></span><span class='op'>(</span><span class='va'>chl</span>, seas <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span> 
+</div><div class='output co'>#&gt; $sen.slope
 #&gt; [1] 0.2161335
 #&gt; 
 #&gt; $sen.slope.rel
@@ -289,7 +297,8 @@ analysis for monthly water quality data. <em>Water Resources Research</em>
 #&gt; 
 #&gt; $miss
 #&gt; [1] 0.25
-#&gt; </div><div class='input'><span class='fu'>seaKen</span>(<span class='fu'><a href='mts2ts.html'>mts2ts</a></span>(<span class='no'>chl</span>[, <span class='fl'>1</span>:<span class='fl'>12</span>], <span class='fl'>2</span>:<span class='fl'>4</span>)) <span class='co'># more reliable result</span></div><div class='output co'>#&gt; $sen.slope
+#&gt; </div><div class='input'><span class='fu'>seaKen</span><span class='op'>(</span><span class='fu'><a href='mts2ts.html'>mts2ts</a></span><span class='op'>(</span><span class='va'>chl</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>]</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># more reliable result</span>
+</div><div class='output co'>#&gt; $sen.slope
 #&gt; [1] 0.2155
 #&gt; 
 #&gt; $sen.slope.rel
@@ -313,11 +322,11 @@ analysis for monthly water quality data. <em>Water Resources Research</em>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

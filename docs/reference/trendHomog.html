@@ -136,7 +136,7 @@ and Hughes (1984). Seasons with insufficient data as defined in
 <code><a href='mannKen.html'>mannKen</a></code> are ignored.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>trendHomog</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>trendHomog</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,13 +162,17 @@ trend in water quality. <em>Water Resources Research</em> <b>20,</b> 127-136.</p
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='seaKen.html'>seaKen</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alan Jassby, James Cloern</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Apply to a monthly vector time series to test homogeneity</span>
 <span class='co'>## of seasonal trends.</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>sfbayChla</span>[, <span class='st'>'s27'</span>]
-<span class='fu'>trendHomog</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; $chi2.trend
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>sfbayChla</span><span class='op'>[</span>, <span class='st'>'s27'</span><span class='op'>]</span>
+<span class='fu'>trendHomog</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $chi2.trend
 #&gt; [1] 106.3295
 #&gt; 
 #&gt; $chi2.homog
@@ -192,11 +196,11 @@ trend in water quality. <em>Water Resources Research</em> <b>20,</b> 127-136.</p
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

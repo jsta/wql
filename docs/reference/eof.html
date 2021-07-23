@@ -132,7 +132,7 @@
     <p>Finds and rotates empirical orthogonal functions (EOFs).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>eof</span>(<span class='no'>x</span>, <span class='no'>n</span>, <span class='kw'>scale.</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>eof</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>n</span>, scale. <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,14 +205,18 @@ Climatology</em> <b>6,</b> 293--335.</p>
 
     <div class='dont-index'><p><code><a href='eofNum.html'>eofNum</a></code>, <code><a href='eofPlot.html'>eofPlot</a></code>,
 <code><a href='monthCor.html'>monthCor</a></code>, <code><a href='ts2df.html'>ts2df</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alan Jassby, James Cloern</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Create an annual matrix time series</span>
-<span class='no'>chla1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aggregate.html'>aggregate</a></span>(<span class='no'>sfbayChla</span>, <span class='fl'>1</span>, <span class='no'>mean</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>chla1</span> <span class='kw'>&lt;-</span> <span class='no'>chla1</span>[, <span class='fl'>1</span>:<span class='fl'>12</span>]  <span class='co'># remove stations with missing years</span>
+<span class='va'>chla1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aggregate.html'>aggregate</a></span><span class='op'>(</span><span class='va'>sfbayChla</span>, <span class='fl'>1</span>, <span class='va'>mean</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>chla1</span> <span class='op'>&lt;-</span> <span class='va'>chla1</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>]</span>  <span class='co'># remove stations with missing years</span>
 <span class='co'># eofNum (see examples) suggests n = 1</span>
-<span class='fu'>eof</span>(<span class='no'>chla1</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; $REOF
+<span class='fu'>eof</span><span class='op'>(</span><span class='va'>chla1</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $REOF
 #&gt;          EOF1
 #&gt; s21 0.9152475
 #&gt; s22 0.8817009
@@ -279,11 +283,11 @@ Climatology</em> <b>6,</b> 293--335.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

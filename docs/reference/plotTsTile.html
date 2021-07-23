@@ -134,18 +134,18 @@ colors are plotted in a month by year matrix." />
 colors are plotted in a month by year matrix.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotTsTile</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>plot.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legend.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>four</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>loganom</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>overall</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"mean"</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>plotTsTile</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  plot.title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  legend.title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  four <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  loganom <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  square <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  legend <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  trim <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  overall <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  stat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"median"</span>, <span class='st'>"mean"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -236,15 +236,20 @@ too much white space.</p>
 (2008) <em>ICES Zooplankton Status Report 2006/2007.</em> ICES Cooperative
 Research Report 292, International Council for the Exploration of the Sea,
 Copenhagen, 168 p.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alan Jassby, James Cloern</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># plot log-anomalies in four bins</span>
-<span class='no'>chl27</span> <span class='kw'>=</span> <span class='no'>sfbayChla</span>[, <span class='st'>'s27'</span>]
-<span class='fu'>plotTsTile</span>(<span class='no'>chl27</span>, <span class='kw'>legend.title</span> <span class='kw'>=</span> <span class='st'>'Chl log-anomaly'</span>)</div><div class='img'><img src='plotTsTile-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>chl27</span> <span class='op'>=</span> <span class='va'>sfbayChla</span><span class='op'>[</span>, <span class='st'>'s27'</span><span class='op'>]</span>
+<span class='fu'>plotTsTile</span><span class='op'>(</span><span class='va'>chl27</span>, legend.title <span class='op'>=</span> <span class='st'>'Chl log-anomaly'</span><span class='op'>)</span>
+</div><div class='img'><img src='plotTsTile-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot deciles</span>
-<span class='fu'>plotTsTile</span>(<span class='no'>chl27</span>, <span class='kw'>plot.title</span> <span class='kw'>=</span> <span class='st'>'SF Bay station 27'</span>, <span class='kw'>legend.title</span> <span class='kw'>=</span>
-        <span class='st'>'chlorophyll'</span>, <span class='kw'>four</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>loganom</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotTsTile-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plotTsTile</span><span class='op'>(</span><span class='va'>chl27</span>, plot.title <span class='op'>=</span> <span class='st'>'SF Bay station 27'</span>, legend.title <span class='op'>=</span>
+  <span class='st'>'chlorophyll'</span>, four <span class='op'>=</span> <span class='cn'>FALSE</span>, loganom <span class='op'>=</span> <span class='cn'>FALSE</span>, square <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='plotTsTile-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -257,11 +262,11 @@ Copenhagen, 168 p.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

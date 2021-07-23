@@ -204,28 +204,34 @@ to make these time series.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Create new WqData object</span>
-<span class='no'>sfb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='wqData.html'>wqData</a></span>(<span class='no'>sfbay</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>:<span class='fl'>4</span>), <span class='fl'>5</span>:<span class='fl'>12</span>, <span class='kw'>site.order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-         <span class='kw'>time.format</span> <span class='kw'>=</span> <span class='st'>"%m/%d/%Y"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"wide"</span>)
+<span class='va'>sfb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='wqData.html'>wqData</a></span><span class='op'>(</span><span class='va'>sfbay</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>:</span><span class='fl'>12</span>, site.order <span class='op'>=</span> <span class='cn'>TRUE</span>,
+         time.format <span class='op'>=</span> <span class='st'>"%m/%d/%Y"</span>, type <span class='op'>=</span> <span class='st'>"wide"</span><span class='op'>)</span>
 
 <span class='co'># Find means in the 0-10 m layer</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>tsMake</span>(<span class='no'>sfb</span>, <span class='kw'>focus</span> <span class='kw'>=</span> <span class='st'>'s27'</span>, <span class='kw'>layer</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>10</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>y</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>'Station 27'</span>)</div><div class='img'><img src='tsMake-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Or select medians in the same layer</span>
-<span class='no'>y1</span> <span class='kw'>&lt;-</span> <span class='fu'>tsMake</span>(<span class='no'>sfb</span>, <span class='kw'>focus</span> <span class='kw'>=</span> <span class='st'>'s27'</span>, <span class='kw'>layer</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>10</span>), <span class='kw'>qprob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>y1</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>'Station 27'</span>)</div><div class='img'><img src='tsMake-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Compare means:medians</span>
-<span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span>(<span class='no'>y</span>/<span class='no'>y1</span>, <span class='fl'>2</span>, <span class='no'>mean</span>, <span class='kw'>na.rm</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;     y.chl     y.dox     y.spm     y.ext     y.sal    y.temp     y.nox     y.nhx 
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>tsMake</span><span class='op'>(</span><span class='va'>sfb</span>, focus <span class='op'>=</span> <span class='st'>'s27'</span>, layer <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>y</span>, main <span class='op'>=</span> <span class='st'>'Station 27'</span><span class='op'>)</span>
+</div><div class='img'><img src='tsMake-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Or select medians in the same layer</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'>tsMake</span><span class='op'>(</span><span class='va'>sfb</span>, focus <span class='op'>=</span> <span class='st'>'s27'</span>, layer <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span><span class='op'>)</span>, qprob <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>y1</span>, main <span class='op'>=</span> <span class='st'>'Station 27'</span><span class='op'>)</span>
+</div><div class='img'><img src='tsMake-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Compare means:medians</span>
+<span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>/</span><span class='va'>y1</span>, <span class='fl'>2</span>, <span class='va'>mean</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     y.chl     y.dox     y.spm     y.ext     y.sal    y.temp     y.nox     y.nhx 
 #&gt; 1.0642680 1.0019440 1.1172737 1.0717303 0.9995585 1.0007394 1.0644137 1.0496283 </div><div class='input'>
 <span class='co'># Combine a layer with a single additional depth</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>tsMake</span>(<span class='no'>sfb</span>, <span class='kw'>focus</span> <span class='kw'>=</span> <span class='st'>'chl'</span>, <span class='kw'>layer</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>2</span>), <span class='fl'>5</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>y</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>'Chlorophyll a, ug/L'</span>)</div><div class='img'><img src='tsMake-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>tsMake</span><span class='op'>(</span><span class='va'>sfb</span>, focus <span class='op'>=</span> <span class='st'>'chl'</span>, layer <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>y</span>, main <span class='op'>=</span> <span class='st'>'Chlorophyll a, ug/L'</span><span class='op'>)</span>
+</div><div class='img'><img src='tsMake-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Use values from the deepest samples</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>tsMake</span>(<span class='no'>sfb</span>, <span class='kw'>focus</span> <span class='kw'>=</span> <span class='st'>'dox'</span>, <span class='kw'>layer</span> <span class='kw'>=</span> <span class='st'>"max.depths"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'zoo'</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt;            s21 s24  s27  s30  s32  s36
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>tsMake</span><span class='op'>(</span><span class='va'>sfb</span>, focus <span class='op'>=</span> <span class='st'>'dox'</span>, layer <span class='op'>=</span> <span class='st'>"max.depths"</span>, type <span class='op'>=</span> <span class='st'>'zoo'</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            s21 s24  s27  s30  s32  s36
 #&gt; 1993-01-05 8.9 8.9  8.9  8.9  8.9  NaN
 #&gt; 1993-02-16 NaN 8.9  9.0  9.0  8.9  8.9
 #&gt; 1993-02-24 9.0 9.0  9.1  9.0  9.1  NaN
 #&gt; 1993-03-11 NaN 9.8  9.9  9.9  9.8  9.7
 #&gt; 1993-03-18 NaN 9.6 10.4 10.5  9.6  7.9
-#&gt; 1993-03-25 9.4 9.9 11.9 11.5 11.7 11.0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>y</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"h"</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"'Bottom' DO, mg/L"</span>)</div><div class='img'><img src='tsMake-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 1993-03-25 9.4 9.9 11.9 11.5 11.7 11.0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>y</span>, type<span class='op'>=</span><span class='st'>"h"</span>, main <span class='op'>=</span> <span class='st'>"'Bottom' DO, mg/L"</span><span class='op'>)</span>
+</div><div class='img'><img src='tsMake-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -238,11 +244,11 @@ to make these time series.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

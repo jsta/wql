@@ -134,7 +134,7 @@ Salinity Scale and an extension for salinities below 2." />
 Salinity Scale and an extension for salinities below 2.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ec2pss</span>(<span class='no'>ec</span>, <span class='no'>t</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre class="usage"><span class='fu'>ec2pss</span><span class='op'>(</span><span class='va'>ec</span>, <span class='va'>t</span>, p <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,17 +178,22 @@ in Marine Science 44. UNESCO, Paris, 53 p.</p>
 <p>Hill K.D., Dauphinee T.M. and Woods D.J. (1986) The extension of the
 Practical Salinity Scale 1978 to low salinities. <em>IEEE Journal of
 Oceanic Engineering</em> <b>11,</b> 109-112.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alan Jassby, James Cloern</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Check values from Fofonoff and Millard (1983):</span>
-<span class='no'>R</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.2</span>, <span class='fl'>0.65</span>)
-<span class='no'>t</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>15</span>, <span class='fl'>20</span>, <span class='fl'>5</span>)
-<span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>2000</span>, <span class='fl'>1500</span>)
-<span class='fu'><a href='R2pss.html'>R2pss</a></span>(<span class='no'>R</span>, <span class='no'>t</span>, <span class='no'>p</span>)  <span class='co'># 35.000 37.246 27.995</span></div><div class='output co'>#&gt; [1] 35.00000 37.24563 27.99535</div><div class='input'><span class='co'># Repeat calculation with equivalent conductivity values by setting </span>
+<span class='va'>R</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1.2</span>, <span class='fl'>0.65</span><span class='op'>)</span> 
+<span class='va'>t</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>20</span>, <span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2000</span>, <span class='fl'>1500</span><span class='op'>)</span>
+<span class='fu'><a href='R2pss.html'>R2pss</a></span><span class='op'>(</span><span class='va'>R</span>, <span class='va'>t</span>, <span class='va'>p</span><span class='op'>)</span>  <span class='co'># 35.000 37.246 27.995</span>
+</div><div class='output co'>#&gt; [1] 35.00000 37.24563 27.99535</div><div class='input'><span class='co'># Repeat calculation with equivalent conductivity values by setting </span>
 <span class='co'># ec &lt;- R * C(35, 15, 0):</span>
-<span class='no'>ec</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.2</span>, <span class='fl'>0.65</span>) * <span class='fl'>42.9140</span>
-<span class='fu'>ec2pss</span>(<span class='no'>ec</span>, <span class='no'>t</span>, <span class='no'>p</span>)  <span class='co'># same results</span></div><div class='output co'>#&gt; [1] 35.00000 37.24563 27.99535</div><div class='input'>
+<span class='va'>ec</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1.2</span>, <span class='fl'>0.65</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>42.9140</span>
+<span class='fu'>ec2pss</span><span class='op'>(</span><span class='va'>ec</span>, <span class='va'>t</span>, <span class='va'>p</span><span class='op'>)</span>  <span class='co'># same results</span>
+</div><div class='output co'>#&gt; [1] 35.00000 37.24563 27.99535</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -201,11 +206,11 @@ Oceanic Engineering</em> <b>11,</b> 109-112.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

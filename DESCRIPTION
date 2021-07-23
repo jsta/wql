@@ -5,9 +5,9 @@ Version: 0.4.9
 Authors@R: c(
   person("Alan", "Jassby", role = c("aut")),
   person("James", "Cloern", role = c("ctb")),
-  person("Joseph", "Stachelek", role = c("ctb", "cre"), email = "stachel2@msu.edu")
+  person("Jemma", "Stachelek", role = c("ctb", "cre"), email = "stachel2@msu.edu")
   )
-Maintainer: Joseph Stachelek <stachel2@msu.edu>
+Maintainer: Jemma Stachelek <stachel2@msu.edu>
 URL: https://github.com/jsta/wql
 BugReports: https://github.com/jsta/wql/issues
 Description: Functions to assist in the processing and

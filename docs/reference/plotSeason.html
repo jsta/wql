@@ -136,14 +136,14 @@ plots composites of seasonal pattern. Can also plot each month separately
 for the entire record.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotSeason</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"by.era"</span>, <span class='st'>"by.month"</span>),
-  <span class='kw'>num.era</span> <span class='kw'>=</span> <span class='fl'>4</span>,
-  <span class='kw'>same.plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>num.col</span> <span class='kw'>=</span> <span class='fl'>3</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plotSeason</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"by.era"</span>, <span class='st'>"by.month"</span><span class='op'>)</span>,
+  num.era <span class='op'>=</span> <span class='fl'>4</span>,
+  same.plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  ylab <span class='op'>=</span> <span class='cn'>NULL</span>,
+  num.col <span class='op'>=</span> <span class='fl'>3</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,11 +195,17 @@ device aspect ratio and size to get the clearest information.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='decompTs.html'>decompTs</a></code>, <code><a href='seasonTrend.html'>seasonTrend</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alan Jassby, James Cloern</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>chl27</span> <span class='kw'>&lt;-</span> <span class='no'>sfbayChla</span>[, <span class='st'>'s27'</span>]
-<span class='fu'>plotSeason</span>(<span class='no'>chl27</span>, <span class='kw'>num.era</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1978</span>, <span class='fl'>1988</span>, <span class='fl'>1998</span>, <span class='fl'>2008</span>), <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Stn 27 Chl-a'</span>)</div><div class='img'><img src='plotSeason-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotSeason</span>(<span class='no'>chl27</span>, <span class='kw'>num.era</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>same.plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Stn 27 Chl-a'</span>)</div><div class='img'><img src='plotSeason-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotSeason</span>(<span class='no'>chl27</span>, <span class='st'>"by.month"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Stn 27 Chl-a'</span>)</div><div class='img'><img src='plotSeason-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>chl27</span> <span class='op'>&lt;-</span> <span class='va'>sfbayChla</span><span class='op'>[</span>, <span class='st'>'s27'</span><span class='op'>]</span>
+<span class='fu'>plotSeason</span><span class='op'>(</span><span class='va'>chl27</span>, num.era <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1978</span>, <span class='fl'>1988</span>, <span class='fl'>1998</span>, <span class='fl'>2008</span><span class='op'>)</span>, ylab <span class='op'>=</span> <span class='st'>'Stn 27 Chl-a'</span><span class='op'>)</span>
+</div><div class='img'><img src='plotSeason-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotSeason</span><span class='op'>(</span><span class='va'>chl27</span>, num.era <span class='op'>=</span> <span class='fl'>3</span>, same.plot <span class='op'>=</span> <span class='cn'>FALSE</span>, ylab <span class='op'>=</span> <span class='st'>'Stn 27 Chl-a'</span><span class='op'>)</span>
+</div><div class='img'><img src='plotSeason-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotSeason</span><span class='op'>(</span><span class='va'>chl27</span>, <span class='st'>"by.month"</span>, ylab <span class='op'>=</span> <span class='st'>'Stn 27 Chl-a'</span><span class='op'>)</span>
+</div><div class='img'><img src='plotSeason-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -212,11 +218,11 @@ device aspect ratio and size to get the clearest information.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Alan Jassby, Joseph Stachelek.</p>
+  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
