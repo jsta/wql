@@ -21,7 +21,7 @@ vignette: >
 knitr::opts_chunk$set(fig.align="center", warning=FALSE)
 ```
 
-*Edited by Joseph Stachelek: `r format(Sys.time(), '%d %B, %Y')`*
+*Edited by Jemma Stachelek: `r format(Sys.time(), '%d %B, %Y')`*
 
 # Introduction
 

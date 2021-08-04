@@ -94,7 +94,7 @@
 
     
     
-<p><em>Edited by Joseph Stachelek: 23 July, 2021</em></p>
+<p><em>Edited by Jemma Stachelek: 04 August, 2021</em></p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -130,12 +130,12 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">sfbay</span><span class="op">)</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="va">sfbay</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></code></pre></div>
-<pre><code>##  [1] 9.5 7.2 9.3  NA  NA 7.3  NA  NA 7.1 7.1</code></pre>
+<pre><code>##  [1]  8.3  9.1   NA  9.2  6.7 11.8  7.1  9.5  8.1  7.4</code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sfbay1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">sfbay</span>,
                     dox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">*</span> <span class="va">dox</span><span class="op">/</span><span class="fu"><a href="../reference/oxySol.html">oxySol</a></span><span class="op">(</span><span class="va">sal</span>, <span class="va">temp</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sfbay1</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></code></pre></div>
-<pre><code>##  [1] 103.6 104.2 103.2    NA    NA 105.6    NA    NA 106.5 106.1</code></pre>
+<pre><code>##  [1] 117.9 104.6    NA 103.4  80.7 130.0  99.5 120.5 110.2 106.8</code></pre>
 </div>
 <div id="the-wqdata-class" class="section level1">
 <h1 class="hasAnchor">
