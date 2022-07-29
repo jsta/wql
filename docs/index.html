@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,23 +42,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">wql</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -73,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jsta/wql/">
+  <a href="https://github.com/jsta/wql/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -90,30 +86,30 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="wql--exploring-water-quality-monitoring-data" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#wql--exploring-water-quality-monitoring-data" class="anchor"></a>wql : Exploring Water Quality Monitoring Data</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="wql--exploring-water-quality-monitoring-data">wql : Exploring Water Quality Monitoring Data<a class="anchor" aria-label="anchor" href="#wql--exploring-water-quality-monitoring-data"></a>
+</h1></div>
 
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div id="stable-version-from-cran" class="section level3">
-<h3 class="hasAnchor">
-<a href="#stable-version-from-cran" class="anchor"></a>Stable version from CRAN</h3>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="section level3">
+<h3 id="stable-version-from-cran">Stable version from CRAN<a class="anchor" aria-label="anchor" href="#stable-version-from-cran"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"wql"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"wql"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="or-development-version-from-github" class="section level3">
-<h3 class="hasAnchor">
-<a href="#or-development-version-from-github" class="anchor"></a>or development version from GitHub</h3>
+<div class="section level3">
+<h3 id="or-development-version-from-github">or development version from GitHub<a class="anchor" aria-label="anchor" href="#or-development-version-from-github"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'devtools'</span><span class="op">)</span>  <span class="co"># package devtools needed</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"jsta/wql"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'devtools'</span><span class="op">)</span>  <span class="co"># package devtools needed</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jsta/wql"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="motivation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#motivation" class="anchor"></a>Motivation</h2>
+<div class="section level2">
+<h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
+</h2>
 <p>The main purpose of wql is to explore seasonal time series through plots and nonparametric trend tests. It was created originally to examine water quality data sets (hence, wql) but is suitable as a more general purpose set of tools for looking at annual or seasonal time series.</p>
 <p>One of the more tedious tasks in exploring environmental data sets is creating usable time series from the original complex data sets, especially when you want many series at will that group data in different ways. So wql also provides a way of transforming data sets to a common format that then allows a diversity of time series to be created quickly. A few functions are specific to the fields of limnology and oceanography.</p>
 <p>The plots are designed for easy use, not for publication-quality graphs. Nonetheless, extensive customization is possible by passing options through …, adding annotations in the case of base graphics, and adding layers in the case of ggplot2 objects.</p>
@@ -138,14 +134,14 @@
 <li>converting between salinity and conductivity</li>
 </ul>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>The capabilities of wql are more fully explained in the accompanying vignette: <a href="https://jsta.github.io/wql/articles/wql-package.html">wql: Exploring environmental monitoring data</a></p>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<p>The capabilities of wql are more fully explained in the accompanying vignette: <a href="https://jsta.github.io/wql/articles/wql-package.html" class="external-link">wql: Exploring environmental monitoring data</a></p>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <p>This package is an independent fork of the archived CRAN package <code>wq</code>. To date, improvements have been focused on improving the documentation and code readability.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; To cite wq in publications use:</span></span>
@@ -169,54 +165,58 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=wql">https://​cloud.r-project.org/​package=wql</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/jsta/wql/">https://​github.com/​jsta/​wql/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/jsta/wql/issues">https://​github.com/​jsta/​wql/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a></li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing wql</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Alan Jassby <br><small class="roles"> Author </small>  </li>
-<li>Jemma Stachelek <br><small class="roles"> Contributor, maintainer </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=wql" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/jsta/wql/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/jsta/wql/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
-<li><a href="https://cran.r-project.org/package=wql"><img src="http://www.r-pkg.org/badges/version/wql" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-2" class="external-link">GPL-2</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing wql</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Alan Jassby <br><small class="roles"> Author </small>  </li>
+<li>Jemma Stachelek <br><small class="roles"> Contributor, maintainer </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="http://www.repostatus.org/#active" class="external-link"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
+<li><a href="https://cran.r-project.org/package=wql" class="external-link"><img src="http://www.r-pkg.org/badges/version/wql" alt="CRAN_Status_Badge"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Alan Jassby, Jemma Stachelek.</p>
+  <p></p>
+<p>Developed by Alan Jassby, Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
@@ -224,6 +224,8 @@
 
   
 
+
+  
 
   </body>
 </html>
