@@ -1,3 +1,9 @@
+wql 1.0.0
+=========
+* Update maintainer name and contact info
+* Bump version to signify stable functioning
+* Link rot fixes
+
 wql 0.4.9
 =========
 * Fork and rebrand wq to wql

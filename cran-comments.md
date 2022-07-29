@@ -1,12 +1,10 @@
 ## Test environments
-* ubuntu 16.04, R 3.4.1
-* win-builder (devel and release)
+* ubuntu 20.04, R 3.4.1
+* rhub (devel and release)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* This is a new release.
+0 errors | 0 warnings | 0 note
 
 ## Reverse dependencies
 
