@@ -1,7 +1,7 @@
 Package: wql
 Type: Package
 Title: Exploring Water Quality Monitoring Data
-Version: 0.4.9
+Version: 1.0.0
 Authors@R: c(
   person("Alan", "Jassby", role = c("aut")),
   person("James", "Cloern", role = c("ctb")),
