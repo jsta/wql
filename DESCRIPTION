@@ -5,9 +5,9 @@ Version: 0.4.9
 Authors@R: c(
   person("Alan", "Jassby", role = c("aut")),
   person("James", "Cloern", role = c("ctb")),
-  person("Jemma", "Stachelek", role = c("ctb", "cre"), email = "stachel2@msu.edu")
+  person("Jemma", "Stachelek", role = c("ctb", "cre"), email = "jemma.stachelek@gmail.com")
   )
-Maintainer: Jemma Stachelek <stachel2@msu.edu>
+Maintainer: Jemma Stachelek <jemma.stachelek@gmail.com>
 URL: https://github.com/jsta/wql
 BugReports: https://github.com/jsta/wql/issues
 Description: Functions to assist in the processing and
@@ -26,6 +26,6 @@ LazyData: yes
 License: GPL-2
 VignetteBuilder: knitr
 NeedsCompilation: no
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Suggests: knitr,
     rmarkdown
