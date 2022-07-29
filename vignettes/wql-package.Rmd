@@ -41,7 +41,7 @@ library(wql)
 
 # Preparing data from an external file
 
-Our starting point is a comma-delimited file downloaded on 2009-11-17 from the U.S. Geological Survey's water quality data set for [San Francisco Bay](https://sfbay.wr.usgs.gov/water-quality-database "USGS: Water Quality of San Francisco Bay"). The downloaded file, `sfbay.csv`, starts with a row of variable names followed by a row of units, so the first two lines are skipped during import and simpler variable names are substituted for the originals. Also, only a subset of stations and years is used in order to keep `sfbay.csv` small:
+Our starting point is a comma-delimited file downloaded on 2009-11-17 from the U.S. Geological Survey's water quality data set for [San Francisco Bay](https://sfbay.wr.usgs.gov/water-quality-database/ "USGS: Water Quality of San Francisco Bay"). The downloaded file, `sfbay.csv`, starts with a row of variable names followed by a row of units, so the first two lines are skipped during import and simpler variable names are substituted for the originals. Also, only a subset of stations and years is used in order to keep `sfbay.csv` small:
 
 ```{r eval=FALSE}
 sfbay <- read.csv("sfbay.csv", header = FALSE, as.is = TRUE,

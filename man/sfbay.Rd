@@ -40,7 +40,7 @@ of average 0-5 m chlorophyll \emph{a} concentrations calculated from the
 data in \code{sfbay}.
 }
 \source{
-Downloaded from \url{http://sfbay.wr.usgs.gov/access/wqdata} on
+Downloaded from \url{https://sfbay.wr.usgs.gov/water-quality-database/} on
 2009-11-17.
 }
 \description{
