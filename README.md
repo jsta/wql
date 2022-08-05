@@ -5,8 +5,8 @@
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
-developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/wql)](https://cran.r-project.org/package=wql)
+developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/wql)](https://cran.r-project.org/package=wql)
 
 ## Installation
 
@@ -84,16 +84,15 @@ and code readability.
     #> 
     #> To cite wq in publications use:
     #> 
-    #>   Alan D. Jassby and James E. Cloern (2017). wq: Some tools for
-    #>   exploring water quality monitoring data. R package version 0.4.9.
+    #>   Alan D. Jassby and James E. Cloern (). wq: Some tools for exploring
+    #>   water quality monitoring data. R package version 1.0.0.
     #>   https://cran.r-project.org/package=wq
     #> 
     #> A BibTeX entry for LaTeX users is
     #> 
-    #>   @Manual{jassby2017wq,
+    #>   @Manual{jassbywq,
     #>     title = {wq: Exploring water quality monitoring data},
     #>     author = {Alan D. Jassby and James E. Cloern},
-    #>     year = {2017},
-    #>     note = {R package version 0.4.9},
+    #>     note = {R package version 1.0.0},
     #>     url = {https://CRAN.R-project.org/package=wq},
     #>   }
