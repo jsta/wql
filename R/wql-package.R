@@ -523,7 +523,6 @@ NULL
 #'
 #' @name wql-package
 #' @aliases wql-package wql
-#' @docType package
 #' @author
 #' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_author(\"#1\")}",
 #' "wql")\Sexpr{tools:::Rd_package_author("wql")}
@@ -532,7 +531,7 @@ NULL
 #' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer(\"#1\")}",
 #' "wql")\Sexpr{tools:::Rd_package_maintainer("wql")}
 #' @keywords package
-NULL
+"_PACKAGE"
 
 
 

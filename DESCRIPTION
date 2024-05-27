@@ -1,7 +1,8 @@
 Package: wql
 Type: Package
 Title: Exploring Water Quality Monitoring Data
-Version: 1.0.0
+Encoding: UTF-8
+Version: 1.0.1
 Authors@R: c(
   person("Alan", "Jassby", role = c("aut")),
   person("James", "Cloern", role = c("ctb")),
@@ -26,6 +27,6 @@ LazyData: yes
 License: GPL-2
 VignetteBuilder: knitr
 NeedsCompilation: no
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.1
 Suggests: knitr,
     rmarkdown

@@ -57,6 +57,14 @@ saturation \item converting between salinity and conductivity }
 The capabilities of \pkg{wql} are more fully explained in the accompanying
 vignette: \dQuote{wql: Exploring environmental monitoring data}.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/jsta/wql}
+  \item Report bugs at \url{https://github.com/jsta/wql/issues}
+}
+
+}
 \author{
 c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_author(\"#1\")}",
 "wql")\Sexpr{tools:::Rd_package_author("wql")}
