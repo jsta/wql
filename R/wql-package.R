@@ -469,12 +469,6 @@ NULL
 
 
 
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_title(\"#1\")}",
-#' "wql")\Sexpr{tools:::Rd_package_title("wql")}
-#'
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_description(\"#1\")}",
-#' "wql")\Sexpr{tools:::Rd_package_description("wql")}
-#'
 #' The main purpose of \pkg{wql} is to explore seasonal time series through
 #' plots and nonparametric trend tests. It was created originally to examine
 #' water quality data sets (hence, \dQuote{wql}) but is suitable as a more
@@ -523,13 +517,6 @@ NULL
 #'
 #' @name wql-package
 #' @aliases wql-package wql
-#' @author
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_author(\"#1\")}",
-#' "wql")\Sexpr{tools:::Rd_package_author("wql")}
-#'
-#' Maintainer:
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer(\"#1\")}",
-#' "wql")\Sexpr{tools:::Rd_package_maintainer("wql")}
 #' @keywords package
 "_PACKAGE"
 

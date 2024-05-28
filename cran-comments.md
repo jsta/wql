@@ -1,5 +1,5 @@
 ## Test environments
-* ubuntu 20.04, R 3.4.1
+* ubuntu 22.04, R "Unsuffered Consequences"
 * rhub (devel and release)
 
 ## R CMD check results

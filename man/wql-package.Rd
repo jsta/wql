@@ -4,25 +4,19 @@
 \name{wql-package}
 \alias{wql-package}
 \alias{wql}
-\title{c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_title(\"#1\")}",
-"wql")\Sexpr{tools:::Rd_package_title("wql")}}
-\description{
-c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_description(\"#1\")}",
-"wql")\Sexpr{tools:::Rd_package_description("wql")}
-}
-\details{
-The main purpose of \pkg{wql} is to explore seasonal time series through
+\title{The main purpose of \pkg{wql} is to explore seasonal time series through
 plots and nonparametric trend tests. It was created originally to examine
 water quality data sets (hence, \dQuote{wql}) but is suitable as a more
-general purpose set of tools for looking at annual or seasonal time series.
-
+general purpose set of tools for looking at annual or seasonal time series.}
+\description{
 One of the more tedious tasks in exploring environmental data sets is
 creating usable time series from the original complex data sets, especially
 when you want many series at will that group data in different ways. So
 \pkg{wql} also provides a way of transforming data sets to a common format
 that then allows a diversity of time series to be created quickly. A few
 functions are specific to the fields of limnology and oceanography.
-
+}
+\details{
 The plots are designed for easy use, not for publication-quality graphs.
 Nonetheless, extensive customization is possible by passing options through
 \code{\ldots{}}, adding annotations in the case of base graphics, and adding
@@ -66,11 +60,17 @@ Useful links:
 
 }
 \author{
-c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_author(\"#1\")}",
-"wql")\Sexpr{tools:::Rd_package_author("wql")}
+\strong{Maintainer}: Jemma Stachelek \email{jemma.stachelek@gmail.com} [contributor]
 
-Maintainer:
-c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer(\"#1\")}",
-"wql")\Sexpr{tools:::Rd_package_maintainer("wql")}
+Authors:
+\itemize{
+  \item Alan Jassby
+}
+
+Other contributors:
+\itemize{
+  \item James Cloern [contributor]
+}
+
 }
 \keyword{package}

@@ -54,7 +54,7 @@
 #' Helsel, D.R. and Hirsch, R.M. (2002) \emph{Statistical methods in water
 #' resources.} Techniques of Water Resources Investigations, Book 4, chapter
 #' A3. U.S. Geological Survey. 522 pages.
-#' \url{http://pubs.usgs.gov/twri/twri4a3/}
+#' \doi{10.3133/twri04A3}
 #' 
 #' Schertz, T.L., Alexander, R.B., and Ohe, D.J. (1991) \emph{The computer
 #' program EStimate TREND (ESTREND), a system for the detection of trends in
