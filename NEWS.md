@@ -1,3 +1,7 @@
+wql 1.0.1
+=========
+* CRAN maintenence release
+
 wql 1.0.0
 =========
 * Update maintainer name and contact info
