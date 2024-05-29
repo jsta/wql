@@ -7,3 +7,4 @@ saveNAMESPACE
 README.html
 ^cran-comments\.md$
 .vscode
+^CRAN-SUBMISSION$

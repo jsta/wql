@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>wql: Exploring water quality monitoring data • wql</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">wql</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -78,8 +78,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>wql: Exploring water quality monitoring data</h1>
-                        <h4 data-toc-skip class="author">Alan D. Jassby and James E. Cloern</h4>
+      <h1 data-toc-skip>wql: Exploring water quality monitoring
+data</h1>
+                        <h4 data-toc-skip class="author">Alan D. Jassby
+and James E. Cloern</h4>
             
             <h4 data-toc-skip class="date">18 May, 2016</h4>
       
@@ -90,21 +92,54 @@
 
     
     
-<p><em>Edited by Jemma Stachelek: 29 July, 2022</em></p>
+<p><em>Edited by Jemma Stachelek: 28 May, 2024</em></p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This package contains functions to assist in the processing and exploration of data from monitoring programs for aquatic ecosystems. The name <em>wq</em> stands for <em>w</em>ater <em>q</em>uality. Although our own interest is in aquatic ecology, almost all of the functions should be useful for time series analysis regardless of the subject matter. The package is intended for programs that sample approximately monthly at discrete stations, a feature of many legacy data sets.</p>
+<p>This package contains functions to assist in the processing and
+exploration of data from monitoring programs for aquatic ecosystems. The
+name <em>wq</em> stands for <em>w</em>ater <em>q</em>uality. Although
+our own interest is in aquatic ecology, almost all of the functions
+should be useful for time series analysis regardless of the subject
+matter. The package is intended for programs that sample approximately
+monthly at discrete stations, a feature of many legacy data sets.</p>
 <p><img src="wqflow.png" style="display: block; margin: auto;"></p>
-<p>The functions are summarized in the diagram above, which illustrates a typical sequence of analysis that could be facilitated by the package when the data are in a data frame or time series. The functions associated with each step of the sequence are listed below their corresponding step. First, we might want to <strong>derive</strong> additional variables of interest. A few functions are provided here for variables common to water monitoring data. Next, we <strong>generate</strong> time series from the data in a two-stage process: the <code>data.frame</code> is first converted into a standardized form (with <code>wqData</code>) and then another function (<code>tsMake</code>) is applied to this new data object to generate the series. This two-stage process is not necessary, and – as implied in the diagram – you can skip it by using time series that already exist or that you construct in another way. But it has advantages when you’re constructing many different kinds of series from a data set, especially one that is unbalanced with respect to place and time. There are also a few special methods available to <strong>summarize</strong> this new data object. Next, we may need to <strong>reshape</strong> the time series in various ways for further analysis, perhaps also imputing missing values. Finally, we <strong>analyze</strong> the data to extract patterns using special plots, trend tests, and other approaches.</p>
-<p>We illustrate some of the steps in the diagram using the accompanying data set <code>sfbay</code>.</p>
+<p>The functions are summarized in the diagram above, which illustrates
+a typical sequence of analysis that could be facilitated by the package
+when the data are in a data frame or time series. The functions
+associated with each step of the sequence are listed below their
+corresponding step. First, we might want to <strong>derive</strong>
+additional variables of interest. A few functions are provided here for
+variables common to water monitoring data. Next, we
+<strong>generate</strong> time series from the data in a two-stage
+process: the <code>data.frame</code> is first converted into a
+standardized form (with <code>wqData</code>) and then another function
+(<code>tsMake</code>) is applied to this new data object to generate the
+series. This two-stage process is not necessary, and – as implied in the
+diagram – you can skip it by using time series that already exist or
+that you construct in another way. But it has advantages when you’re
+constructing many different kinds of series from a data set, especially
+one that is unbalanced with respect to place and time. There are also a
+few special methods available to <strong>summarize</strong> this new
+data object. Next, we may need to <strong>reshape</strong> the time
+series in various ways for further analysis, perhaps also imputing
+missing values. Finally, we <strong>analyze</strong> the data to extract
+patterns using special plots, trend tests, and other approaches.</p>
+<p>We illustrate some of the steps in the diagram using the accompanying
+data set <code>sfbay</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jsta/wql" class="external-link">wql</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="preparing-data-from-an-external-file">Preparing data from an external file<a class="anchor" aria-label="anchor" href="#preparing-data-from-an-external-file"></a>
 </h2>
-<p>Our starting point is a comma-delimited file downloaded on 2009-11-17 from the U.S. Geological Survey’s water quality data set for <a href="https://sfbay.wr.usgs.gov/water-quality-database/" title="USGS: Water Quality of San Francisco Bay" class="external-link">San Francisco Bay</a>. The downloaded file, <code>sfbay.csv</code>, starts with a row of variable names followed by a row of units, so the first two lines are skipped during import and simpler variable names are substituted for the originals. Also, only a subset of stations and years is used in order to keep <code>sfbay.csv</code> small:</p>
+<p>Our starting point is a comma-delimited file downloaded on 2009-11-17
+from the U.S. Geological Survey’s water quality data set for <a href="https://sfbay.wr.usgs.gov/water-quality-database/" title="USGS: Water Quality of San Francisco Bay" class="external-link">San Francisco Bay</a>.
+The downloaded file, <code>sfbay.csv</code>, starts with a row of
+variable names followed by a row of units, so the first two lines are
+skipped during import and simpler variable names are substituted for the
+originals. Also, only a subset of stations and years is used in order to
+keep <code>sfbay.csv</code> small:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfbay</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"sfbay.csv"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, as.is <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                  skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -112,7 +147,9 @@
 <span>                  <span class="st">'spm'</span>, <span class="st">'ext'</span>, <span class="st">'sal'</span>, <span class="st">'temp'</span>, <span class="st">'nox'</span>, <span class="st">'nhx'</span><span class="op">)</span></span>
 <span><span class="va">sfbay</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">sfbay</span>, <span class="va">stn</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">21</span>, <span class="fl">24</span>, <span class="fl">27</span>, <span class="fl">30</span>, <span class="fl">32</span>, <span class="fl">36</span><span class="op">)</span> <span class="op">&amp;</span></span>
 <span>                <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="va">date</span>, <span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">1985</span><span class="op">:</span><span class="fl">2004</span><span class="op">)</span></span></code></pre></div>
-<p>The resulting data frame <code>sfbay</code> is provided as part of the package, and its contents are explained in the accompanying help file.</p>
+<p>The resulting data frame <code>sfbay</code> is provided as part of
+the package, and its contents are explained in the accompanying help
+file.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sfbay</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##            date time stn depth chl dox spm ext   sal temp nox nhx</span></span>
@@ -122,24 +159,66 @@
 <span><span class="co">## 6838  1/23/1985 1120  21    12 3.4  NA  21 1.9 29.36   NA  NA  NA</span></span>
 <span><span class="co">## 6841  1/23/1985 1222  24     1 6.2  NA  17 1.6 27.42   NA  NA  NA</span></span>
 <span><span class="co">## 6842  1/23/1985 1222  24     2 5.6  NA  18 1.6 27.42   NA  NA  NA</span></span></code></pre>
-<p>The next step is to add any necessary derived variables to the data frame. An initial data set will sometimes contain conductivity rather than salinity data, and we might want to use <code>ec2pss</code> to derive the latter. That’s not the case here, but let’s assume that we want dissolved oxygen as percent saturation rather than in concentration units. Using <code>oxySol</code> and the convention of expressing percent saturation with respect to surface pressure:</p>
+<p>The next step is to add any necessary derived variables to the data
+frame. An initial data set will sometimes contain conductivity rather
+than salinity data, and we might want to use <code>ec2pss</code> to
+derive the latter. That’s not the case here, but let’s assume that we
+want dissolved oxygen as percent saturation rather than in concentration
+units. Using <code>oxySol</code> and the convention of expressing
+percent saturation with respect to surface pressure:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sfbay</span><span class="op">)</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">sfbay</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1]  8.2  9.8  7.2  9.0  8.5 11.3   NA  9.0  8.7  8.0</span></span></code></pre>
+<pre><code><span><span class="co">##  [1]   NA  8.0   NA  8.6   NA  8.3 10.4  9.0  8.1   NA</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfbay1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">sfbay</span>,</span>
 <span>                    dox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">*</span> <span class="va">dox</span><span class="op">/</span><span class="fu"><a href="../reference/oxySol.html">oxySol</a></span><span class="op">(</span><span class="va">sal</span>, <span class="va">temp</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sfbay1</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1] 106.7 110.5  81.1 122.2  98.7 111.4    NA 115.9 119.4 103.3</span></span></code></pre>
+<pre><code><span><span class="co">##  [1]    NA 114.6    NA 106.6    NA 108.9  99.1 103.3  94.5    NA</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="the-wqdata-class">The <code>WqData</code> class<a class="anchor" aria-label="anchor" href="#the-wqdata-class"></a>
 </h2>
-<p>We define a standardized format for water quality data by creating a formal (<code>S4</code>) class, the <code>WqData</code> class, that enforces the standards, and an accompanying generating function <code>wqData</code> (note lower-case w). This generating function constructs a <code>WqData</code> object from a data frame. The <code>WqData</code> object is just a restricted version of a <code>data.frame</code> that requires specific column names and classes.</p>
-<p>We decided to accommodate two types of sampling time, namely, the date either with or without the time of day. The former are converted to the <code>POSIXct</code> class and the latter to the <code>Date</code> class. A special class <code>DateTime</code> is created, which is the union of these two time classes. Classes that combine date and time of day require an additional level of care with respect to time zone <span class="citation">(Grothendieck and Petzoldt 2004)</span>.</p>
-<p>Surface location is specified by a <code>site</code> code, as the intention is to handle discrete monitoring programs as opposed to continuous transects. Latitude-longitude and distances from a fixed point are implicit in the <code>site</code> code and can be recorded in a separate table (see <code>sfbayVars</code>). The <code>depth</code> is specified separately as a number. Other information that may not be depth-specific, such as the mean vertical extinction coefficient in the near-surface layer, can be coded by a negative depth number. The last two fields in the data portion of a <code>WqData</code> object are the <code>variable</code> code and the <code>value</code>. The variables are given as character strings and the values as numbers. As in the case of the sampling site, additional information related to the variable code can be maintained in a separate table (see <code>sfbayVars</code>).</p>
-<p>Like all <code>S4</code> classes, <code>WqData</code> has a generating function called <code>new</code> automatically created along with the class. This function, however, requires that its data frame argument already have a fairly restricted form of structure. In order to decrease the manipulation required of the imported data, a separate, less restrictive generating function called <code>wqData</code> is available. This function is more forgiving of field names and classes and does a few other cleanup tasks with the data before calling <code>new</code>. Perhaps most useful, it converts data from a <em>wide</em> format with one field per variable into the <em>long</em> format used by the <code>WqData</code> class. For example, <code>sfbay</code> can be converted to a <code>WqData</code> object with a single command:</p>
+<p>We define a standardized format for water quality data by creating a
+formal (<code>S4</code>) class, the <code>WqData</code> class, that
+enforces the standards, and an accompanying generating function
+<code>wqData</code> (note lower-case w). This generating function
+constructs a <code>WqData</code> object from a data frame. The
+<code>WqData</code> object is just a restricted version of a
+<code>data.frame</code> that requires specific column names and
+classes.</p>
+<p>We decided to accommodate two types of sampling time, namely, the
+date either with or without the time of day. The former are converted to
+the <code>POSIXct</code> class and the latter to the <code>Date</code>
+class. A special class <code>DateTime</code> is created, which is the
+union of these two time classes. Classes that combine date and time of
+day require an additional level of care with respect to time zone <span class="citation">(Grothendieck and Petzoldt 2004)</span>.</p>
+<p>Surface location is specified by a <code>site</code> code, as the
+intention is to handle discrete monitoring programs as opposed to
+continuous transects. Latitude-longitude and distances from a fixed
+point are implicit in the <code>site</code> code and can be recorded in
+a separate table (see <code>sfbayVars</code>). The <code>depth</code> is
+specified separately as a number. Other information that may not be
+depth-specific, such as the mean vertical extinction coefficient in the
+near-surface layer, can be coded by a negative depth number. The last
+two fields in the data portion of a <code>WqData</code> object are the
+<code>variable</code> code and the <code>value</code>. The variables are
+given as character strings and the values as numbers. As in the case of
+the sampling site, additional information related to the variable code
+can be maintained in a separate table (see <code>sfbayVars</code>).</p>
+<p>Like all <code>S4</code> classes, <code>WqData</code> has a
+generating function called <code>new</code> automatically created along
+with the class. This function, however, requires that its data frame
+argument already have a fairly restricted form of structure. In order to
+decrease the manipulation required of the imported data, a separate,
+less restrictive generating function called <code>wqData</code> is
+available. This function is more forgiving of field names and classes
+and does a few other cleanup tasks with the data before calling
+<code>new</code>. Perhaps most useful, it converts data from a
+<em>wide</em> format with one field per variable into the <em>long</em>
+format used by the <code>WqData</code> class. For example,
+<code>sfbay</code> can be converted to a <code>WqData</code> object with
+a single command:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wqData.html">wqData</a></span><span class="op">(</span><span class="va">sfbay</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>, <span class="fl">5</span><span class="op">:</span><span class="fl">12</span>, site.order <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>              type <span class="op">=</span> <span class="st">"wide"</span>, time.format <span class="op">=</span> <span class="st">"%m/%d/%Y"</span><span class="op">)</span></span>
@@ -151,7 +230,9 @@
 <span><span class="co">## 4 1985-01-23  s21    12      chl   3.4</span></span>
 <span><span class="co">## 5 1985-01-23  s24     1      chl   6.2</span></span>
 <span><span class="co">## 6 1985-01-23  s24     2      chl   5.6</span></span></code></pre>
-<p>There is a <code>summary</code> method for this class that tabulates the number of observations by site and variable, as well as the mean and quartiles for individual variables:</p>
+<p>There is a <code>summary</code> method for this class that tabulates
+the number of observations by site and variable, as well as the mean and
+quartiles for individual variables:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sfb</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       time             site           depth           variable    </span></span>
@@ -170,16 +251,38 @@
 <span><span class="co">##  3rd Qu.: 23.00  </span></span>
 <span><span class="co">##  Max.   :983.00  </span></span>
 <span><span class="co">## </span></span></code></pre>
-<p>Plotting a <code>WqData</code> object produces a plot for each variable specified, each plot containing a boxplot of the values for each site. If no variables are specified, then the first 10 will be plotted.</p>
+<p>Plotting a <code>WqData</code> object produces a plot for each
+variable specified, each plot containing a boxplot of the values for
+each site. If no variables are specified, then the first 10 will be
+plotted.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sfb</span>, vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'dox'</span>, <span class="st">'temp'</span><span class="op">)</span>, num.col <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-8-1.png" width="480" style="display: block; margin: auto;"></p>
-<p>Apart from <code>summary</code> and <code>plot</code>, one can subset a <code>WqData</code> object with the <code>[</code> operator. All other existing methods for data frames will produce an object of class <code>data.frame</code> rather than one of class <code>WqData</code>.</p>
+<p>Apart from <code>summary</code> and <code>plot</code>, one can subset
+a <code>WqData</code> object with the <code>[</code> operator. All other
+existing methods for data frames will produce an object of class
+<code>data.frame</code> rather than one of class
+<code>WqData</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="generating-time-series">Generating time series<a class="anchor" aria-label="anchor" href="#generating-time-series"></a>
 </h2>
-<p>Historical water quality data are often suitable for analyzing as monthly time series, which permits the use of many existing time series functions. <code>tsMake</code> is a function for <code>WqData</code> objects that creates monthly time series for all variables at a single site or for a single variable at all sites, when the option <code>type = "ts.mon"</code>. If the quantile probability <code>qprob = NULL</code>, all replicates are first averaged and then the mean is found for the depth layers of interest. Otherwise the respective quantile will be used both to aggregate depths for each day and to aggregate days for each month. If no layers are specified, all depths will be used. If <code>layer = "max.depths"</code>, the time series will be values of the deepest sample for each time, site and variable. The <code>layer</code> argument allows for flexibility in specifying depths, including a list of layers and negative depths used as codes for, say, <em>near botton</em> or <em>entire water column</em>.</p>
+<p>Historical water quality data are often suitable for analyzing as
+monthly time series, which permits the use of many existing time series
+functions. <code>tsMake</code> is a function for <code>WqData</code>
+objects that creates monthly time series for all variables at a single
+site or for a single variable at all sites, when the option
+<code>type = "ts.mon"</code>. If the quantile probability
+<code>qprob = NULL</code>, all replicates are first averaged and then
+the mean is found for the depth layers of interest. Otherwise the
+respective quantile will be used both to aggregate depths for each day
+and to aggregate days for each month. If no layers are specified, all
+depths will be used. If <code>layer = "max.depths"</code>, the time
+series will be values of the deepest sample for each time, site and
+variable. The <code>layer</code> argument allows for flexibility in
+specifying depths, including a list of layers and negative depths used
+as codes for, say, <em>near botton</em> or <em>entire water
+column</em>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tsMake.html">tsMake</a></span><span class="op">(</span><span class="va">sfb</span>, focus <span class="op">=</span> <span class="st">"chl"</span>, layer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">]</span></span></code></pre></div>
@@ -191,12 +294,16 @@
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/tsp.html" class="external-link">tsp</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 1985.000 2004.917   12.000</span></span></code></pre>
-<p>The function <code>plotTs</code> is convenient for a quick look at the series. Lines join only adjacent data; otherwise, data are isolated dots.</p>
+<p>The function <code>plotTs</code> is convenient for a quick look at
+the series. Lines join only adjacent data; otherwise, data are isolated
+dots.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTs.html">plotTs</a></span><span class="op">(</span><span class="va">y</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, dot.size <span class="op">=</span> <span class="fl">1.3</span>, ylab <span class="op">=</span> <span class="st">"Chlorophyll in San Francisco Bay"</span>,</span>
 <span>      strip.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Station"</span>, <span class="fl">21</span><span class="op">:</span><span class="fl">24</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-10-1.png" width="700" style="display: block; margin: auto;"></p>
-<p>If the option <code>type = "zoo"</code>, then <code>tsMake</code> produces an object of class <code>zoo</code> containing values by date of observation, rather than a monthly time series.</p>
+<p>If the option <code>type = "zoo"</code>, then <code>tsMake</code>
+produces an object of class <code>zoo</code> containing values by date
+of observation, rather than a monthly time series.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/tsMake.html">tsMake</a></span><span class="op">(</span><span class="va">sfb</span>, focus <span class="op">=</span> <span class="st">"chl"</span>, layer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">'zoo'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##               s21      s24       s27       s30       s32   s36</span></span>
@@ -210,7 +317,12 @@
 <div class="section level2">
 <h2 id="reshape">Reshaping<a class="anchor" aria-label="anchor" href="#reshape"></a>
 </h2>
-<p>There are several functions for further reshaping of time series, preparing them for use in specific analyses. <code>ts2df</code> converts a monthly time series vector to a year <span class="math inline">\(\times\)</span> month data frame. Leading and trailing empty rows are removed, additional rows with missing data are optionally removed, and the data frame can be reconfigured to represent a local <em>water year</em>:</p>
+<p>There are several functions for further reshaping of time series,
+preparing them for use in specific analyses. <code>ts2df</code> converts
+a monthly time series vector to a year <span class="math inline">\(\times\)</span> month data frame. Leading and
+trailing empty rows are removed, additional rows with missing data are
+optionally removed, and the data frame can be reconfigured to represent
+a local <em>water year</em>:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl27</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span><span class="op">[</span>, <span class="st">'s27'</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/tsp.html" class="external-link">tsp</a></span><span class="op">(</span><span class="va">chl27</span><span class="op">)</span></span></code></pre></div>
@@ -225,7 +337,17 @@
 <span><span class="co">## 1981  NA 1.7 2.0  9.1   NA  NA  NA  NA  NA  NA  NA  NA</span></span>
 <span><span class="co">## 1982 2.8 4.5 6.5  9.3  8.2 3.4 1.4  NA 2.1 1.8 1.7 0.9</span></span>
 <span><span class="co">## 1983  NA 1.4 7.0 16.4 16.6 5.4 1.4 1.7 2.0 1.5 1.5 1.4</span></span></code></pre>
-<p>Another example of its use is shown in <a href="#eof">Empirical Orthogonal Functions</a> below. A similar reshaping function is <code>mts2ts</code>, which converts a matrix time series to a vector time series for various analyses. It first aggregates the multivariate matrix time series by year, then converts it to a vector time series in which the <em>seasons</em> correspond to these annnualized values for the original variables. The <code>seas</code> parameter enables focusing the subsequent analysis on seasons of special interest, or to ignore seasons where there are too many missing data. The function can be used in conjunction with <code>seaKen</code> to conduct a Regional Kendall trend analysis, as described in <a href="#trends">Trends</a> below:</p>
+<p>Another example of its use is shown in <a href="#eof">Empirical
+Orthogonal Functions</a> below. A similar reshaping function is
+<code>mts2ts</code>, which converts a matrix time series to a vector
+time series for various analyses. It first aggregates the multivariate
+matrix time series by year, then converts it to a vector time series in
+which the <em>seasons</em> correspond to these annnualized values for
+the original variables. The <code>seas</code> parameter enables focusing
+the subsequent analysis on seasons of special interest, or to ignore
+seasons where there are too many missing data. The function can be used
+in conjunction with <code>seaKen</code> to conduct a Regional Kendall
+trend analysis, as described in <a href="#trends">Trends</a> below:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">sfbayChla</span>, start <span class="op">=</span> <span class="fl">2005</span>,</span>
 <span>            end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span>  <span class="co"># 5 years, 16 sites</span></span>
@@ -240,11 +362,17 @@
 <span><span class="co">## [46] 13.0 13.0 15.1 15.1 10.9 12.5 13.8 14.1 14.8 15.9 17.0 16.7 20.2 21.0 21.8</span></span>
 <span><span class="co">## [61] 22.3 23.5 23.4 24.0  4.7  4.5  4.6  4.7  4.7  4.4  4.6  5.2  5.4  6.0  6.8</span></span>
 <span><span class="co">## [76]  7.7  8.5  9.1  8.1  8.1</span></span></code></pre>
-<p>Some functions (e.g., <code>eof</code>) do not permit <code>NA</code>s and some kind of data imputation or omission will usually be required. The function <code>interpTs</code> is handy for interpolating small data gaps. It can also be used for filling in larger gaps with long-term or seasonal means or medians. Here, we use it to bridge gaps of up to three months.</p>
+<p>Some functions (e.g., <code>eof</code>) do not permit
+<code>NA</code>s and some kind of data imputation or omission will
+usually be required. The function <code>interpTs</code> is handy for
+interpolating small data gaps. It can also be used for filling in larger
+gaps with long-term or seasonal means or medians. Here, we use it to
+bridge gaps of up to three months.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl27</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span><span class="op">[</span>, <span class="st">"s27"</span><span class="op">]</span></span>
 <span><span class="va">chl27a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/interpTs.html">interpTs</a></span><span class="op">(</span><span class="va">chl27</span>, gap <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p>The interpolated series is then plotted in red and the original series overplotted below.</p>
+<p>The interpolated series is then plotted in red and the original
+series overplotted below.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">chl27a</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">.5</span>, xlab <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">chl27</span>, col <span class="op">=</span> <span class="st">"blue"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span></code></pre></div>
@@ -256,7 +384,12 @@
 <div class="section level3">
 <h3 id="trends">Trends<a class="anchor" aria-label="anchor" href="#trends"></a>
 </h3>
-<p>The function <code>mannKen</code> does a Mann-Kendall test of trend on a time series and provides the corresponding nonparametric slope estimate. Because of serial correlation for most monthly time series, the significance of such a trend is often overstated and <code>mannKen</code> is better suited for annual series, such as this one for Nile River flow:</p>
+<p>The function <code>mannKen</code> does a Mann-Kendall test of trend
+on a time series and provides the corresponding nonparametric slope
+estimate. Because of serial correlation for most monthly time series,
+the significance of such a trend is often overstated and
+<code>mannKen</code> is better suited for annual series, such as this
+one for Nile River flow:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/mannKen.html">mannKen</a></span><span class="op">(</span><span class="va">Nile</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $sen.slope</span></span>
@@ -276,8 +409,14 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## $miss</span></span>
 <span><span class="co">## [1] 0</span></span></code></pre>
-<p>The negative trend in Nile River flow identified by <code>mannKen</code> is due largely to a shift in the late 19th century. The Pettitt test, which has a similar basis to the Mann-Kendall test <span class="citation">(Pettitt 1979)</span>, provides a nonparametric estimate of the change-point. The shift happened in 1898–99 and coincides with the beginning of construction of the Lower Aswan Dam.</p>
-&lt;&lt;fig=TRUE, echo=FALSE, width=6.5, height=4&gt;&gt;= plot(Nile, ylab = “Flow,” xlab = "") abline(v=1898, col=‘blue’) @
+<p>The negative trend in Nile River flow identified by
+<code>mannKen</code> is due largely to a shift in the late 19th century.
+The Pettitt test, which has a similar basis to the Mann-Kendall test
+<span class="citation">(Pettitt 1979)</span>, provides a nonparametric
+estimate of the change-point. The shift happened in 1898–99 and
+coincides with the beginning of construction of the Lower Aswan Dam.</p>
+&lt;&lt;fig=TRUE, echo=FALSE, width=6.5, height=4&gt;&gt;= plot(Nile,
+ylab = “Flow”, xlab = ““) abline(v=1898, col=‘blue’) @
 <p>\end{center} \end{figure}</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Nile</span>, ylab <span class="op">=</span> <span class="st">"Flow"</span>, xlab <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
@@ -306,7 +445,22 @@
 <pre><code><span><span class="co">##           pettitt.K  p.value change.point change.time change.size</span></span>
 <span><span class="co">## Nile           1362 7.83e-06           24        1898     -255.50</span></span>
 <span><span class="co">## LakeHuron      1532 2.88e-07           46        1920       -1.54</span></span></code></pre>
-<p>Both <code>mannKen</code> and <code>pett</code> can also handle matrices or data frames, with options for plotting trends in the original units per year or divided by the median for the series. The first option is suitable when time series are all in the same units, such as chlorophyll-<em>a</em> measurements from different stations. The second makes sense with variables of different units but is not suitable for variables that can span zero (e.g., sea level, or temperature in <span class="math inline">\(^\circ\)</span>C) or that have a zero median. Plotted variables can be ordered by the size of their trends, statistical significance is mapped to point shape, and trends based on excessive missing data are omitted. When aggregating monthly series to produce an annual series for trend testing, there is a utility function <code>tsSub</code> that allows subsetting the months beforehand (<code>meanSub</code> is actually more efficient when aggregation is the goal). It can be useful for avoiding months with many missing data, or to focus attention on a particular time of year:</p>
+<p>Both <code>mannKen</code> and <code>pett</code> can also handle
+matrices or data frames, with options for plotting trends in the
+original units per year or divided by the median for the series. The
+first option is suitable when time series are all in the same units,
+such as chlorophyll-<em>a</em> measurements from different stations. The
+second makes sense with variables of different units but is not suitable
+for variables that can span zero (e.g., sea level, or temperature in
+<span class="math inline">\(^\circ\)</span>C) or that have a zero
+median. Plotted variables can be ordered by the size of their trends,
+statistical significance is mapped to point shape, and trends based on
+excessive missing data are omitted. When aggregating monthly series to
+produce an annual series for trend testing, there is a utility function
+<code>tsSub</code> that allows subsetting the months beforehand
+(<code>meanSub</code> is actually more efficient when aggregation is the
+goal). It can be useful for avoiding months with many missing data, or
+to focus attention on a particular time of year:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span></span>
 <span><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tsSub.html">tsSub</a></span><span class="op">(</span><span class="va">y</span>, seas <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>  <span class="co"># focus on Feb-Apr spring bloom</span></span>
@@ -329,7 +483,17 @@
 <span><span class="co">## s34     0.254        0.0266 4.01e-01  25  817 0.714</span></span>
 <span><span class="co">## s35     0.196        0.0237 4.05e-01  23  697 0.714</span></span>
 <span><span class="co">## s36     0.191        0.0231 4.05e-01  23  697 0.714</span></span></code></pre>
-<p>A main role for <code>mannKen</code> in this package is as a support function for the Seasonal Kendall test of trend <span class="citation">(Hirsch, Slack, and Smith 1982)</span>. The Seasonal Kendall test combines information about trends for individual months (or some other subdivision of the year such as quarters) and produces an overall test of trend for a series. <code>mannKen</code> collects certain information on the pattern of missing data that is then used to determine if a Seasonal Kendall test is warranted. In particular, there is an option to report a result only if more than half the seasons are each missing less than half the possible comparisons between the first and last 20% of the years <span class="citation">(Schertz, Alexander, and Ohe 1991)</span>:</p>
+<p>A main role for <code>mannKen</code> in this package is as a support
+function for the Seasonal Kendall test of trend <span class="citation">(Hirsch, Slack, and Smith 1982)</span>. The Seasonal
+Kendall test combines information about trends for individual months (or
+some other subdivision of the year such as quarters) and produces an
+overall test of trend for a series. <code>mannKen</code> collects
+certain information on the pattern of missing data that is then used to
+determine if a Seasonal Kendall test is warranted. In particular, there
+is an option to report a result only if more than half the seasons are
+each missing less than half the possible comparisons between the first
+and last 20% of the years <span class="citation">(Schertz, Alexander,
+and Ohe 1991)</span>:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl27</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span><span class="op">[</span>, <span class="st">"s27"</span><span class="op">]</span></span>
 <span><span class="fu"><a href="../reference/seaKen.html">seaKen</a></span><span class="op">(</span><span class="va">chl27</span><span class="op">)</span></span></code></pre></div>
@@ -344,7 +508,13 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## $miss</span></span>
 <span><span class="co">## [1] 0.083</span></span></code></pre>
-<p>An important role, in turn, for <code>seaKen</code> in this package is as a support function for <code>seaRoll</code>, which applies the Seasonal Kendall test to a rolling window of years, such as a decadal window. There is an option to plot the results of <code>seaRoll</code>. <code>seaKen</code> is subject to distortion by correlation among months, but the relatively small number of years per window in typical use does not allow for an accurate correction:</p>
+<p>An important role, in turn, for <code>seaKen</code> in this package
+is as a support function for <code>seaRoll</code>, which applies the
+Seasonal Kendall test to a rolling window of years, such as a decadal
+window. There is an option to plot the results of <code>seaRoll</code>.
+<code>seaKen</code> is subject to distortion by correlation among
+months, but the relatively small number of years per window in typical
+use does not allow for an accurate correction:</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/seaRoll.html">seaRoll</a></span><span class="op">(</span><span class="va">chl27</span>, w <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##        sen.slope sen.slope.rel      p.value</span></span>
@@ -371,12 +541,20 @@
 <span><span class="co">## 1998  0.31550000   0.089193677 9.162416e-05</span></span>
 <span><span class="co">## 1999  0.30900000   0.078921416 2.609064e-05</span></span>
 <span><span class="co">## 2000  0.17500000   0.043028611 1.807407e-02</span></span></code></pre>
-<p>The Seasonal Kendall test is not informative when trends for different months differ in sign. The function <code>seasonTrend</code> enables visualization of individual monthly trends and can be helpful for, among other things, deciding on the appropriateness of the Seasonal Kendall test. The Sen slopes are shown along with an indication, using bar colour, of the Mann-Kendall test of significance. The bar is omitted if the proportion of missing values in the first and last fifths of the data is less than 0.5.</p>
+<p>The Seasonal Kendall test is not informative when trends for
+different months differ in sign. The function <code>seasonTrend</code>
+enables visualization of individual monthly trends and can be helpful
+for, among other things, deciding on the appropriateness of the Seasonal
+Kendall test. The Sen slopes are shown along with an indication, using
+bar colour, of the Mann-Kendall test of significance. The bar is omitted
+if the proportion of missing values in the first and last fifths of the
+data is less than 0.5.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span></span>
 <span><span class="fu"><a href="../reference/seasonTrend.html">seasonTrend</a></span><span class="op">(</span><span class="va">x</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, ncol <span class="op">=</span> <span class="fl">2</span>, scales <span class="op">=</span> <span class="st">'free_y'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>The function <code>trendHomog</code> can also be used to test directly for the homogeneity of seasonal trends <span class="citation">(Belle and Hughes 1984)</span>:</p>
+<p>The function <code>trendHomog</code> can also be used to test
+directly for the homogeneity of seasonal trends <span class="citation">(Belle and Hughes 1984)</span>:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span><span class="op">[</span>, <span class="st">'s27'</span><span class="op">]</span></span>
 <span><span class="fu"><a href="../reference/trendHomog.html">trendHomog</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
@@ -391,7 +569,16 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## $n</span></span>
 <span><span class="co">## [1] 11</span></span></code></pre>
-<p>A Regional Kendall test is similar to a Seasonal Kendall test, with annual data for multiple sites instead of annual data for multiple seasons <span class="citation">(Helsel and Frans 2006)</span>. The function <code>mts2ts</code> (<a href="#reshape">Reshaping</a>) facilitates transforming an annual matrix time series into the required vector time series for <code>seaKen</code>, with stations playing the role of seasons. As with seasons, correlation among sites can inflate the apparent statistical significance, so the test is best used with stations from different subregions that are not too closely related, unlike the following example:</p>
+<p>A Regional Kendall test is similar to a Seasonal Kendall test, with
+annual data for multiple sites instead of annual data for multiple
+seasons <span class="citation">(Helsel and Frans 2006)</span>. The
+function <code>mts2ts</code> (<a href="#reshape">Reshaping</a>)
+facilitates transforming an annual matrix time series into the required
+vector time series for <code>seaKen</code>, with stations playing the
+role of seasons. As with seasons, correlation among sites can inflate
+the apparent statistical significance, so the test is best used with
+stations from different subregions that are not too closely related,
+unlike the following example:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span>  <span class="co"># first 12 stns have good data coverage</span></span>
 <span><span class="fu"><a href="../reference/seaKen.html">seaKen</a></span><span class="op">(</span><span class="fu"><a href="../reference/mts2ts.html">mts2ts</a></span><span class="op">(</span><span class="va">chl</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>  <span class="co"># regional trend in spring bloom</span></span></code></pre></div>
@@ -410,14 +597,29 @@
 <div class="section level3">
 <h3 id="eof">Empirical Orthogonal Functions<a class="anchor" aria-label="anchor" href="#eof"></a>
 </h3>
-<p>Empirical Orthogonal Function (EOF) analysis is a term used primarily in the earth sciences for principal component analysis applied to simultaneous time series at different spatial locations. <span class="citation">Hannachi, Jolliffe, and Stephenson (2007)</span> provide a comprehensive summary. The function <code>eof</code> in this package, based on <code>prcomp</code> and <code>varimax</code> in the <code>stats</code> package, optionally scales the time series and applies a rotation to the EOFs.</p>
-<p><code>eof</code> requires an estimate of the number of EOFs to retain for rotation. <code>eofNum</code> provides a guide to this number by plotting the eigenvalues and their confidence intervals in a <em>scree</em> plot. Here, we apply <code>eofNum</code> to annualized San Francisco Bay chlorophyll data and retain the stations with no missing data, namely, the first 12 stations.</p>
+<p>Empirical Orthogonal Function (EOF) analysis is a term used primarily
+in the earth sciences for principal component analysis applied to
+simultaneous time series at different spatial locations. <span class="citation">Hannachi, Jolliffe, and Stephenson (2007)</span>
+provide a comprehensive summary. The function <code>eof</code> in this
+package, based on <code>prcomp</code> and <code>varimax</code> in the
+<code>stats</code> package, optionally scales the time series and
+applies a rotation to the EOFs.</p>
+<p><code>eof</code> requires an estimate of the number of EOFs to retain
+for rotation. <code>eofNum</code> provides a guide to this number by
+plotting the eigenvalues and their confidence intervals in a
+<em>scree</em> plot. Here, we apply <code>eofNum</code> to annualized
+San Francisco Bay chlorophyll data and retain the stations with no
+missing data, namely, the first 12 stations.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chla1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">sfbayChla</span>, <span class="fl">1</span>, <span class="va">mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">chla1</span> <span class="op">&lt;-</span> <span class="va">chla1</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span></span>
 <span><span class="fu"><a href="../reference/eofNum.html">eofNum</a></span><span class="op">(</span><span class="va">chla1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>These stations have similar coefficients for the first EOF and appear to act as one with respect to chlorophyll variability on the annual scale. It suggests that further exploration of the interannual variability of these stations can be simplified by using a single time series, namely, the first EOF.</p>
+<p>These stations have similar coefficients for the first EOF and appear
+to act as one with respect to chlorophyll variability on the annual
+scale. It suggests that further exploration of the interannual
+variability of these stations can be simplified by using a single time
+series, namely, the first EOF.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eof.html">eof</a></span><span class="op">(</span><span class="va">chla1</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">e1</span></span></code></pre></div>
@@ -475,11 +677,23 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## $variance</span></span>
 <span><span class="co">##  [1]  78.4  86.5  93.5  97.0  98.4  98.9  99.2  99.5  99.7  99.8  99.9 100.0</span></span></code></pre>
-<p>The function <code>eofPlot</code> produces a graph of either the EOFs or their accompanying time series. In this case, with <code>n = 1</code>, there is only one plot for each such graph.</p>
+<p>The function <code>eofPlot</code> produces a graph of either the EOFs
+or their accompanying time series. In this case, with
+<code>n = 1</code>, there is only one plot for each such graph.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/eofPlot.html">eofPlot</a></span><span class="op">(</span><span class="va">e1</span>, type <span class="op">=</span> <span class="st">"amp"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-27-1.png" width="480" style="display: block; margin: auto;"></p>
-<p>Principal component analysis can also be useful in studying the way different seasonal <em>modes</em> of variability contribute to overall year-to-year variability of a single time series . The basic approach is to consider each month as determining a separate annual time series and then to calculate the eigenvalues for the resulting <span class="math inline">\(12 \times n\)</span> years time series matrix. The function <code>ts2df</code> is useful for expressing a monthly time series in the form needed by <code>eof</code>. For example, the following code converts the monthly chlorophyll time series for Station 27 in San Francisco Bay to the appropriate data frame with October, the first month of the local <em>water year</em>, in the first column, and years with missing data omitted:</p>
+<p>Principal component analysis can also be useful in studying the way
+different seasonal <em>modes</em> of variability contribute to overall
+year-to-year variability of a single time series . The basic approach is
+to consider each month as determining a separate annual time series and
+then to calculate the eigenvalues for the resulting <span class="math inline">\(12 \times n\)</span> years time series matrix. The
+function <code>ts2df</code> is useful for expressing a monthly time
+series in the form needed by <code>eof</code>. For example, the
+following code converts the monthly chlorophyll time series for Station
+27 in San Francisco Bay to the appropriate data frame with October, the
+first month of the local <em>water year</em>, in the first column, and
+years with missing data omitted:</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl27b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/interpTs.html">interpTs</a></span><span class="op">(</span><span class="va">sfbayChla</span><span class="op">[</span>, <span class="st">"s27"</span><span class="op">]</span>, gap <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">chl27b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ts2df.html">ts2df</a></span><span class="op">(</span><span class="va">chl27b</span>, mon1 <span class="op">=</span> <span class="fl">10</span>, addYr <span class="op">=</span> <span class="cn">TRUE</span>, omit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -491,7 +705,12 @@
 <span><span class="co">## 1984 1.5 1.5 1.4 1.9 2.8 3.0  9.8  3.5 1.2 1.7 2.3 2.9</span></span>
 <span><span class="co">## 1986 1.5 1.1 1.2 1.2 1.2 4.0 25.5  4.0 1.5 1.5 1.4 1.4</span></span>
 <span><span class="co">## 1987 1.3 1.2 1.1 1.4 1.4 5.1  5.9  5.1 2.9 1.7 2.0 2.0</span></span></code></pre>
-<p>The following example plots the EOFs from an analysis of this month <span class="math inline">\(\times\)</span> year data frame for Station 27 chlorophyll after scaling the data. <code>eofNum</code> (not shown) suggested retaining up to two EOFs. The resulting rotated EOFs imply two separate modes of variability for further exploration, the first operating during May-Sep and the other during Nov-Jan:</p>
+<p>The following example plots the EOFs from an analysis of this month
+<span class="math inline">\(\times\)</span> year data frame for Station
+27 chlorophyll after scaling the data. <code>eofNum</code> (not shown)
+suggested retaining up to two EOFs. The resulting rotated EOFs imply two
+separate modes of variability for further exploration, the first
+operating during May-Sep and the other during Nov-Jan:</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eof.html">eof</a></span><span class="op">(</span><span class="va">chl27b</span>, n <span class="op">=</span> <span class="fl">2</span>, scale. <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/eofPlot.html">eofPlot</a></span><span class="op">(</span><span class="va">e2</span>, type <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></code></pre></div>
@@ -500,33 +719,108 @@
 <div class="section level3">
 <h3 id="time-series-decomposition">Time series decomposition<a class="anchor" aria-label="anchor" href="#time-series-decomposition"></a>
 </h3>
-<p>An analysis of chlorophyll-<em>a</em> time series from many coastal and estuarine sites around the world demonstrates that the standard deviation of chlorophyll is approximately proportional to the mean, both among and within sites, as well as at different time scales <span class="citation">(Cloern and Jassby 2010)</span>. One consequence is that these monthly time series are well described by a multiplicative seasonal model: <span class="math inline">\(c_{ij} = C y_i m_j \epsilon_{ij}\)</span>, where <span class="math inline">\(c_{ij}\)</span> is chlorophyll concentration in year <span class="math inline">\(i\)</span> and month <span class="math inline">\(j\)</span>; <span class="math inline">\(C\)</span> is the long-term mean; <span class="math inline">\(y_i\)</span> is the annual effect; <span class="math inline">\(m_j\)</span> is the mean seasonal (in this case monthly) effect; and <span class="math inline">\(\epsilon_{ij}\)</span> is the residual series, which we sometimes refer to as the <em>events</em> component. The annual effect is simply the annual mean divided by the long-term mean: <span class="math inline">\(y_{i} = Y_{i}/C\)</span>, where <span class="math inline">\(Y_{i} = (1/12) \sum_{j=1}^{12}c_{ij}\)</span>. The mean monthly effect is given by <span class="math inline">\(m_{j}=(1/N) \sum_{i=1}^{N} M_{ij}/(C y_{i})\)</span>, where <span class="math inline">\(M_{ij}\)</span> is the value for month <span class="math inline">\(j\)</span> in year <span class="math inline">\(i\)</span>, and <span class="math inline">\(N\)</span> is the total number of years. The events component is then obtained by <span class="math inline">\(\epsilon_{ij}=c_{ij}/C y_{i} m_{j}\)</span>. This simple approach is motivated partly by the observation that many important events for estuaries (e.g., persistent dry periods, species invasions) start or stop suddenly. Smoothing to extract the annualized term, which can disguise the timing of these events and make analysis of them unnecessarily difficult, is not used.</p>
-<p>The <code>decompTs</code> listed here accomplishes this multiplicative decomposition (an option allows additive decomposition as an alternative). The median rather than the mean can be used in the operations described above, and the median is, in fact, the default for the function. Large, isolated events are common in environmental time series, especially from the ocean or ocean-influenced habitats such as certain types of estuary. The median leads to a more informative decomposition in these cases. <code>decompTs</code> requires input of a time series matrix in which the columns are monthly time series. It allows missing data, but it is up to the user to decide how many data are sufficient and if the pattern of missing data will lead to bias in the results. If so, it would be advisable to eliminate problem years beforehand by setting all month values to <code>NA</code> for those years. There are two cases of interest here: one in which the seasonal effect is held constant from year to year, and another in which it is allowed to vary by not distinguishing a separate events component. The choice is made by setting <code>event = TRUE</code> or <code>event = FALSE</code>, respectively, in the input. The output of this function is a matrix time series containing the original time series and its multiplicative model components, except for the long-term median or mean.</p>
-<p>The average seasonal pattern may not resemble observed seasonality in a given year. Patterns that are highly variable from year to year will result in an average seasonal pattern of relatively low amplitude (i.e., low range of monthly values) compared to the amplitudes in individual years. An average seasonal pattern with high amplitude therefore indicates both high amplitude and a recurring pattern for individual years. The default time series <code>plot</code> again provides a quick illustration of the result.</p>
+<p>An analysis of chlorophyll-<em>a</em> time series from many coastal
+and estuarine sites around the world demonstrates that the standard
+deviation of chlorophyll is approximately proportional to the mean, both
+among and within sites, as well as at different time scales <span class="citation">(Cloern and Jassby 2010)</span>. One consequence is
+that these monthly time series are well described by a multiplicative
+seasonal model: <span class="math inline">\(c_{ij} = C y_i m_j
+\epsilon_{ij}\)</span>, where <span class="math inline">\(c_{ij}\)</span> is chlorophyll concentration in
+year <span class="math inline">\(i\)</span> and month <span class="math inline">\(j\)</span>; <span class="math inline">\(C\)</span>
+is the long-term mean; <span class="math inline">\(y_i\)</span> is the
+annual effect; <span class="math inline">\(m_j\)</span> is the mean
+seasonal (in this case monthly) effect; and <span class="math inline">\(\epsilon_{ij}\)</span> is the residual series,
+which we sometimes refer to as the <em>events</em> component. The annual
+effect is simply the annual mean divided by the long-term mean: <span class="math inline">\(y_{i} = Y_{i}/C\)</span>, where <span class="math inline">\(Y_{i} = (1/12) \sum_{j=1}^{12}c_{ij}\)</span>. The
+mean monthly effect is given by <span class="math inline">\(m_{j}=(1/N)
+\sum_{i=1}^{N} M_{ij}/(C y_{i})\)</span>, where <span class="math inline">\(M_{ij}\)</span> is the value for month <span class="math inline">\(j\)</span> in year <span class="math inline">\(i\)</span>, and <span class="math inline">\(N\)</span> is the total number of years. The
+events component is then obtained by <span class="math inline">\(\epsilon_{ij}=c_{ij}/C y_{i} m_{j}\)</span>. This
+simple approach is motivated partly by the observation that many
+important events for estuaries (e.g., persistent dry periods, species
+invasions) start or stop suddenly. Smoothing to extract the annualized
+term, which can disguise the timing of these events and make analysis of
+them unnecessarily difficult, is not used.</p>
+<p>The <code>decompTs</code> listed here accomplishes this
+multiplicative decomposition (an option allows additive decomposition as
+an alternative). The median rather than the mean can be used in the
+operations described above, and the median is, in fact, the default for
+the function. Large, isolated events are common in environmental time
+series, especially from the ocean or ocean-influenced habitats such as
+certain types of estuary. The median leads to a more informative
+decomposition in these cases. <code>decompTs</code> requires input of a
+time series matrix in which the columns are monthly time series. It
+allows missing data, but it is up to the user to decide how many data
+are sufficient and if the pattern of missing data will lead to bias in
+the results. If so, it would be advisable to eliminate problem years
+beforehand by setting all month values to <code>NA</code> for those
+years. There are two cases of interest here: one in which the seasonal
+effect is held constant from year to year, and another in which it is
+allowed to vary by not distinguishing a separate events component. The
+choice is made by setting <code>event = TRUE</code> or
+<code>event = FALSE</code>, respectively, in the input. The output of
+this function is a matrix time series containing the original time
+series and its multiplicative model components, except for the long-term
+median or mean.</p>
+<p>The average seasonal pattern may not resemble observed seasonality in
+a given year. Patterns that are highly variable from year to year will
+result in an average seasonal pattern of relatively low amplitude (i.e.,
+low range of monthly values) compared to the amplitudes in individual
+years. An average seasonal pattern with high amplitude therefore
+indicates both high amplitude and a recurring pattern for individual
+years. The default time series <code>plot</code> again provides a quick
+illustration of the result.</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl27</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span><span class="op">[</span>, <span class="st">"s27"</span><span class="op">]</span></span>
 <span><span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/decompTs.html">decompTs</a></span><span class="op">(</span><span class="va">chl27</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">d1</span>, nc <span class="op">=</span> <span class="fl">1</span>, main <span class="op">=</span> <span class="st">"Station 27 Chl-a decomposition"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>The average seasonal pattern does not provide any information about potential secular trends in the pattern. A solution is to apply the decomposition to a moving time window. The window should be big enough to yield a meaningful average of interannual variability but short enough to allow a trend to manifest. This may be different for different systems, but a decadal window can be used as a starting point. A more convenient way to examine changing seasonality is with the dedicated function <code>plotSeason</code>. It divides the time period into intervals and plots a composite of the seasonal pattern in each interval. The intervals can be specifed by a single number – the number of equal-length intervals – or by a vector listing the breaks between intervals. The function also warns of months that may not be represented by enough data by colouring them red. <code>plotSeason</code> is an easy way to decide on the value for the <code>event</code> option in <code>decompTs</code>.</p>
+<p>The average seasonal pattern does not provide any information about
+potential secular trends in the pattern. A solution is to apply the
+decomposition to a moving time window. The window should be big enough
+to yield a meaningful average of interannual variability but short
+enough to allow a trend to manifest. This may be different for different
+systems, but a decadal window can be used as a starting point. A more
+convenient way to examine changing seasonality is with the dedicated
+function <code>plotSeason</code>. It divides the time period into
+intervals and plots a composite of the seasonal pattern in each
+interval. The intervals can be specifed by a single number – the number
+of equal-length intervals – or by a vector listing the breaks between
+intervals. The function also warns of months that may not be represented
+by enough data by colouring them red. <code>plotSeason</code> is an easy
+way to decide on the value for the <code>event</code> option in
+<code>decompTs</code>.</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSeason.html">plotSeason</a></span><span class="op">(</span><span class="va">chl27</span>, num.era <span class="op">=</span> <span class="fl">3</span>, same.plot <span class="op">=</span> <span class="cn">FALSE</span>, ylab <span class="op">=</span> <span class="st">'Stn 27 Chl-a'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>The same boxplots can also be combined in one plot, with boxplots for the same month grouped together.</p>
+<p>The same boxplots can also be combined in one plot, with boxplots for
+the same month grouped together.</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSeason.html">plotSeason</a></span><span class="op">(</span><span class="va">chl27</span>, num.era <span class="op">=</span> <span class="fl">3</span>, same.plot <span class="op">=</span> <span class="cn">TRUE</span>, ylab <span class="op">=</span> <span class="st">'Stn 27 Chl-a'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;"></p>
-<p><code>plotSeason</code> also has an option to plot all individual months separately as standardized anomalies for the entire record.</p>
+<p><code>plotSeason</code> also has an option to plot all individual
+months separately as standardized anomalies for the entire record.</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSeason.html">plotSeason</a></span><span class="op">(</span><span class="va">chl27</span>, <span class="st">"by.month"</span>, ylab <span class="op">=</span> <span class="st">'Stn 27 Chl-a'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>With all types of seasonal plots, it is often helpful to adjust the device aspect ratio and size manually to get the clearest information.</p>
+<p>With all types of seasonal plots, it is often helpful to adjust the
+device aspect ratio and size manually to get the clearest
+information.</p>
 </div>
 <div class="section level3">
 <h3 id="phenological-parameters">Phenological parameters<a class="anchor" aria-label="anchor" href="#phenological-parameters"></a>
 </h3>
-<p><code>phenoPhase</code> and <code>phenoAmp</code> act on monthly time series or dated observations (<code>zoo</code> objects) and produce measures of the phase and amplitude, respectively, for each year. <code>phenoPhase</code> finds the month containing the maximum value, the <em>fulcrum</em> or center of gravity, and the weighted mean month. <code>phenoAmp</code> finds the range, the range divided by mean, and the coefficient of variation. Both functions can be confined to only part of the year, for example, the months containing the spring phytoplankton bloom. This feature can also be used to avoid months with chronic missing-data problems.</p>
-<p>Illustrating once again with chlorophyll observations from Station 27 in San Francisco Bay:</p>
+<p><code>phenoPhase</code> and <code>phenoAmp</code> act on monthly time
+series or dated observations (<code>zoo</code> objects) and produce
+measures of the phase and amplitude, respectively, for each year.
+<code>phenoPhase</code> finds the month containing the maximum value,
+the <em>fulcrum</em> or center of gravity, and the weighted mean month.
+<code>phenoAmp</code> finds the range, the range divided by mean, and
+the coefficient of variation. Both functions can be confined to only
+part of the year, for example, the months containing the spring
+phytoplankton bloom. This feature can also be used to avoid months with
+chronic missing-data problems.</p>
+<p>Illustrating once again with chlorophyll observations from Station 27
+in San Francisco Bay:</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl27</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span><span class="op">[</span>, <span class="st">'s27'</span><span class="op">]</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phenoPhase.html">phenoPhase</a></span><span class="op">(</span><span class="va">chl27</span><span class="op">)</span></span>
@@ -601,47 +895,75 @@
 <div class="section level3">
 <h3 id="miscellaneous-plotting-functions">Miscellaneous plotting functions<a class="anchor" aria-label="anchor" href="#miscellaneous-plotting-functions"></a>
 </h3>
-<p><code>plotTsAnom</code> plots (unstandardized) departures of vector or matrix time series from their long-term mean and can be a useful way of examining trends in annualized data.</p>
+<p><code>plotTsAnom</code> plots (unstandardized) departures of vector
+or matrix time series from their long-term mean and can be a useful way
+of examining trends in annualized data.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">sfbayChla</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">meanSub</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plotTsAnom.html">plotTsAnom</a></span><span class="op">(</span><span class="va">chl</span>, ylab <span class="op">=</span> <span class="st">'Chlorophyll-a'</span>,</span>
 <span>           strip.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Station'</span>, <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">chl</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;"></p>
-<p><code>plotTsTile</code> plots a monthly time series as a month <span class="math inline">\(\times\)</span> year grid of tiles, with color representing magnitude. The data can be binned in either of two ways. The first is simply by deciles. The second, which is intended for log-anomaly data, is by four categories: Positive numbers higher or lower than the mean positive value, and negative numbers higher or lower than the mean negative value. In this version of <code>plotTsTile</code>, the anomalies are calculated with respect to the overall mean month.</p>
+<p><code>plotTsTile</code> plots a monthly time series as a month <span class="math inline">\(\times\)</span> year grid of tiles, with color
+representing magnitude. The data can be binned in either of two ways.
+The first is simply by deciles. The second, which is intended for
+log-anomaly data, is by four categories: Positive numbers higher or
+lower than the mean positive value, and negative numbers higher or lower
+than the mean negative value. In this version of
+<code>plotTsTile</code>, the anomalies are calculated with respect to
+the overall mean month.</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chl27</span> <span class="op">&lt;-</span> <span class="va">sfbayChla</span><span class="op">[</span>, <span class="st">"s27"</span><span class="op">]</span></span>
 <span><span class="fu"><a href="../reference/plotTsTile.html">plotTsTile</a></span><span class="op">(</span><span class="va">chl27</span><span class="op">)</span></span></code></pre></div>
 <p><img src="wql-package_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>This plot shows clearly the change in chlorophyll magnitude after 1999.</p>
+<p>This plot shows clearly the change in chlorophyll magnitude after
+1999.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-belle1984" class="csl-entry">
-Belle, G. van, and J. P. Hughes. 1984. <span>“Nonparametric Tests for Trend in Water Quality.”</span> <em>Water Resources Research</em> 20: 127–36.
+Belle, G. van, and J. P. Hughes. 1984. <span>“Nonparametric Tests for
+Trend in Water Quality.”</span> <em>Water Resources Research</em> 20:
+127–36.
 </div>
 <div id="ref-cloern2010" class="csl-entry">
-Cloern, James E, and Alan D Jassby. 2010. <span>“Patterns and Scales of Phytoplankton Variability in Estuarine-Coastal Ecosystems.”</span> <em>Estuaries and Coasts</em> 33: 230–41.
+Cloern, James E, and Alan D Jassby. 2010. <span>“Patterns and Scales of
+Phytoplankton Variability in Estuarine-Coastal Ecosystems.”</span>
+<em>Estuaries and Coasts</em> 33: 230–41.
 </div>
 <div id="ref-grothendieck2004" class="csl-entry">
-Grothendieck, G., and T. Petzoldt. 2004. <span>“<span class="nocase">R help desk: Date and time classes in R</span>.”</span> <em>R News</em> 4 (1): 29–32.
+Grothendieck, G., and T. Petzoldt. 2004. <span>“<span class="nocase">R
+help desk: Date and time classes in R</span>.”</span> <em>R News</em> 4
+(1): 29–32.
 </div>
 <div id="ref-hannachi2007" class="csl-entry">
-Hannachi, A., I. T. Jolliffe, and D. B. Stephenson. 2007. <span>“Empirical Orthogonal Functions and Related Techniques in Atmospheric Science: A Review.”</span> <em>International Journal of Climatology</em> 27 (9): 1119–52.
+Hannachi, A., I. T. Jolliffe, and D. B. Stephenson. 2007.
+<span>“Empirical Orthogonal Functions and Related Techniques in
+Atmospheric Science: A Review.”</span> <em>International Journal of
+Climatology</em> 27 (9): 1119–52.
 </div>
 <div id="ref-helsel2006a" class="csl-entry">
-Helsel, D. R., and L. M. Frans. 2006. <span>“<span class="nocase">Regional Kendall test for trend</span>.”</span> <em>Environmental Science and Technology</em> 40 (13): 4066–73.
+Helsel, D. R., and L. M. Frans. 2006. <span>“<span class="nocase">Regional Kendall test for trend</span>.”</span>
+<em>Environmental Science and Technology</em> 40 (13): 4066–73.
 </div>
 <div id="ref-hirsch1982" class="csl-entry">
-Hirsch, R. M., J. R. Slack, and R. A. Smith. 1982. <span>“Techniques of Trend Analysis for Monthly Water Quality Data.”</span> <em>Water Resources Research</em> 18: 107–21.
+Hirsch, R. M., J. R. Slack, and R. A. Smith. 1982. <span>“Techniques of
+Trend Analysis for Monthly Water Quality Data.”</span> <em>Water
+Resources Research</em> 18: 107–21.
 </div>
 <div id="ref-pettitt1979" class="csl-entry">
-Pettitt, A. N. 1979. <span>“A Non-Parametric Approach to the Change-Point Problem.”</span> <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 28 (2): 126–35.
+Pettitt, A. N. 1979. <span>“A Non-Parametric Approach to the
+Change-Point Problem.”</span> <em>Journal of the Royal Statistical
+Society. Series C (Applied Statistics)</em> 28 (2): 126–35.
 </div>
 <div id="ref-schertz1991" class="csl-entry">
-Schertz, Terry L., Richard B. Alexander, and Dane J. Ohe. 1991. <span>“<span class="nocase">The computer program EStimate TREND (ESTREND), a system for the detection of trends in water-quality data</span>.”</span> Water-Resources Investigations Report 91-4040. U.S. Geological Survey.
+Schertz, Terry L., Richard B. Alexander, and Dane J. Ohe. 1991.
+<span>“<span class="nocase">The computer program EStimate TREND
+(ESTREND), a system for the detection of trends in water-quality
+data</span>.”</span> Water-Resources Investigations Report 91-4040. U.S.
+Geological Survey.
 </div>
 </div>
 </div>
@@ -664,7 +986,7 @@ Schertz, Terry L., Richard B. Alexander, and Dane J. Ohe. 1991. <span>“<span c
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
