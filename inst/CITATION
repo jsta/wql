@@ -1,26 +1,27 @@
 # Needed if R < 2.8.0; later versions pass package metadata to citation().
-if(!exists("meta") || is.null(meta)) meta <- packageDescription("wq")
+if (!exists("meta") || is.null(meta)) meta <- packageDescription("wql")
 
-year <- substring(meta$Date, 1, 4)
+year <- 2025
 vers <- paste("R package version", meta$Version)
 
-bibentry(key = paste0("jassby", year, "wq"),
+bibentry(key = paste0("jassby", year, "wl"),
   bibtype = "Manual",
-  title = "wq: Exploring water quality monitoring data",
+  title = "wql: Exploring water quality monitoring data",
   author = c(
-	  person(c("Alan", "D."), "Jassby", role = c("aut", "cre"), 
-	         email = "adjassby@ucdavis.edu"),
-	  person(c("James", "E."), "Cloern", role = c("aut"))
+    person(c("Alan", "D."), "Jassby", role = c("aut", "cre"),
+      email = "adjassby@ucdavis.edu"),
+    person(c("James", "E."), "Cloern", role = c("aut")),
+    person(c("Jemma"), "Stachelek", role = c("aut"))
   ),
   year = year,
   note = vers,
-  url = "https://CRAN.R-project.org/package=wq",
+  url = "https://doi.org/10.32614/CRAN.package.wql",
   textVersion = paste0(
-    "Alan D. Jassby and James E. Cloern (", 
-    year, 
-    "). wq: Some tools for exploring water quality monitoring data. ", 
-    vers, 
-    ". https://cran.r-project.org/package=wq"
+    "Alan D. Jassby and James E. Cloern and Jemma Stachelek (",
+    year,
+    "). wql: Some tools for exploring water quality monitoring data. ",
+    vers,
+    ". https://doi.org/10.32614/CRAN.package.wql"
   ),
-  header = "To cite wq in publications use:"
+  header = "To cite wql in publications use:"
 )
