@@ -1,6 +1,8 @@
 ## Test environments
-* ubuntu 22.04, R "Unsuffered Consequences"
-* rhub (devel and release)
+
+* win_builder (devel)
+
+* rhub (R-devel)
 
 ## R CMD check results
 
@@ -8,6 +10,6 @@
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies. However, this is a fork of an archived package entitled "wq". I have obtained the permission of the original author to fork and rebrand the original package.
+This release fixes the package citation information and makes minor styling changes.
 
 ---
