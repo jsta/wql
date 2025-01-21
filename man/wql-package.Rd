@@ -3,6 +3,7 @@
 \docType{package}
 \name{wql-package}
 \alias{wql-package}
+\alias{_PACKAGE}
 \alias{wql}
 \title{The main purpose of \pkg{wql} is to explore seasonal time series through
 plots and nonparametric trend tests. It was created originally to examine

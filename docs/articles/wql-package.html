@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>wql: Exploring water quality monitoring data • wql</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">wql</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@ and James E. Cloern</h4>
 
     
     
-<p><em>Edited by Jemma Stachelek: 28 May, 2024</em></p>
+<p><em>Edited by Jemma Stachelek: 21 January, 2025</em></p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -103,7 +103,7 @@ our own interest is in aquatic ecology, almost all of the functions
 should be useful for time series analysis regardless of the subject
 matter. The package is intended for programs that sample approximately
 monthly at discrete stations, a feature of many legacy data sets.</p>
-<p><img src="wqflow.png" style="display: block; margin: auto;"></p>
+<p><img src="wqflow.png" width="1012" style="display: block; margin: auto;"></p>
 <p>The functions are summarized in the diagram above, which illustrates
 a typical sequence of analysis that could be facilitated by the package
 when the data are in a data frame or time series. The functions
@@ -169,12 +169,12 @@ percent saturation with respect to surface pressure:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sfbay</span><span class="op">)</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">sfbay</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1]   NA  8.0   NA  8.6   NA  8.3 10.4  9.0  8.1   NA</span></span></code></pre>
+<pre><code><span><span class="co">##  [1] 6.9  NA 7.0 7.2 8.5  NA 8.0 6.8  NA 7.7</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfbay1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">sfbay</span>,</span>
 <span>                    dox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">*</span> <span class="va">dox</span><span class="op">/</span><span class="fu"><a href="../reference/oxySol.html">oxySol</a></span><span class="op">(</span><span class="va">sal</span>, <span class="va">temp</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sfbay1</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1]    NA 114.6    NA 106.6    NA 108.9  99.1 103.3  94.5    NA</span></span></code></pre>
+<pre><code><span><span class="co">##  [1] 101.1    NA 101.1 103.4 102.8    NA 106.4  99.1    NA 105.7</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="the-wqdata-class">The <code>WqData</code> class<a class="anchor" aria-label="anchor" href="#the-wqdata-class"></a>
@@ -986,7 +986,7 @@ Geological Survey.
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
