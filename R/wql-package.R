@@ -240,8 +240,7 @@ NULL
 #' \code{sfbayChla} is a time series matrix (380 months \code{x} 16 stations)
 #' of average 0-5 m chlorophyll \emph{a} concentrations calculated from the
 #' data in \code{sfbay}.
-#' @source Downloaded from \url{https://sfbay.wr.usgs.gov/water-quality-database/} on
-#' 2009-11-17.
+#' @source Downloaded from USGS on 2009-11-17.
 #' @keywords datasets
 #' @examples
 #'

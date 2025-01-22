@@ -9,3 +9,4 @@ README.html
 .vscode
 ^CRAN-SUBMISSION$
 .github
+Makefile
