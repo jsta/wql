@@ -1,20 +1,24 @@
 wql 1.0.1
 =========
+
 * CRAN maintenence release
 
 wql 1.0.0
 =========
+
 * Update maintainer name and contact info
 * Bump version to signify stable functioning
 * Link rot fixes
 
 wql 0.4.9
 =========
+
 * Fork and rebrand wq to wql
 * Added roxygen documentation
 
 wq 0.4.8
 ========
+
 * eof: Shift id to row name in output.
 * eofPlot: Fix for non-numeric row names in original data.
 * mannKen: Use different definition of relative sen slope.
@@ -26,6 +30,7 @@ wq 0.4.8
 
 wq 0.4.7
 ========
+
 * Add back html vignette.
 * Fix global variable notes.
 * eof: Calculation method changed.
@@ -36,6 +41,7 @@ wq 0.4.7
 
 wq 0.4.6
 ========
+
 * decompTs: Remove startyr and endyr. Add median as default centering method.
 * mannKen: Remove "tau" argument. Use median instead of mean for relative. Add exact p-values. Allow matrix and data.frame. Change plot.
 * pett.R: Add new function with plot for Pettitt test.
@@ -47,20 +53,24 @@ wq 0.4.6
 
 wq 0.4.5
 ========
+
 * eofPlot.R: Fix argument to geom_hline.
 
 wq 0.4.4
 ========
+
 * wq-internal.R: Removed.
 * plot WqData-class: Added global variable definitions.
 
 wq 0.4.3
 ========
+
 * ammFrac: Remove.
 * layOut: Remove.
 
 wq 0.4-1
 ========
+
 * mannKen: Preserve station order in data matrix.
 * mannKen: Modify examples to be more useful.
 * NAMESPACE: Add importFrom("methods").
@@ -73,6 +83,7 @@ wq 0.4-1
 
 wq 0.3-11
 =========
+
 * `[`: method now exists for WqData objects.
 * plotTsTile: has additional options and a corrected help file.
 * subset, transform: no longer used within code.
@@ -81,29 +92,35 @@ wq 0.3-11
 
 wq 0.3-10
 =========
+
 * Vignette (re-)included.
 * Minor changes in plotting functions.
 
 wq 0.3-8
 ========
+
 * Updated for ggplot2 0.9.2.
 
 wq 0.3-7
 ========
+
 * Minor changes to manual.
 
 wq 0.3-6
 ========
+
 * Minor changes to code, with no changes in behaviour.
 
 wq 0.3-5
 ========
+
 * Addresses issues introduced with version 0.9 of ggplot2.
 * Uses reshape2 instead of reshape.
 * plotTsAnom and seasonTrend: minor plotting changes.
 
 wq 0.3-4
 ========
+
 * date2decyear: Converts dates to numeric years.
 * interpTs: More options for replacing NAs.
 * plotTs: Time series line plot plus isolated points
@@ -113,6 +130,7 @@ wq 0.3-4
 
 wq 0.3-3
 ========
+
 * plotTsAnom: time series anomaly plot.
 * tsMake: Now aggregates depths (and days) by quantiles as well as means.
 * plotSeason: Fixed problem with missing data treatment.
@@ -120,6 +138,7 @@ wq 0.3-3
 
 wq 0.3-1
 ========
+
 * plot method for class "WqData": Boxplots instead of stripcharts. Also fixed behaviour when less than 10 unique variables.
 * plotSeason: Changed "by.month" option to standardized anomalies.
 * tsMake: Added option to create series for "bottom" of water column.
@@ -128,6 +147,7 @@ wq 0.3-1
 
 wq 0.3
 ======
+
 * All plot functions now produce objects of class "ggplot".
 * layOut: Lays out graphs of class ggplot.
 * mannKen: Added mts and plot options.
@@ -141,6 +161,7 @@ wq 0.3
 
 wq 0.2-9
 ========
+
 * phenoPhase: Integration defaults can now be changed, if necessary.
 * plotSeason: Added smoother when type='by.month'.
 * seasonTrend: Changed appearance and some options.
@@ -150,6 +171,7 @@ wq 0.2-9
 
 wq 0.2-8
 ========
+
 * wqData: Changed "narrow" to "long".
 * plotSeas: Changed to plotSeason.
 * ammFrac: New function for un-ionized ammonium.
@@ -164,6 +186,7 @@ wq 0.2-8
 
 wq 0.2-5
 ========
+
 * interpTs: Option to fill with long-term mean or median.
 * plotSeas: Option to choose number of intervals.
 * WqData plot method: Option to choose variables.
@@ -172,7 +195,7 @@ wq 0.2-5
 * plotTsTile: More useful error message when not enough data.
 * seaRoll: Fixed problem with frequencies other than 12.
 * tsMake: Remove need to specify layer if no depth info.
-* WqData subset method: Removed because of strategy that WqData objects	should not be changed.
+* WqData subset method: Removed because of strategy that WqData objects should not be changed.
 * wqData: Argument value "narrow" changed to more conventional "long".
 * wqData: Now requires time.format to be specified.
 * wqData: Now ensures variable is a factor when type = "long".
