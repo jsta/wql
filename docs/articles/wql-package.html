@@ -169,12 +169,12 @@ percent saturation with respect to surface pressure:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sfbay</span><span class="op">)</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">sfbay</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1]   NA   NA   NA  7.7  8.7 10.3  6.3   NA   NA  8.2</span></span></code></pre>
+<pre><code><span><span class="co">##  [1]  NA  NA  NA  NA 8.4 9.3 8.1 7.7 9.3 7.0</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfbay1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">sfbay</span>,</span>
 <span>                    dox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">*</span> <span class="va">dox</span><span class="op">/</span><span class="fu"><a href="../reference/oxySol.html">oxySol</a></span><span class="op">(</span><span class="va">sal</span>, <span class="va">temp</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sfbay1</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1]    NA    NA    NA 107.9 115.1 116.8  90.9    NA    NA  96.0</span></span></code></pre>
+<pre><code><span><span class="co">##  [1]    NA    NA    NA    NA 104.0  98.0 113.8  97.8 114.7  90.2</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="the-wqdata-class">The <code>WqData</code> class<a class="anchor" aria-label="anchor" href="#the-wqdata-class"></a>
