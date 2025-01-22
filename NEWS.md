@@ -1,3 +1,9 @@
+wql 1.0.2
+=========
+
+* Correct citation information
+* Minor styling fixes
+
 wql 1.0.1
 =========
 
