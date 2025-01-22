@@ -81,17 +81,18 @@ This package is an independent fork of the archived CRAN package `wq`.
 To date, improvements have been focused on improving the documentation
 and code readability.
 
-    #> To cite wq in publications use:
+    #> To cite wql in publications use:
     #> 
-    #>   Alan D. Jassby and James E. Cloern (). wq: Some tools for exploring
-    #>   water quality monitoring data. R package version 1.0.1.
-    #>   https://cran.r-project.org/package=wq
+    #>   Alan D. Jassby and James E. Cloern and Jemma Stachelek (2025). wql:
+    #>   Some tools for exploring water quality monitoring data. R package
+    #>   version 1.0.2. https://doi.org/10.32614/CRAN.package.wql
     #> 
     #> A BibTeX entry for LaTeX users is
     #> 
-    #>   @Manual{jassbywq,
-    #>     title = {wq: Exploring water quality monitoring data},
-    #>     author = {Alan D. Jassby and James E. Cloern},
-    #>     note = {R package version 1.0.1},
-    #>     url = {https://CRAN.R-project.org/package=wq},
+    #>   @Manual{jassby2025wl,
+    #>     title = {wql: Exploring water quality monitoring data},
+    #>     author = {Alan D. Jassby and James E. Cloern and Jemma Stachelek},
+    #>     year = {2025},
+    #>     note = {R package version 1.0.2},
+    #>     url = {https://doi.org/10.32614/CRAN.package.wql},
     #>   }
