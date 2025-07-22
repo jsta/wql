@@ -79,6 +79,6 @@ function(x, n = nrow(x), scale. = TRUE) {
     geom_point(size = 3) +
     geom_text(aes(x = rank, y = cumvar.line, label = cumvar),
               size = 3, vjust = 0) +
-    labs(list(x = "Rank", y = "Eigenvalue")) +
+    labs(x = "Rank", y = "Eigenvalue") +
     theme(panel.grid.minor = element_blank())
 }
