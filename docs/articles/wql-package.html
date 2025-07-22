@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">wql</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
       </span>
     </div>
 
@@ -169,12 +169,12 @@ percent saturation with respect to surface pressure:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sfbay</span><span class="op">)</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">sfbay</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1] 8.3 6.8 8.5 7.2  NA 6.7 8.1  NA 7.3 7.3</span></span></code></pre>
+<pre><code><span><span class="co">##  [1] 10.5  6.8   NA   NA  7.9  9.6   NA  8.4  8.0  7.1</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfbay1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">sfbay</span>,</span>
 <span>                    dox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">*</span> <span class="va">dox</span><span class="op">/</span><span class="fu"><a href="../reference/oxySol.html">oxySol</a></span><span class="op">(</span><span class="va">sal</span>, <span class="va">temp</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sfbay1</span><span class="op">[</span><span class="va">x</span>, <span class="st">"dox"</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1] 101.5  76.4 114.6 104.8    NA  99.8 101.2    NA 106.4 106.8</span></span></code></pre>
+<pre><code><span><span class="co">##  [1] 144.4  99.1    NA    NA 109.7  97.0    NA 115.6 101.8 105.5</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="the-wqdata-class">The <code>WqData</code> class<a class="anchor" aria-label="anchor" href="#the-wqdata-class"></a>
