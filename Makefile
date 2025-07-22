@@ -7,7 +7,7 @@ docs: README.md
 	Rscript -e 'pkgdown::build_site(".")'
 
 check:
-	Rscript -e 'rhub::rhub_check(platforms=1)'
+	Rscript -e 'rhub::rhub_check(platform = "linux")'
 
 submit: README.md
 	echo 'devtools::release()'
