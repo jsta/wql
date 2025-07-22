@@ -1,4 +1,4 @@
-This release fixes the package citation information and makes minor styling changes.
+This release fixes an issue with ggplot labels
 
 ## Test environments
 

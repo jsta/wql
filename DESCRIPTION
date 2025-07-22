@@ -2,7 +2,7 @@ Package: wql
 Type: Package
 Title: Exploring Water Quality Monitoring Data
 Encoding: UTF-8
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(
   person("Alan", "Jassby", role = c("aut")),
   person("James", "Cloern", role = c("ctb")),
