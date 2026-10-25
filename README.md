@@ -1,3 +1,4 @@
+**\**moved to https://codeberg.org/jsta/wql****
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
